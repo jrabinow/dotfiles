@@ -1,10 +1,20 @@
-#!/bin/sh
+#!/bin/bash
 
-function main() 
+function main ()
 {
-	files=(bashrc gitconfig git-prompt.sh profile tmux.conf vimrc gdb-dashboard/.gdbinit vim)
-	for f in "${files}"; do
-		mv "${f}" "${HOME}/.${f}"
+	readonly files=(
+		bashrc
+		gdb-dashboard/.gdbinit
+		gitconfig
+		git-prompt.sh
+		profile
+		tmux.conf
+		vimrc
+		vim
+	)
+	for f in "${files[@]}"; do
+		filename="$(basename "${f}" | sed -e 's/^[^[:punct:]]/.&/')"
+		mv "${f}" "${HOME}/${filename}"
 	done
 }
 
