@@ -77,7 +77,6 @@ alias fb="firefox -no-remote -P Facebook >/dev/null 2>&1 &"
 alias binclock="watch -n1 'echo \"obase=2;\$(date +%s)\" | bc'"
 alias syncstatus='dropbox filestatus $(find ~/Dropbox -type f)|grep "syncing"|uniq'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
 # FIXME screws up when called with alias
 #alias allcows="cowsay -l | sed '1d;s/ /\n/g' | while read f; do cowsay -f $f $f;done"
 #alias listgames="echo -e \"Tetris : tetris-bsd\nsnake / worm (same game with different borders)\nwumpus\nrobot\nadventure\nphantasia\nMultiplayer-terminal shoot'em up : hunt\nAir traffic regulation : atc\n1000 bornes : mille\nsolitaire : canfield\nbackgammon\nhangman\nboggle\narithmetic\nquiz\""
@@ -190,11 +189,12 @@ function passgen () {
 shopt -s cdable_vars
 
 export lab3="/home/julien/Documents/Education/2013-2014/OS/Lab3/src"	#Bookmark
-export java="/home/julien/Documents/Programming/Java/"	#Bookmark
 export prog="/home/julien/Documents/Programming/C"	#Bookmark
 export android="/home/julien/Documents/Android/SDCard Backup"	#Bookmark
 export utils="/home/julien/Documents/Programming/C/Structures and generics/libutils"	#Bookmark
 export sea="/home/julien/Documents/Education/2014-2015/SEA"	#Bookmark
 export mus="/home/julien/Music/Media/"	#Bookmark
-export redb="/home/julien/Documents/Pentest - Security/Redballoon"	#Bookmark
-export python="/home/julien/Documents/Programming/Python"	#Bookmark
+export rt="/home/julien/Dropbox/Road Trip/Music"	#Bookmark
+export edu="/home/julien/Documents/Education/2014-2015"	#Bookmark
+export py="/home/julien/Documents/Programming/Python"	#Bookmark
+export ashiya="/home/julien/Documents/Programming/Python/Ashiya/Stubhub-Scrape"	#Bookmark
