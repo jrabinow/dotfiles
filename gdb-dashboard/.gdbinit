@@ -1,4 +1,5 @@
 set disassembly-flavor intel
+set -o vi
 python
 
 # GDB dashboard - Modular visual interface for GDB in Python.
