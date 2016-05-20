@@ -30,10 +30,19 @@ endif
 " Use more natural key movement on wrapped lines.
 nnoremap j gj
 nnoremap k gk
+nnoremap gj 5j
+nnoremap gk 5k
 
 " Keep selection when indent/dedenting in select mode.
 vnoremap > >gv
 vnoremap < <gv
+
+" Center screen on next match
+nnoremap n nzz
+nnoremap N Nzz
+
+" Make Y copy to end of line instead of be an alias for yy
+nnoremap Y y$
 
 " Who uses ';' anyways?
 nnoremap ; :
@@ -139,3 +148,8 @@ endfunction
 
 command! -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
 
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+augroup END
