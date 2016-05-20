@@ -139,3 +139,8 @@ endfunction
 
 command! -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
 
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+augroup END
