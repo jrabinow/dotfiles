@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# vi keybindings
+set -o vi
+# report status of terminated bg jobs immediately
+set -o notify
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+# real-time history update between bash instances, disabling for now
+#PROMPT_COMMAND="history -a;history -n;$PROMPT_COMMAND"
+# update the values of LINES and COLUMNS after each command if necessary
+shopt -s checkwinsize
+# save multiline history entries with '\n' instead of ;
+shopt -s lithist
+# '<TAB><TAB>' at an empty prompt doesn't try to complete
+shopt -s no_empty_cmd_completion
+
+if [ $BASH_VERSINFO == "4" ]; then
+    # perform shell expansion when completing with tab
+    shopt -s direxpand
+    # ** pattern represents all files in current directory and subdirectories
+    shopt -s globstar
+fi
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# enable programmable completion features
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+	. /etc/bash_completion
+fi

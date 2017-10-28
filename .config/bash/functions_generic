@@ -1,0 +1,122 @@
+#!/bin/bash
+
+# calculator integrated in command-line
+function ? () { echo "$@"|bc -l; }
+
+# shortcut for find all files containing pattern in name under current dir
+function search () { find . -iname "*$@*"; }
+
+# stupid godoc program just throws text at stdout without paging
+function godoc () { $(which godoc) "$@"|less; }
+
+# if ag binary isn't installed, set it up
+if [ -z "$(which ag 2>/dev/null)" ]; then
+    function ag () {
+      if [ $# -eq 1 ]; then
+          grep -R "$@" --exclude=cscope.* --exclude=.git --exclude=tags \
+              --exclude='.*.swp' .
+      else
+          grep -R "$1" --exclude=cscope.* --exclude=.git --exclude=tags \
+              --exclude='.*.swp' "$2"
+      fi
+    }
+fi
+
+# repeat command n times
+# 'repeat 5 ls -l' will run 'ls -l' 5 times
+function repeat ()
+{ 
+    local count="$1"; shift
+    shift;
+    for i in $(seq 1 "$count");
+    do
+        eval "$@";
+    done
+}
+
+# generate password
+# 'passgen 10 [[:alnum:]]' will generate an alphanumeric password of length 10
+function passgen ()
+{
+    len=${1:-30}
+    domain="${2:-[[:print:]]}"
+    strings /dev/urandom|grep -o "${domain}"|head -n"${len}"|tr -d '\n'; echo
+}
+
+# Stolen from ~meyering
+function date ()
+{
+    test $# = 0 \
+        && command date +"%a %Y-%m-%d %T %z" \
+        || command date "$@"
+}
+
+# Invoke sleep with the right number of seconds so that it sleeps
+# until the specified date/time, T.  If T is in the past, return 1.
+# sleep_until 17:02
+# sleep_until 2018  # will sleep until 20:18
+# sleep_until now+5min
+# sleep_until 24/12/2017
+# Stolen from ~meyering
+function sleep_until ()
+{
+  local t=$(date -d "$1" +%s)
+  local now=$(date +%s)
+  local delta=$((t - now))
+  echo "Sleeping for ${delta} seconds"
+  case $delta in
+      -*)
+            return 1
+            ;;
+      esac
+  sleep $delta
+}
+
+# Stolen from ~meyering
+function bell ()
+{
+    echo -en '\a\a\a'
+}
+
+# number of processors available on computer
+# Stolen from ~meyering
+function num_proc()
+{
+    local n=$(getconf _NPROCESSORS_ONLN || nproc || echo 0) 2>/dev/null
+    test "$n" -gt 0 \
+        || n=$(grep -c '^processor[[:space:]]*:' /proc/cpuinfo)
+    case $n in
+        0)
+            n=1 ;;
+    esac
+    echo $n
+}
+
+function color ()
+{
+    declare -A COLOR_MAP=(
+        [default]=39 [black]=30 [red]=31 [green]=32 [yellow]=33
+        [blue]=34 [magenta]=35 [cyan]=36 [ltgray]=37 [dkgray]=90
+        [ltred]=91 [ltgreen]=92 [ltyellow]=93 [ltblue]=94
+        [ltmagenta]=95 [ltcyan]=96 [white]=97
+    )
+    BG=10
+    OFFSET=0
+    COLOR=$1
+    TYPE=$2
+    NUM=
+    test -z "$COLOR" && COLOR=default
+    test "$TYPE" = "bg" && OFFSET=$BG
+    NUM=${COLOR_MAP[$COLOR]}
+    test -z "$NUM" && return
+    ((NUM = NUM + OFFSET))
+    echo -ne "\e[${NUM}m"
+}
+
+function notify ()
+{
+    for i in `seq 1 3`; do
+        echo -ne '\a';
+        sleep .5;
+    done
+}

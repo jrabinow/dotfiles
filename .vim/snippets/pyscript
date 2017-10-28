@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Write_description_and_usage_example_here
+"""
+
+import argparse
+import logging
+
+LOG = logging.getLogger()
+LOG.setLevel('INFO')
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+ch = logging.StreamHandler()
+ch.setFormatter(formatter)
+LOG.addHandler(ch)
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument(
+        '-d', '--debug',
+        action='store_true',
+        help='enable debug logging information',
+    )
+    parser.add_argument(
+        'REPLACEME',
+        #type=int,
+        nargs='+',
+        help='WRITE_SOMETHING_SMART_HERE'
+    )
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+    for arg in args.REPLACEME:
+        pass
+
+
+if __name__ == '__main__':
+    main()

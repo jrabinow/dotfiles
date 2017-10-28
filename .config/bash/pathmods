@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# List of dirs to be added to PATH if they exist 
+PATH_DIRS_PREPEND="
+    "$TESTBINARYDIR"
+    $HOME/bin
+"
+PATH_DIRS_APPEND="
+	/sbin
+	/usr/sbin
+"
+
+# Prepend these directories if we're not root.
+test $EUID != 0 &&
+    PATH_DIRS_PREPEND="
+    $PATH_DIRS_PREPEND
+    "
+ 
+# must use intermediate variable as otherwise the contents of $PATH_DIRS_PREPEND
+# are reversed. Alternative solution:
+# http://stackoverflow.com/questions/1527049/join-elements-of-an-array
+PREPEND=""
+for i in ${PATH_DIRS_PREPEND}; do
+    test -d $i && [[ ! $PATH =~ (^|:)"${i}"(:|$) ]] && PREPEND="$PREPEND:$i"
+done
+[ ! -z "${PREPEND}" ] && PATH=${PREPEND#:}:$PATH
+unset PREPEND
+for i in ${PATH_DIRS_APPEND}; do
+    test -d $i && [[ ! $PATH =~ (^|:)"${i}"(:|$) ]] && PATH=$PATH:$i
+done
+unset PATH_DIRS_APPEND
+unset PATH_DIRS_PREPEND

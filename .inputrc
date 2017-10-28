@@ -1,0 +1,40 @@
+# This configuration file sets modes/bindings for the GNU readline
+# library.  It is used in the history and command editing interfaces
+# to gdb and bash.
+#
+set editing-mode vi
+C-D: possible-completions
+C-L: clear-screen
+"\C-x\C-x": "!!\C-m"
+set horizontal-scroll-mode Off
+set visible-stats On
+TAB: complete
+set input-meta On
+set output-meta On
+set meta-flag On
+set convert-meta Off
+"\C-?": backward-delete-char
+"\C-[": vi-movement-mode
+"\C-_": undo
+"\C-b": shell-expand-line
+"\C-d": possible-completions
+"\C-h": backward-delete-char
+"\C-i": complete
+"\C-j": accept-line
+"\C-l": clear-screen
+"\C-k": kill-line
+"\C-m": accept-line
+"\C-r": reverse-search-history
+"\C-s": forward-search-history
+"\C-t": transpose-chars
+"\C-u": unix-line-discard
+"\C-v": quoted-insert
+"\C-w": unix-word-rubout
+"\C-y": yank
+C-G: re-read-init-file
+
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+"\C-p": previous-history
+"\C-n": next-history
+"\C-w": backward-delete-word
