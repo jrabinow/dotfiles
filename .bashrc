@@ -15,16 +15,14 @@ if [ -f /etc/bashrc ]; then
 fi
 HISTFILE=$HOME/.bash_history
 
-# keep the facebook module first: it sources global config stuff we wanna
-# overwrite later
 MODULE_NAMES=(
-    # facebook  
     aliases
     bookmarks
     envvars
     functions_generic
     pathmods
     ps1
+    qubes
     scm_prompt_setup
     shellconfig
 )
@@ -91,4 +89,4 @@ unset load_modules
 HISTSIZE=30000
 HISTFILESIZE=30000
 # don't put duplicate lines in the history
-HISTCONTROL=ignoreboth
+HISTCONTROL=ignoreboth:erasedups

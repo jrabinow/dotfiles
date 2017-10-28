@@ -207,5 +207,7 @@ if $TMUX == ''
   set clipboard+=unnamed
 endif
 
+command! -nargs=0 FlappyVird call flappyvird#start()
+
 " to please the Olde Gods
 iabbrev cthuf Ia! Ia! Cthulhu fhtagn! Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn! Cthulhu fhtagn! Cthulhu fhtagn!
