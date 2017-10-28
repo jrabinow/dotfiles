@@ -7,8 +7,8 @@ PATH_DIRS_PREPEND="
 "
 
 PATH_DIRS_APPEND="
-	/sbin
-	/usr/sbin
+    /sbin
+    /usr/sbin
 "
 
 # Prepend these directories if we're not root.
