@@ -12,5 +12,5 @@ alias open='xdg-open'
 # apparently this is nonstandard... redhat-based has, debian-based doesn't :-(
 which --version >/dev/null 2>&1
 if [ $? == 0 ]; then
-	alias which='(alias; declare -f) | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde --read-functions'
+    alias which='(alias; declare -f) | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde --read-functions'
 fi

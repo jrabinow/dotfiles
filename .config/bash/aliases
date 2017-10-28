@@ -32,5 +32,5 @@ alias starwars='telnet towel.blinkenlights.nl'
 
 if [ ! -z $(which cowsay 2>/dev/null) ]; then
     alias allcows='cowsay -l | sed "1d;s/ /\n/g" | while read f; do cowsay -f $f $f;done'
-    alias randcow='cowsay -f $(cowsay -l|sed "1d;s/ /\n/g"|grep -vE "sodomized|telebears|had-in"|shuf -n1)'
+    alias randcow='cowsay -f $(cowsay -l|sed "1d;s/ /\n/g"|grep -vE "sodomized|telebears|head-in"|shuf -n1)'
 fi

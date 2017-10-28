@@ -1,6 +1,6 @@
 [user]
-	email = jnr305@nyu.edu
-	name = Julien Rabinow
+    email = jnr305@nyu.edu
+    name = Julien Rabinow
 
 [core]
 	longpaths = true
@@ -16,11 +16,11 @@
   co = checkout
   ci = commit
   br = branch
-	lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-	lg = !"git lg1"
+  lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  lg = !"git lg1"
   url = config --get remote.origin.url
-	yolo = !git commit -am \"$(curl -s http://whatthecommit.com/index.txt)\"
+  yolo = !git commit -am \"$(curl -s http://whatthecommit.com/index.txt)\"
 
 [color]
 	ui = auto
