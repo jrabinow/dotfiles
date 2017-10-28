@@ -1,0 +1,67 @@
+#!/bin/bash
+
+
+# add bookmark for current dir:
+# $ bma bookmark
+
+# add bookmark for relative path:
+# $ bma bookmark path
+
+# add bookmark for full path:
+# $ bma -f bookmark path
+
+# go to bookmark dir from any directory:
+# $ cd bookmark
+
+# bookmark is actually just an env variable
+# refer to bookmarked dir in some command:
+# $ ls $bookmark
+
+# list bookmarks:
+# $ bml
+
+# delete bookmark:
+# $ bmd bookmark
+
+
+# BASH_MOD_DIR defined in ~/.bashrc
+BMARKS_FILE="${BASH_MOD_DIR}/data/bookmarks"
+
+# setup
+BMARKS_DIR="$(dirname "${BMARKS_FILE}")"
+test -d "${BMARKS_DIR}" || mkdir -p "${BMARKS_DIR}"
+[ $? == 0 ] && test -f "${BMARKS_FILE}" || \
+  touch "${BMARKS_FILE}" ||
+  (echo "ERROR SETTING UP BOOKMARKS MODULE" >&2 && return)
+
+shopt -s cdable_vars
+
+function bma () {
+	if [ $# -eq 1 ]; then
+		export $1="$(pwd)"
+		echo -e "export $1=\"$(pwd)\"\t# Bookmark" >> "${BMARKS_FILE}"
+	elif [ $# -eq 2 ] && [ -d "$2" ]; then
+		export $1="$2"
+		echo -e "export $1=\"$2\"\t# Bookmark" >> "${BMARKS_FILE}"
+	elif [ $# -eq 3 ] && [ $1 == "-f" ] && [ -d "$(pwd)/$3" ]; then
+		export $2="$(pwd)/$3"
+		echo -e "export $2=\"$(pwd)/$3\"\t# Bookmark" >> "${BMARKS_FILE}"
+	else
+		echo "Usage: bma BMARKNAME [ PATH ]" >&2
+	fi
+}
+
+function bmd () {
+	if [ $# -eq 1 ]; then
+		sed -i -e "/^export $1=.*\t# Bookmark$/d" "${BMARKS_FILE}"
+		unset $1
+	else
+		echo "Usage: bmd BMARKNAME" >&2
+	fi
+}
+
+function bml () {
+	grep '# Bookmark$' "${BMARKS_FILE}" | cut -f1 | cut -d' ' -f2- | sed -e 's/=/\t->\t/' | sort
+}
+
+source "${BMARKS_FILE}"

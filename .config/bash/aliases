@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# seriously, fuck those aliases
+unalias ln cp mv 2>/dev/null
+
+alias diff="diff -wbBdu"
+alias egrep='echo "Fuck you nigga, dat shit is deprecated" #'
+alias fgrep='echo "Fuck you nigga, dat shit is deprecated" #'
+alias info="info --vi-keys"
+alias reload='source ~/.bashrc'
+alias savepane='tmux capture-pane -S -; tmux save-buffer'
+alias tmux_alert='tmux select-pane -P "bg=colour1"'
+alias treset='tmux select-pane -P "bg=colour0"'
+alias uhtop="htop -u $USER"
+alias utop="top -u $USER"
+alias watch="watch --differences"
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=always'
+fi
+
+# personal
+alias binclock='watch -n1 "echo \"obase=2;\$(date +%s)\" | bc"'
+alias syncstatus='dropbox filestatus $(find ~/Dropbox -type f)|grep "syncing"|uniq'
+
+# I did a funny
+alias 42='echo The answer to Life, the Universe and Everything.'
+alias starwars='telnet towel.blinkenlights.nl'
+
+if [ ! -z $(which cowsay 2>/dev/null) ]; then
+    alias allcows='cowsay -l | sed "1d;s/ /\n/g" | while read f; do cowsay -f $f $f;done'
+    alias randcow='cowsay -f $(cowsay -l|sed "1d;s/ /\n/g"|grep -vE "sodomized|telebears|had-in"|shuf -n1)'
+fi

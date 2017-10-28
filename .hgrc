@@ -1,0 +1,56 @@
+# see 'hg help config' for more info
+[ui]
+# name and email, e.g.
+# username = Jane Doe <jdoe@example.com>
+username = Julien Rabinow <jnr305@nyu.edu>
+
+[extensions]
+# uncomment these lines to enable some popular extensions
+# (see 'hg help extensions' for more info)
+#
+pager =
+color =
+myparent =
+purge =
+#remotenames = /usr/lib/python2.7/site-packages/remotenames.py
+
+[revsetalias]
+cur = reverse(only(last(.::), master))
+r($1) = reverse($1)
+top = last(.::)
+bottom = first(. % master)
+below = first(. % master)~1
+child = children(.)
+stable = remote/fbcode/stable
+
+[alias]
+# hg prev hg next
+#top = update top
+#bot = update bottom
+#bottom = update bottom
+#bel = update below
+#below = update below
+#child = update child
+#oneline = log -T "{oneline}"
+#st = status --copies
+blame = blame -upldq
+rebaseall = rebase -r 'draft()' -d master
+
+[templatealias]
+oneline = "{node|short} {author|user} {desc|firstline}\n"
+
+[comittemplate]
+#emptymsg={myparenttitleprefix}
+#Summary: {myparentdiff}
+#Test Plan:
+#Reviewers: {myparentreviewers}
+#Subscribers: {myparentsubscribers}
+#Tasks: {myparenttasks}
+#Blame Revision:
+#testplan=wedoitlive
+#summary=journey is now 2% finished
+# https://our.intern.facebook.com/intern/wiki/Tasks/SpecialTags/
+tags=internPushComment
+
+#[remotenames]
+#syncbookmarks = True

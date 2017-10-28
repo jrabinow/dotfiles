@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# BASH_MOD_DIR defined in ~/.bashrc
+
+function _dotfiles_scm_info () {
+    echo -n
+}
+
+function ensure_source_present ()
+{
+    SCM_PROMPT="${BASH_MOD_DIR}/source_control/scm-prompt"
+    GIT_PROMPT="${BASH_MOD_DIR}/source_control/git-prompt"
+    REMOTE_URL=https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+    test -f "${SCM_PROMPT}" || test -f "${GIT_PROMPT}" || \
+        curl $REMOTE_URL > "${GIT_PROMPT}" && \
+        sed -i -e 's/^__git_ps1 ()$/_dotfiles_scm_info ()/g' "${GIT_PROMPT}"
+}
+
+function scmmode () {
+    if [ $# -eq 1 ] && [ $1 == 'off' ]; then
+        function _dotfiles_scm_info () { echo -n; }
+    elif [ $# -eq 0 ] || ([ $# -eq 1 ] && [ "${1}" == 'on' ]); then
+        if [ -f "$BASH_MOD_DIR/source_control/scm-prompt" ]; then
+            source "$BASH_MOD_DIR/source_control/scm-prompt"
+        elif [ -f "$BASH_MOD_DIR/source_control/git-prompt" ]; then
+            GIT_PS1_SHOWDIRTYSTATE=1
+            GIT_PS1_SHOWSTASHSTATE=1
+            GIT_PS1_SHOWUPSTREAM="auto"
+            source "$BASH_MOD_DIR/source_control/git-prompt"
+        else
+            echo "ERROR: file $BASH_MOD_DIR/source_control/*-prompt NOT FOUND"
+        fi
+    else
+        echo "Usage: scmmode [on|off]"
+    fi
+}
+
+ensure_source_present

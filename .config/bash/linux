@@ -1,0 +1,16 @@
+#!/bin/bash
+
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# launch facebook in a separate firefox profile
+alias fb='firefox -no-remote -P Facebook >/dev/null 2>&1 &'
+alias cp='cp --backup=numbered'
+alias ln='ln --backup=numbered'
+alias mv='mv -f --backup=numbered'
+alias open='xdg-open'
+
+# apparently this is nonstandard... redhat-based has, debian-based doesn't :-(
+which --version >/dev/null 2>&1
+if [ $? == 0 ]; then
+	alias which='(alias; declare -f) | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde --read-functions'
+fi
