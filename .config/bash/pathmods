@@ -5,6 +5,7 @@ PATH_DIRS_PREPEND="
     "$TESTBINARYDIR"
     $HOME/bin
 "
+
 PATH_DIRS_APPEND="
 	/sbin
 	/usr/sbin
