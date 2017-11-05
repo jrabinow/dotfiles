@@ -5,11 +5,13 @@ function main ()
 	readonly files=(
 		.bashrc
 		.config/bash
+		.config/xfce4/terminal/terminalrc
 		.ctags
 		.gdbinit
 		.gitconfig
 		.hgrc
 		.inputrc
+		'.local/share/fonts/Roboto Mono for Powerline.ttf'
 		.profile
 		.root-env
 		.tmux.conf
