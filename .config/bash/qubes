@@ -5,4 +5,10 @@ function qvm-shell ()
     qvm-run -a $1 xfce4-terminal
 }
 
+function qvm-restart ()
+{
+    qvm-shutdown $1
+	qvm-start $1
+}
+
 alias qvm-running='qvm-ls|grep Running'
