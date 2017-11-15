@@ -15,15 +15,15 @@ function qubes-sync-dotfiles ()
 {
 	vm=$1; shift
 	if [ -z "${vm}" ]; then
-		echo "USAGE: $0 VMNAME"
+		echo "USAGE: qubes-sync-dotfiles VMNAME"
 	else
-		qvm-run -a "${vm}" 'tar -Jcf /tmp/dotfiles.txz /home/user/Documents/dotfiles'
-		qvm-run -p "${vm}" 'cat /tmp/dotfiles.txz' > /tmp/dotfiles.txz
-		qvm-run "${vm}" 'rm /tmp/dotfiles.txz'
+		dir=$(mktemp -d)
+		find /var/lib/qubes -maxdepth 2 -type d -name "${vm}" 2>/dev/null \
+			| xargs -n1 -I% sudo mount %/private.img "${dir}"
 		rm -rf $HOME/Documents/dotfiles
-		cd Documents
-		tar -Jxf /tmp/dotfiles.txz
-		rm /tmp/dotfiles
+		cp -R "${dir}/home/user/Documents/dotfiles" $HOME/Documents
+		sudo umount "${dir}"
+		rmdir "${dir}"
 	fi
 }
 
