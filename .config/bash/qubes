@@ -11,4 +11,36 @@ function qvm-restart ()
 	qvm-start $1
 }
 
-alias qvm-running='qvm-ls|grep Running'
+function qubes-sync-dotfiles ()
+{
+	vm=$1; shift
+	if [ -z "${vm}" ]; then
+		echo "USAGE: $0 VMNAME"
+	else
+		qvm-run -a "${vm}" 'tar -Jcf /tmp/dotfiles.txz /home/user/Documents/dotfiles'
+		qvm-run -p "${vm}" 'cat /tmp/dotfiles.txz' > /tmp/dotfiles.txz
+		qvm-run "${vm}" 'rm /tmp/dotfiles.txz'
+		rm -rf $HOME/Documents/dotfiles
+		cd Documents
+		tar -Jxf /tmp/dotfiles.txz
+		rm /tmp/dotfiles
+	fi
+}
+
+alias qvm-running='qvm-ls --raw-data name state template netvm|grep Running|cut -d"|" -f1,3-|tr "|" " "|column -t'
+
+function qvm-sc ()
+{
+	cat << EOF
+personal		F2
+media			F3
+work			F4
+finance			F5
+vault			F6
+sys-usb			F7
+sys-net			F8
+anon-whonix		F9
+fedora-25		F11
+debian-stable	F12
+EOF
+}
