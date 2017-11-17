@@ -1,0 +1,22 @@
+set colorcolumn=81,101 " absolute columns to highlight "
+set colorcolumn=+1,+21 " relative (to textwidth) columns to highlight "
+
+function! HLNext (blinktime)
+	let [bufnum, lnum, col, off] = getpos('.')
+	let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+	let target_pat = '\c\%#'.@/
+	let ring = matchadd('WhiteOnRed', target_pat, 101)
+	redraw
+	exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+	call matchdelete(ring)
+	redraw
+endfunction
+
+" hlnext blink next match
+nnoremap <silent> n n:call HLNext(0.4)<cr>
+nnoremap <silent> N N:call HLNext(0.4)<cr>
+
+" Center screen on next match; disabled because too much jumping around
+nnoremap n nzz
+nnoremap N Nzz
+

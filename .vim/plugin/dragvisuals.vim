@@ -339,7 +339,5 @@ function! s:Drag_Block (dir)
     endif
 endfunction
 
-
 " Restore previous external compatibility options
 let &cpo = s:save_cpo
-
