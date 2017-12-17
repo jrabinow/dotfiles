@@ -27,7 +27,6 @@ fi
 function repeat ()
 { 
     local count="$1"; shift
-    shift;
     for i in $(seq 1 "$count");
     do
         eval "$@";
