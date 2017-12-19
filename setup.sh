@@ -5,6 +5,7 @@ function main ()
 	readonly files=(
 		.bashrc
 		.config/bash
+		.config/bleachbit/bleachbit.ini
 		.config/xfce4/terminal/terminalrc
 		.ctags
 		.gdbinit
