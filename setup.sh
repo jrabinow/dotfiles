@@ -47,7 +47,7 @@ EOF
 			dir="$(dirname "${f}")"
 			file="$(basename "${f}")"
 			mkdir -p "./${dir}"
-			rm -r "./${dir}/${file}"
+			rm -rf "./${dir}/${file}"
 			cp -rv "$HOME/$f" "./${dir}/"
 		done
 	else
@@ -55,7 +55,7 @@ EOF
 			dir="$(dirname "${f}")"
 			file="$(basename "${f}")"
 			mkdir -p "${HOME}/${dir}"
-			rm -r "${HOME}/${dir}/${file}"
+			rm -rf "${HOME}/${dir}/${file}"
 			cp -rv "$f" "${HOME}/${dir}/"
 		done
 	fi
