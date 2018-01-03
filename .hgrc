@@ -10,9 +10,12 @@ username = Julien Rabinow <jnr305@nyu.edu>
 #
 pager =
 color =
-myparent =
+#myparent =
 purge =
 #remotenames = /usr/lib/python2.7/site-packages/remotenames.py
+#lz4revlog = /tmp/lz4revlog/lz4revlog.py
+#remotefilelog = /tmp/hg-experimental/remotefilelog/remotefilelog.py
+#smartlog = /tmp/hg-experimental/hgext3rd/smartlog.py
 
 [revsetalias]
 cur = reverse(only(last(.::), master))
@@ -33,7 +36,8 @@ stable = remote/fbcode/stable
 #child = update child
 #oneline = log -T "{oneline}"
 #st = status --copies
-blame = blame -upldq
+#blame = blame -upldq
+blame = blame -uldq
 rebaseall = rebase -r 'draft()' -d master
 
 [templatealias]
