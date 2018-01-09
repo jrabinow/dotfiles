@@ -1,0 +1,31 @@
+#!/bin/bash
+
+function init_cscope ()
+{
+	if [ $# != 1 ]; then
+		lang=c
+	else
+		lang=$1; shift
+	fi
+
+	case $lang in
+		c)
+			find -name '*.cpp' -o -name '*.c++' -o -name '*.c' -o \
+				-name '*.cu' \
+				-name '*.hpp' -o -name '*.h' \
+				| grep -v 'CMakeFiles' > cscope.in
+			cscope -qRb -i cscope.in
+			rm cscope.in
+			;;
+		py)
+			echo "Python language"
+			echo "IMPLEMENT ME"
+			;;
+		*)
+			echo "Unsupported language; write your own thing, k?"
+			;;
+	esac
+}
+
+# stupid godoc program just throws text at stdout without paging
+function godoc () { $(which godoc) "$@"|less; }
