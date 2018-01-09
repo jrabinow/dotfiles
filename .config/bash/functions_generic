@@ -6,9 +6,6 @@ function ? () { echo "$@"|bc -l; }
 # shortcut for find all files containing pattern in name under current dir
 function search () { find . -iname "*$@*"; }
 
-# stupid godoc program just throws text at stdout without paging
-function godoc () { $(which godoc) "$@"|less; }
-
 # if ag binary isn't installed, set it up
 if [ -z "$(which ag 2>/dev/null)" ]; then
     function ag () {

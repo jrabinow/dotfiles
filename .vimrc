@@ -160,6 +160,8 @@ vmap  <expr>  D        DVB_Duplicate()
 noremap <leader>sw :call SelectWindowSwap()<CR>
 noremap <leader>mw :call MoveWindowSwap()<CR>
 
+nmap <F4> :TagbarToggle<CR>
+
 " to please the Olde Gods
 iabbrev cthuf Ia! Ia! Cthulhu fhtagn! Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn! Cthulhu fhtagn! Cthulhu fhtagn!
 
@@ -169,4 +171,5 @@ call plug#begin('~/.vim/plugged')
 	Plug 'nixon/vim-vmath'
 	Plug 'vim-airline/vim-airline'
 	Plug 'mattn/flappyvird-vim'
+	Plug 'majutsushi/tagbar'
 call plug#end()

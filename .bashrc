@@ -21,6 +21,7 @@ MODULE_NAMES=(
     envvars
     functions_generic
     pathmods
+    programming
     ps1
     qubes
     scm_prompt_setup
