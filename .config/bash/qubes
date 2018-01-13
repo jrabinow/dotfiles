@@ -2,14 +2,11 @@
 
 function qvm-shell ()
 {
-    qvm-run -a $1 xfce4-terminal
+	qvm-run -a $1 xfce4-terminal
 }
 
-function qvm-restart ()
-{
-    qvm-shutdown $1
-	qvm-start $1
-}
+alias qvm-running='qvm-ls --raw-data name state template netvm|grep Running|cut -d"|" -f1,3-|tr "|" " "|column -t'
+
 
 function qubes-sync-dotfiles ()
 {
@@ -17,17 +14,29 @@ function qubes-sync-dotfiles ()
 	if [ -z "${vm}" ]; then
 		echo "USAGE: qubes-sync-dotfiles VMNAME"
 	else
-		dir=$(mktemp -d)
-		find /var/lib/qubes -maxdepth 2 -type d -name "${vm}" 2>/dev/null \
-			| xargs -n1 -I% sudo mount %/private.img "${dir}"
-		rm -rf $HOME/Documents/dotfiles
-		cp -R "${dir}/home/user/Documents/dotfiles" $HOME/Documents
-		sudo umount "${dir}"
-		rmdir "${dir}"
+		running=$(qvm-running|grep "${vm}")
+		if [ -z "${running}" ]; then
+			echo "VM ${vm} not running; mounting image"
+			dir=$(mktemp -d)
+			find /var/lib/qubes -maxdepth 2 -type d -name "${vm}" 2>/dev/null \
+				| xargs -n1 -I% sudo mount %/private.img "${dir}"
+			rm -rf $HOME/Documents/dotfiles
+			cp -R "${dir}/home/user/Documents/dotfiles" $HOME/Documents
+			sudo umount "${dir}"
+			rmdir "${dir}"
+		else
+			echo "VM ${vm} running; using pass-through"
+			qvm-run -p "${vm}" \
+				'tar -C /home/$(whoami)/Documents -Jcf \
+				/tmp/dotfiles.txz dotfiles;\
+				cat /tmp/dotfiles.txz;\
+				rm /tmp/dotfiles.txz' > ~/Documents/dotfiles.txz
+			rm -rf ~/Documents/dotfiles
+			(cd ~/Documents/ && tar -Jxf dotfiles.txz)
+			rm ~/Documents/dotfiles.txz
+		fi
 	fi
 }
-
-alias qvm-running='qvm-ls --raw-data name state template netvm|grep Running|cut -d"|" -f1,3-|tr "|" " "|column -t'
 
 function qvm-sc ()
 {
@@ -39,8 +48,21 @@ finance			F5
 vault			F6
 sys-usb			F7
 sys-net			F8
-anon-whonix		F9
+sys-firewall	F9
+anon-whonix		F10
 fedora-25		F11
-debian-stable	F12
+debian-stable		F12
 EOF
+}
+
+function qvm-restart ()
+{
+	vmname=$1; shift
+    qvm-shutdown ${vmname}
+	is_running=$(qvm-ls --raw-data name state|grep -E ".?${vmname}.?\|(Running|Transient|Dying)")
+	while [ ! -z $is_running ]; do
+		sleep 1
+		is_running=$(qvm-ls --raw-data name state|grep -E ".?${vmname}.?\|(Running|Transient|Dying)")
+	done
+	qvm-start ${vmname}
 }
