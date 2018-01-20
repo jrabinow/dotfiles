@@ -18,7 +18,7 @@ LOG.addHandler(ch)
 
 def parse_args():
     parser = argparse.ArgumentParser(
-            formatter_class=argparse.RawDescriptionHelpFormatter,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
         '-d', '--debug',
