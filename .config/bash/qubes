@@ -59,10 +59,12 @@ function qvm-restart ()
 {
 	vmname=$1; shift
     qvm-shutdown ${vmname}
-	is_running=$(qvm-ls --raw-data name state|grep -E ".?${vmname}.?\|(Running|Transient|Dying)")
-	while [ ! -z $is_running ]; do
-		sleep 1
-		is_running=$(qvm-ls --raw-data name state|grep -E ".?${vmname}.?\|(Running|Transient|Dying)")
-	done
-	qvm-start ${vmname}
+	if [ $? == 0 ]; then
+	    is_running=$(qvm-ls --raw-data name state|grep -E ".?${vmname}.?\|(Running|Transient|Dying)")
+	    while [ ! -z $is_running ]; do
+	    	sleep 1
+	    	is_running=$(qvm-ls --raw-data name state|grep -E ".?${vmname}.?\|(Running|Transient|Dying)")
+	    done
+	    qvm-start ${vmname}
+	fi
 }
