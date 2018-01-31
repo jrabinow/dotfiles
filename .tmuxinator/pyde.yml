@@ -1,7 +1,7 @@
 # ~/.tmuxinator/pyde.yml
 
 name: pyde
-root: ~/
+root: ~/Documents/Programming/Python
 
 windows:
   - editor:
