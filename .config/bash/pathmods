@@ -31,3 +31,11 @@ for i in ${PATH_DIRS_APPEND}; do
 done
 unset PATH_DIRS_APPEND
 unset PATH_DIRS_PREPEND
+
+
+GCLOUD_SDK_BASEDIR='/home/user/Documents/google-cloud-sdk'
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "${GCLOUD_SDK_BASEDIR}/path.bash.inc" ]; then source "${GCLOUD_SDK_BASEDIR}/path.bash.inc"; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "${GCLOUD_SDK_BASEDIR}/completion.bash.inc" ]; then source "${GCLOUD_SDK_BASEDIR}/completion.bash.inc"; fi
