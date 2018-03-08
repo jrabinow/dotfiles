@@ -30,10 +30,10 @@ MODULE_NAMES=(
 
 case $(uname) in
     Linux)
-        MODULE_NAMES=(${MODULE_NAMES[@]} linux)
+        MODULE_NAMES=(linux ${MODULE_NAMES[@]})
         ;;
     Darwin)
-        MODULE_NAMES=(${MODULE_NAMES[@]} mac_os)
+        MODULE_NAMES=(mac_os ${MODULE_NAMES[@]})
         ;;
 esac
 

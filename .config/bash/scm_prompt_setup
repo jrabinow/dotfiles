@@ -13,7 +13,7 @@ function ensure_source_present ()
     REMOTE_URL=https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
     test -f "${SCM_PROMPT}" || test -f "${GIT_PROMPT}" || \
         curl $REMOTE_URL > "${GIT_PROMPT}" && \
-        sed -i -e 's/^__git_ps1 ()$/_dotfiles_scm_info ()/g' "${GIT_PROMPT}"
+        sed -i '' -e 's/^__git_ps1 ()$/_dotfiles_scm_info ()/g' "${GIT_PROMPT}"
 }
 
 function scmmode () {
