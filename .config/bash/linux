@@ -8,6 +8,7 @@ alias cp='cp --backup=numbered'
 alias ln='ln --backup=numbered'
 alias mv='mv -f --backup=numbered'
 alias open='xdg-open'
+alias utop="top -u $USER"
 
 # the extensions for 'which' apparently aren't standard... redhat-based has,
 # debian-based doesn't
