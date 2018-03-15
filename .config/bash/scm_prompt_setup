@@ -20,13 +20,13 @@ function scmmode () {
     if [ $# -eq 1 ] && [ $1 == 'off' ]; then
         function _dotfiles_scm_info () { echo -n; }
     elif [ $# -eq 0 ] || ([ $# -eq 1 ] && [ "${1}" == 'on' ]); then
-        if [ -f "$BASH_MOD_DIR/source_control/scm-prompt" ]; then
-            source "$BASH_MOD_DIR/source_control/scm-prompt"
-        elif [ -f "$BASH_MOD_DIR/source_control/git-prompt" ]; then
+        if [ -f "$BASH_MOD_DIR/source_control/git-prompt" ]; then
             GIT_PS1_SHOWDIRTYSTATE=1
             GIT_PS1_SHOWSTASHSTATE=1
             GIT_PS1_SHOWUPSTREAM="auto"
             source "$BASH_MOD_DIR/source_control/git-prompt"
+        elif [ -f "$BASH_MOD_DIR/source_control/scm-prompt" ]; then
+            source "$BASH_MOD_DIR/source_control/scm-prompt"
         else
             echo "ERROR: file $BASH_MOD_DIR/source_control/*-prompt NOT FOUND"
         fi
