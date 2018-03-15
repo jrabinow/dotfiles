@@ -39,13 +39,13 @@ shopt -s cdable_vars
 function bma () {
 	if [ $# -eq 1 ]; then
 		export $1="$(pwd)"
-		echo -e "export $1=\"$(pwd)\"\t# Bookmark" >> "${BMARKS_FILE}"
+		echo -e "export $1=\"$(pwd)\"	# Bookmark" >> "${BMARKS_FILE}"
 	elif [ $# -eq 2 ] && [ -d "$2" ]; then
 		export $1="$2"
-		echo -e "export $1=\"$2\"\t# Bookmark" >> "${BMARKS_FILE}"
+		echo -e "export $1=\"$2\"	# Bookmark" >> "${BMARKS_FILE}"
 	elif [ $# -eq 3 ] && [ $1 == "-f" ] && [ -d "$(pwd)/$3" ]; then
 		export $2="$(pwd)/$3"
-		echo -e "export $2=\"$(pwd)/$3\"\t# Bookmark" >> "${BMARKS_FILE}"
+		echo -e "export $2=\"$(pwd)/$3\"	# Bookmark" >> "${BMARKS_FILE}"
 	else
 		echo "Usage: bma BMARKNAME [ PATH ]" >&2
 	fi
@@ -53,7 +53,7 @@ function bma () {
 
 function bmd () {
 	if [ $# -eq 1 ]; then
-		sed -i -e "/^export $1=.*\t# Bookmark$/d" "${BMARKS_FILE}"
+		sed -i -e "/^export $1=.*	# Bookmark$/d" "${BMARKS_FILE}"
 		unset $1
 	else
 		echo "Usage: bmd BMARKNAME" >&2
@@ -61,7 +61,7 @@ function bmd () {
 }
 
 function bml () {
-	grep '# Bookmark$' "${BMARKS_FILE}" | cut -f1 | cut -d' ' -f2- | sed -e 's/=/\t->\t/' | sort
+	grep '# Bookmark$' "${BMARKS_FILE}" | cut -f1 | cut -d' ' -f2- | sed -e 's/=/	->	/' | sort
 }
 
 source "${BMARKS_FILE}"

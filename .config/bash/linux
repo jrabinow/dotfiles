@@ -10,6 +10,13 @@ alias mv='mv -f --backup=numbered'
 alias open='xdg-open'
 alias utop="top -u $USER"
 
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=always'
+fi
+
 # the extensions for 'which' apparently aren't standard... redhat-based has,
 # debian-based doesn't
 which --version >/dev/null 2>&1

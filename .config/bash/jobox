@@ -1,0 +1,17 @@
+#!/bin/bash
+
+export JOBOX="$HOME/Documents/jobox-src"
+
+alias deploy_server="cp -v ${JOBOX}/Kili/build/libs/Kili.war /Applications/tomcat/webapps/"
+
+function start_tomcat ()
+{
+	tomcat_pid=$(pgrep -f tomcat)
+	if [ ! -z "${tomcat_pid}" ]; then
+		echo "Found running tomcat server pid ${tomcat_pid}; killing now"
+		kill "${tomcat_pid}"
+		sleep 2
+		pgrep -f tomcat && echo "failed to kill tomcat server" && exit 1
+	fi
+	/Applications/tomcat/bin/startup.sh
+}

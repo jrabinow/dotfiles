@@ -20,6 +20,7 @@ MODULE_NAMES=(
     bookmarks
     envvars
     functions_generic
+    jobox
     pathmods
     programming
     ps1
