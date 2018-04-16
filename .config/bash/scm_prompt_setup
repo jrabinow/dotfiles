@@ -2,10 +2,6 @@
 
 # BASH_MOD_DIR defined in ~/.bashrc
 
-function _dotfiles_scm_info () {
-    echo -n
-}
-
 function ensure_source_present ()
 {
     SCM_PROMPT="${BASH_MOD_DIR}/source_control/scm-prompt"
@@ -36,3 +32,4 @@ function scmmode () {
 }
 
 ensure_source_present
+scmmode

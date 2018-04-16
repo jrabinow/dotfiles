@@ -4,6 +4,22 @@
 
 function main ()
 {
+	while getopts "th" opt; do
+		case ${opt} in
+			h)	# help message
+				cat << EOF
+Usage: $(basename $0) [OPTION]...
+Options: -t N: display top N commits
+	 -h: show this help dialog
+EOF
+				exit 0
+				;;
+			?)
+				echo "Unknown option, exiting now" | tee -a "${LOGFILE}" >&2
+				exit 1
+				;;
+		esac
+	done
 }
 
 if [ "${BASH_SOURCE[0]}" == "$0" ]; then

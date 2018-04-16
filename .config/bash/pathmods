@@ -4,6 +4,9 @@
 PATH_DIRS_PREPEND="
     "$TESTBINARYDIR"
     $HOME/bin
+    /opt/local/bin
+    /opt/local/sbin
+    /opt/local/libexec/gnubin
 "
 
 PATH_DIRS_APPEND="
@@ -17,25 +20,25 @@ test $EUID != 0 &&
     $PATH_DIRS_PREPEND
     "
  
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "${GCLOUD_SDK_BASEDIR}/path.bash.inc" ]; then
+    [[ ! $PATH =~ (^|:)"${GCLOUD_SDK_BASEDIR}"/bin(:|\$) ]] && \
+        source "${GCLOUD_SDK_BASEDIR}/path.bash.inc"
+fi
+
 # must use intermediate variable as otherwise the contents of $PATH_DIRS_PREPEND
 # are reversed. Alternative solution:
 # http://stackoverflow.com/questions/1527049/join-elements-of-an-array
 PREPEND=""
 for i in ${PATH_DIRS_PREPEND}; do
-    test -d $i && [[ ! $PATH =~ (^|:)"${i}"(:|$) ]] && PREPEND="$PREPEND:$i"
+    PATH=$(sed -e "s#$i:*##g" <<< $PATH)
+    test -d $i && PREPEND="$PREPEND:$i"
 done
+
 [ ! -z "${PREPEND}" ] && PATH=${PREPEND#:}:$PATH
 unset PREPEND
 for i in ${PATH_DIRS_APPEND}; do
-    test -d $i && [[ ! $PATH =~ (^|:)"${i}"(:|$) ]] && PATH=$PATH:$i
+    test -d $i && PATH=$(sed -e "s#$i:*##g" <<< $PATH):$i
 done
 unset PATH_DIRS_APPEND
 unset PATH_DIRS_PREPEND
-
-
-GCLOUD_SDK_BASEDIR='/opt/local/google-cloud-sdk'
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "${GCLOUD_SDK_BASEDIR}/path.bash.inc" ]; then source "${GCLOUD_SDK_BASEDIR}/path.bash.inc"; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f "${GCLOUD_SDK_BASEDIR}/completion.bash.inc" ]; then source "${GCLOUD_SDK_BASEDIR}/completion.bash.inc"; fi
