@@ -10,11 +10,9 @@ function search () { find . -iname "*$@*"; }
 if [ -z "$(which ag 2>/dev/null)" ]; then
     function ag () {
       if [ $# -eq 1 ]; then
-          grep -Ri "$@" --exclude=cscope.* --exclude=.git --exclude=tags \
-              --exclude='.*.swp' .
+          grep -IRi "$@" --exclude=cscope.* --exclude=.git --exclude=tags --color=auto .
       else
-          grep -Ri "$1" --exclude=cscope.* --exclude=.git --exclude=tags \
-              --exclude='.*.swp' "$2"
+          grep -IRi "$1" --exclude=cscope.* --exclude=.git --exclude=tags --color=auto "$2"
       fi
     }
 fi

@@ -36,3 +36,8 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 	. /etc/bash_completion
 fi
 stty ixany
+
+# The next line enables shell command completion for gcloud.
+if [ -f "${GCLOUD_SDK_BASEDIR}/completion.bash.inc" ]; then
+	source "${GCLOUD_SDK_BASEDIR}/completion.bash.inc"
+fi

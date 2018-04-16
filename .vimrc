@@ -5,28 +5,28 @@ syntax on
 colorscheme koehler
 
 set nocompatible
-set showcmd								" Show partial command in status line and selected characters/lines in visual mode
-set showmatch							" Show matching brackets.
-set ignorecase							" Ignore case when matching
-set smartcase							" Do smart case matching
-set incsearch							" Incremental search
-set autowrite							" Automatically save before commands like :next and :make
-set mouse=a								" Enable mouse usage (all modes)
-set number								" display line numbers on left
-set hlsearch							" highlighting of search term
+set showcmd                             " Show partial command in status line and selected characters/lines in visual mode
+set showmatch                           " Show matching brackets.
+set ignorecase                          " Ignore case when matching
+set smartcase                           " Do smart case matching
+set incsearch                           " Incremental search
+set autowrite                           " Automatically save before commands like :next and :make
+set mouse=a                             " Enable mouse usage (all modes)
+set number                              " display line numbers on left
+set hlsearch                            " highlighting of search term
 set autoindent
-set scrolloff=5							" show 5 lines above or below cursor position
-set backspace=indent,eol,start			" allow backspace across lines and automatic indentation
-set noexpandtab							" expand tabs to spaces
+set scrolloff=5                         " show 5 lines above or below cursor position
+set backspace=indent,eol,start          " allow backspace across lines and automatic indentation
+set expandtab                           " expand tabs to spaces
 set tabstop=4                           " tabs have a width of 4 chars
-set splitright							" new window opens on right instead of left
+set splitright                          " new window opens on right instead of left
 set splitbelow                          " new window opens on bottom instead of top
-set wildmenu							" show menu when using tab completion
+set wildmenu                            " show menu when using tab completion
 set wildmode=list:longest,full          " list matches and complete longest common part, then cycle through matches
 set wildignore=*.pyc,*.o,*.obj,*.swp
-set pastetoggle=<F2>	                " disable paste-unfriendly features when pasting in insert mode
-set ttimeoutlen=60						" Fast escape out of insert mode
-set path+=**							" search down into subfolders, provides tab completion for all related tasks
+set pastetoggle=<F2>                    " disable paste-unfriendly features when pasting in insert mode
+set ttimeoutlen=60                      " Fast escape out of insert mode
+set path+=**                            " search down into subfolders, provides tab completion for all related tasks
 set encoding=utf-8                      " welcome to the 21st century
 set lazyredraw                          " faster macros
 set nomodeline                          " disable modelines (security)
@@ -48,11 +48,11 @@ if has('statusline')
 endif
 " Remove toolbar from gvim
 if has('gui_running')
-	set guioptions=-t
-	set cursorline
-	map <silent><A-t> :tabnew<CR>
-	map <silent><A-Right> :tabnext<CR>
-	map <silent><A-Left> :tabprevious<CR>
+    set guioptions=-t
+    set cursorline
+    map <silent><A-t> :tabnew<CR>
+    map <silent><A-Right> :tabnext<CR>
+    map <silent><A-Left> :tabprevious<CR>
 endif
 if $TMUX == ''
   set clipboard+=unnamed
@@ -84,9 +84,9 @@ let g:airline_powerline_fonts=1
 
 if has("autocmd")
 " Vim loads indentation rules and plugins according to the detected filetype.
-	filetype plugin indent on
+    filetype plugin indent on
 " Vim jumps to the last position when reopening a file
-	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 " Swap 2 panes with 4 keystrokes
@@ -94,39 +94,39 @@ endif
 " move to new pane
 " 'mw' to exchange selected pane with current pane
 function! SelectWindowSwap()
-	let g:markedWinNum = winnr()
+    let g:markedWinNum = winnr()
 endfunction
 
 function! MoveWindowSwap()
-	"Mark destination
-	let curNum = winnr()
-	let curBuf = bufnr( "%" )
-	exe g:markedWinNum . "wincmd w"
-	"Switch to source and shuffle dest->source
-	let markedBuf = bufnr( "%" )
-	"Hide and open so that we aren't prompted and keep history
-	exe 'hide buf' curBuf
-	"Switch to dest and shuffle source->dest
-	exe curNum . "wincmd w"
-	"Hide and open so that we aren't prompted and keep history
-	exe 'hide buf' markedBuf
+    "Mark destination
+    let curNum = winnr()
+    let curBuf = bufnr( "%" )
+    exe g:markedWinNum . "wincmd w"
+    "Switch to source and shuffle dest->source
+    let markedBuf = bufnr( "%" )
+    "Hide and open so that we aren't prompted and keep history
+    exe 'hide buf' curBuf
+    "Switch to dest and shuffle source->dest
+    exe curNum . "wincmd w"
+    "Hide and open so that we aren't prompted and keep history
+    exe 'hide buf' markedBuf
 endfunction
 
 function! ShowSpaces(...)
-	let @/='\v(\s+$)|( +\ze\t)'
-	let oldhlsearch=&hlsearch
-	if !a:0
-		let &hlsearch=!&hlsearch
-	else
-		let &hlsearch=a:1
-	end
-	return oldhlsearch
+    let @/='\v(\s+$)|( +\ze\t)'
+    let oldhlsearch=&hlsearch
+    if !a:0
+        let &hlsearch=!&hlsearch
+    else
+        let &hlsearch=a:1
+    end
+    return oldhlsearch
 endfunction
 
 function! TrimSpaces() range
-	let oldhlsearch=ShowSpaces(0)
-	execute a:firstline.",".a:lastline."substitute ///gec"
-	let &hlsearch=oldhlsearch
+    let oldhlsearch=ShowSpaces(0)
+    execute a:firstline.",".a:lastline."substitute ///gec"
+    let &hlsearch=oldhlsearch
 endfunction
 
 command! -nargs=0 FlappyVird call flappyvird#start()
@@ -166,10 +166,13 @@ nmap <F4> :TagbarToggle<CR>
 iabbrev cthuf Ia! Ia! Cthulhu fhtagn! Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn! Cthulhu fhtagn! Cthulhu fhtagn!
 
 call plug#begin('~/.vim/plugged')
-	Plug 'mbbill/undotree'
-	Plug 'shinokada/dragvisuals.vim'
-	Plug 'nixon/vim-vmath'
-	Plug 'vim-airline/vim-airline'
-	Plug 'mattn/flappyvird-vim'
-	Plug 'majutsushi/tagbar'
+    Plug 'mbbill/undotree'
+    Plug 'shinokada/dragvisuals.vim'
+    Plug 'nixon/vim-vmath'
+    Plug 'vim-airline/vim-airline'
+    Plug 'mattn/flappyvird-vim'
+    Plug 'majutsushi/tagbar'
+    Plug 'vim-syntastic/syntastic'
+    Plug 'pangloss/vim-javascript'
+    Plug 'mxw/vim-jsx'
 call plug#end()
