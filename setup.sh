@@ -1,5 +1,36 @@
 #!/bin/bash
 
+function prepare_rootenv () {
+    local ROOTENV_DIR="$HOME/.root-env"
+    local LNFILES=(
+        .bashrc
+        .inputrc
+        .profile
+        .tmux.conf
+        .vim
+        .vimrc
+        ../bin/clean_env
+        ../bin/cleanup
+        ../bin/dirdiff
+        ../bin/dmesg-human-readable-time
+        ../bin/flushcache
+        ../bin/group_by
+        ../bin/pathsearch
+        ../bin/rlor
+        ../bin/splitlines
+        ../bin/trimspaces
+        ../bin/zombiekiller
+        ../.config/bash
+    )
+
+    mkdir -p "${ROOTENV_DIR}"/{bin,.config}
+    cd "${ROOTENV_DIR}"
+    for f in "${LNFILES[@]}"; do
+        test -L ${f#../} && echo "link .root-env/${f#../} already exists, skipping" \
+            || ln -s ../$f ${f#../}
+    done
+}
+
 function main ()
 {
 	readonly files=(
@@ -14,7 +45,6 @@ function main ()
 		.inputrc
 		'.local/share/fonts/Roboto Mono for Powerline.ttf'
 		.profile
-		.root-env
 		.tmux.conf
 		.tmuxinator
 		.vim
@@ -59,6 +89,10 @@ EOF
 			cp -rv "$f" "${HOME}/${dir}/"
 		done
 	fi
+
+    prepare_rootenv
+    test -L ~/.vim/init.vim && echo "link ~/.vim/init.vim already exists, skipping" \
+        || ln -s ~/.vimrc ~/.vim/init.vim
 }
 
 if [ "${BASH_SOURCE[0]}" == "$0" ]; then
