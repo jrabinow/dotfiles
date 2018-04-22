@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $(type -t dircolors) != "alias" ]; then
+if [ "$(type -t ls)" != "alias" ]; then
     alias ls="ls -G"
     alias grep='grep --color=always'
 fi
