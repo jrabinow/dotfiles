@@ -31,14 +31,14 @@ fi
 # http://stackoverflow.com/questions/1527049/join-elements-of-an-array
 PREPEND=""
 for i in ${PATH_DIRS_PREPEND}; do
-    PATH=$(sed -e "s#$i:*##g" <<< $PATH)
+    PATH=$(sed -e "s#:$i:*#:#g" <<< $PATH)
     test -d $i && PREPEND="$PREPEND:$i"
 done
 
 [ ! -z "${PREPEND}" ] && PATH=${PREPEND#:}:$PATH
 unset PREPEND
 for i in ${PATH_DIRS_APPEND}; do
-    test -d $i && PATH=$(sed -e "s#$i:*##g" <<< $PATH):$i
+    test -d $i && PATH=$(sed -e "s#:$i:*#:#g" <<< $PATH):$i
 done
 unset PATH_DIRS_APPEND
 unset PATH_DIRS_PREPEND
