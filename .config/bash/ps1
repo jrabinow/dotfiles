@@ -2,9 +2,6 @@
 
 PROMPT_DIRTRIM=3
 
-# BASH_MOD_DIR defined in ~/.bashrc
-source "$BASH_MOD_DIR/scm_prompt_setup"
-
 function format_pipestatus ()
 {
     exes="["

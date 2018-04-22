@@ -4,12 +4,11 @@
 
 function ensure_source_present ()
 {
-    SCM_PROMPT="${BASH_MOD_DIR}/source_control/scm-prompt"
-    GIT_PROMPT="${BASH_MOD_DIR}/source_control/git-prompt"
-    REMOTE_URL=https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+    local SCM_PROMPT="${BASH_MOD_DIR}/source_control/scm-prompt"
+    local GIT_PROMPT="${BASH_MOD_DIR}/source_control/git-prompt"
+    local REMOTE_URL=https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
     test -f "${SCM_PROMPT}" || test -f "${GIT_PROMPT}" || \
-        curl $REMOTE_URL > "${GIT_PROMPT}" && \
-        sed -i '' -e 's/^__git_ps1 ()$/_dotfiles_scm_info ()/g' "${GIT_PROMPT}"
+        curl $REMOTE_URL | sed -e 's/^__git_ps1 ()$/_dotfiles_scm_info ()/g' > "${GIT_PROMPT}"
 }
 
 function scmmode () {
