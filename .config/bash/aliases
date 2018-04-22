@@ -14,6 +14,13 @@ alias treset='tmux select-pane -P "bg=colour0"'
 alias uhtop="htop -u $USER"
 alias watch="watch --differences"
 
+# enable color support of ls and also add handy aliases
+if [ -x $(which dircolors) ]; then
+    eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=always'
+fi
+
 # rename from util-linux sucks, use perl rename utility for PCRE
 if [ -x /usr/bin/prename ]; then
 	alias rename=prename
