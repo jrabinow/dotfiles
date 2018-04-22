@@ -4,18 +4,17 @@
 
 function main ()
 {
-	while getopts "th" opt; do
+	while getopts "h" opt; do
 		case ${opt} in
 			h)	# help message
 				cat << EOF
 Usage: $(basename $0) [OPTION]...
-Options: -t N: display top N commits
-	 -h: show this help dialog
+Options: -h: show this help dialog
 EOF
 				exit 0
 				;;
 			?)
-				echo "Unknown option, exiting now" | tee -a "${LOGFILE}" >&2
+				echo "Unknown option, exiting now" >&2
 				exit 1
 				;;
 		esac
