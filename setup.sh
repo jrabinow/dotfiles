@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function prepare_rootenv () {
     local ROOTENV_DIR="$HOME/.root-env"
@@ -50,6 +50,7 @@ function main ()
 		.vim
 		.vimrc
 	)
+    declare -A LINKS=( [".vimrc"]=".vim/init.vim" )
 	PREPARE_COMMIT=false
 
 	while getopts "hp" opt; do
@@ -80,6 +81,9 @@ EOF
 			rm -rf "./${dir}/${file}"
 			cp -rv "$HOME/$f" "./${dir}/"
 		done
+        for dst in "${LINKS[@]}"; do
+            rm "${dst}"
+        done
 	else
 		for f in "${files[@]}"; do
 			dir="$(dirname "${f}")"
@@ -88,11 +92,12 @@ EOF
 			rm -rf "${HOME}/${dir}/${file}"
 			cp -rv "$f" "${HOME}/${dir}/"
 		done
+        for src in "${!LINKS[@]}"; do
+            dst="${LINKS[$src]}"
+            test -f "$HOME/${dst}" || ln -sv "$HOME/$src", "$HOME/$dst"
+        done
+        prepare_rootenv
 	fi
-
-    prepare_rootenv
-    test -L ~/.vim/init.vim && echo "link ~/.vim/init.vim already exists, skipping" \
-        || ln -s ~/.vimrc ~/.vim/init.vim
 }
 
 if [ "${BASH_SOURCE[0]}" == "$0" ]; then
