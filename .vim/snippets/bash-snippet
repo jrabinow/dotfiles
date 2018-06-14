@@ -1,9 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-#
+# write some cool doc here
 
-function main ()
-{
+function main () {
 	while getopts "h" opt; do
 		case ${opt} in
 			h)	# help message

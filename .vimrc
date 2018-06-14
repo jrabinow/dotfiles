@@ -30,7 +30,7 @@ set path+=**                            " search down into subfolders, provides 
 set encoding=utf-8                      " welcome to the 21st century
 set lazyredraw                          " faster macros
 set nomodeline                          " disable modelines (security)
-set shortmess+=a                        " avoid 'hit enter'
+set shortmess+=aI                       " avoid 'hit enter', no welcome message
 set ttyfast                             " fast internet connection
 set autoread                            " automatically reread modified files, this turns out to be BS but I'm leaving it anyways
 
@@ -133,6 +133,7 @@ command! -nargs=0 FlappyVird call flappyvird#start()
 " Create the 'tags' file
 command! MakeTags !maketags
 command! -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
+command! -nargs=0 Reload source ~/.vimrc
 
 " Use more natural key movement on wrapped lines.
 nnoremap j gj
@@ -160,6 +161,11 @@ vmap  <expr>  D        DVB_Duplicate()
 noremap <leader>sw :call SelectWindowSwap()<CR>
 noremap <leader>mw :call MoveWindowSwap()<CR>
 
+noremap <leader>bash :r ~/.vim/snippets/bash-snippet<CR>kdd
+noremap <leader>py :r ~/.vim/snippets/python-snippet<CR>kdd
+noremap <leader>clang :r ~/.vim/snippets/c-snippet<CR>kdd
+noremap <leader>java :r ~/.vim/snippets/java-snippet<CR>kdd
+
 nmap <F4> :TagbarToggle<CR>
 nnoremap <F5> :UndotreeToggle<CR>
 
@@ -168,7 +174,6 @@ iabbrev cthuf Ia! Ia! Cthulhu fhtagn! Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nag
 
 call plug#begin('~/.vim/plugged')
     Plug 'shinokada/dragvisuals.vim'
-    Plug 'mattn/flappyvird-vim'
     Plug 'keith/swift.vim'
     " Plug 'vim-syntastic/syntastic'
     Plug 'majutsushi/tagbar'
