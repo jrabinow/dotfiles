@@ -1,0 +1,9 @@
+package 
+
+public class {
+    
+    private static final Class<?> TAG = .class;
+
+    public () {
+    }
+}
