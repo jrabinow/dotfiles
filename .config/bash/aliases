@@ -38,3 +38,4 @@ if [ ! -z $(which cowsay 2>/dev/null) ]; then
     alias allcows='cowsay -l | sed "1d"|tr " " "\n"|while read f; do cowsay -f $f $f;done'
     alias randcow='cowsay -f $(cowsay -l|sed "1d"|tr " " "\n"|grep -vE "sodomized|telebears|head-in"|shuf -n1)'
 fi
+alias canihazip="curl https://canihazip.com/s && echo"
