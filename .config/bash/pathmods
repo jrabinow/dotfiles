@@ -7,6 +7,7 @@ PATH_DIRS_PREPEND="
     /opt/local/bin
     /opt/local/sbin
     /opt/local/libexec/gnubin
+    /opt/local/lib/postgresql96/bin
 "
 
 PATH_DIRS_APPEND="
@@ -35,7 +36,7 @@ for i in ${PATH_DIRS_PREPEND}; do
     test -d $i && PREPEND="$PREPEND:$i"
 done
 
-[ ! -z "${PREPEND}" ] && PATH=${PREPEND#:}:$PATH
+[ ! -z "${PREPEND}" ] && PATH=${PREPEND#:}:${PATH%:}
 unset PREPEND
 for i in ${PATH_DIRS_APPEND}; do
     test -d $i && PATH=$(sed -e "s#:$i:*#:#g" <<< $PATH):$i

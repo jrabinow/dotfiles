@@ -4,7 +4,7 @@
 function ? () { echo "$@"|bc -l; }
 
 # shortcut for find all files containing pattern in name under current dir
-function search () { find . -iname "*$@*"; }
+function search () { find . -path '*.git' -prune -o -path '*.idea' -prune -o -iname "*$@*" -print; }
 
 # if ag binary isn't installed, set it up
 if [ -z "$(which ag 2>/dev/null)" ]; then
