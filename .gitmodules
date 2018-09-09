@@ -10,3 +10,6 @@
 [submodule ".vim/plugged/vim-javascript"]
 	path = .vim/plugged/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
+[submodule ".vim/plugged/kotlin-vim"]
+	path = .vim/plugged/kotlin-vim
+	url = https://github.com/udalov/kotlin-vim.git

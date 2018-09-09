@@ -25,7 +25,7 @@
 
 
 # BASH_MOD_DIR defined in ~/.bashrc
-BMARKS_FILE="${BASH_MOD_DIR}/data/bookmarks"
+BMARKS_FILE="${BASH_MOD_DIR:-$HOME/.config}/data/bookmarks"
 
 # setup
 BMARKS_DIR="$(dirname "${BMARKS_FILE}")"
