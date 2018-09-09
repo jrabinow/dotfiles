@@ -32,3 +32,4 @@ function scmmode () {
 
 ensure_source_present
 scmmode
+test -r "${BASH_MOD_DIR}/source_control/git-completion" && source "${BASH_MOD_DIR}/source_control/git-completion"

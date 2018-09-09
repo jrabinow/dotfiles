@@ -175,11 +175,13 @@ iabbrev cthuf Ia! Ia! Cthulhu fhtagn! Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nag
 call plug#begin('~/.vim/plugged')
     Plug 'shinokada/dragvisuals.vim'
     Plug 'keith/swift.vim'
-    " Plug 'vim-syntastic/syntastic'
     Plug 'majutsushi/tagbar'
     Plug 'mbbill/undotree'
     Plug 'vim-airline/vim-airline'
     Plug 'pangloss/vim-javascript'
-    " Plug 'mxw/vim-jsx'
     Plug 'nixon/vim-vmath'
+    Plug 'udalov/kotlin-vim'
+    Plug 'tpope/vim-fugitive'
+    " Plug 'vim-syntastic/syntastic'
+    " Plug 'mxw/vim-jsx'
 call plug#end()

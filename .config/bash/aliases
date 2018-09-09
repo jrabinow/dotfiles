@@ -12,6 +12,7 @@ alias savepane='tmux capture-pane -S -; tmux save-buffer'
 alias tmux_alert='tmux select-pane -P "bg=colour1"'
 alias treset='tmux select-pane -P "bg=colour0"'
 alias uhtop="htop -u $USER"
+alias venv="source ./venv/bin/activate"
 alias watch="watch --differences"
 
 # enable color support of ls and also add handy aliases
