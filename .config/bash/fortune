@@ -7,8 +7,8 @@ which fortune >/dev/null 2>&1
 if [ $? == 0 ]; then
     which cowsay >/dev/null 2>&1
     if [ $? == 0 ] && [[ $COLUMNS -ge 80 ]] && [[ $LINES -ge 28 ]]; then
-      fortune -s|randcow
+      fortune -a|randcow
     else
-      fortune -s
+      fortune -a
     fi
 fi

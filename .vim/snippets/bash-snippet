@@ -21,6 +21,8 @@ EOF
 				;;
 		esac
 	done
+    shift $((OPTIND - 1))
+    [[ "${1:-}" == '--' ]] && shift
 }
 
 if [ "${BASH_SOURCE[0]}" == "$0" ]; then

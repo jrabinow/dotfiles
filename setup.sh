@@ -83,7 +83,7 @@ EOF
 		done
         for src in "${!LINKS[@]}"; do
             dst="${LINKS[$src]}"
-            test -f "${dst}" || ln -sv "$src" "$dst"
+            test -f "${dst}" || test -L "${dst}" || ln -sv "$src" "$dst"
         done
 	else
 		for f in "${files[@]}"; do
@@ -95,7 +95,7 @@ EOF
 		done
         for src in "${!LINKS[@]}"; do
             dst="${LINKS[$src]}"
-            test -f "$HOME/${dst}" || ln -sv "$HOME/$src" "$HOME/$dst"
+            test -f "$HOME/${dst}" || test -L "${dst}" || ln -sv "$HOME/$src" "$HOME/$dst"
         done
         prepare_rootenv
 	fi

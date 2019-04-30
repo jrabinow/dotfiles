@@ -25,7 +25,7 @@
 
 
 # BASH_MOD_DIR defined in ~/.bashrc
-BMARKS_FILE="${BASH_MOD_DIR:-$HOME/.config}/data/bookmarks"
+BMARKS_FILE="${BASH_MOD_DIR:-$HOME/.config/bash}/data/bookmarks"
 
 # setup
 BMARKS_DIR="$(dirname "${BMARKS_FILE}")"
@@ -61,7 +61,7 @@ function bmd () {
 }
 
 function bml () {
-	grep '# Bookmark$' "${BMARKS_FILE}" | cut -f1 | cut -d' ' -f2- | sed -e 's/=/	->	/' | sort
+	grep '# Bookmark$' "${BMARKS_FILE}" | cut -f1 | cut -d' ' -f2- | sed -e 's/=/	->	/' | sort | column -t
 }
 
 source "${BMARKS_FILE}"
