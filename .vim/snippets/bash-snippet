@@ -6,21 +6,21 @@ set -o pipefail
 # write some cool doc here
 
 function main () {
-	while getopts "h" opt; do
-		case ${opt} in
-			h)	# help message
-				cat << EOF
+    while getopts "h" opt; do
+        case ${opt} in
+            h)    # help message
+                cat << EOF
 Usage: $(basename $0) [OPTION]...
 Options: -h: show this help dialog
 EOF
-				exit 0
-				;;
-			?)
-				echo "Unknown option, exiting now" >&2
-				exit 1
-				;;
-		esac
-	done
+                exit 0
+                ;;
+            ?)
+                echo "Unknown option, exiting now" >&2
+                exit 1
+                ;;
+        esac
+    done
     shift $((OPTIND - 1))
     [[ "${1:-}" == '--' ]] && shift
 }
