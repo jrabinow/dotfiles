@@ -7,7 +7,7 @@ function ? () { echo "$@"|bc -l; }
 function search () { find . -path '*.git' -prune -o -path '*.idea' -prune -o -iname "*$@*" -print; }
 
 # if ag binary isn't installed, set it up
-if [ -z "$(which ag 2>/dev/null)" ]; then
+if [ -z "$(command -v ag 2>/dev/null)" ]; then
     function ag () {
       if [ $# -eq 1 ]; then
           grep -IRi "$@" --exclude=cscope.* --exclude=.git --exclude=tags --color=auto .

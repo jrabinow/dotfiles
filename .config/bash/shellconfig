@@ -12,9 +12,11 @@ shopt -s histappend
 # update the values of LINES and COLUMNS after each command if necessary
 shopt -s checkwinsize
 # save multiline history entries with '\n' instead of ;
-shopt -s lithist
+#shopt -s lithist
 # '<TAB><TAB>' at an empty prompt doesn't try to complete
 shopt -s no_empty_cmd_completion
+# extended glob pattern matching
+shopt -s extglob
 
 if [ $BASH_VERSINFO == "4" ]; then
     # perform shell expansion when completing with tab
@@ -35,7 +37,15 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 	. /etc/bash_completion
 fi
+
+# when the STOP character pressed (^s), allow resuming with any key combo
 stty ixany
+# disable modem control signals
+stty clocal
+# assume chars are UTF8
+stty iutf8
+# enable non-posix-compliant chars
+stty iexten
 
 # The next line enables shell command completion for gcloud.
 if [ -f "${GCLOUD_SDK_BASEDIR}/completion.bash.inc" ]; then
