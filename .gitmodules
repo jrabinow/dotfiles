@@ -13,3 +13,6 @@
 [submodule ".vim/plugged/kotlin-vim"]
 	path = .vim/plugged/kotlin-vim
 	url = https://github.com/udalov/kotlin-vim.git
+[submodule ".vim/plugged/vim-surround"]
+	path = .vim/plugged/vim-surround
+	url = https://github.com/jrabinow/dotfiles.git
