@@ -33,74 +33,74 @@ function prepare_rootenv () {
 
 function main ()
 {
-	readonly files=(
-		.bashrc
-		.config/bash
-		.config/bleachbit/bleachbit.ini
-		.config/xfce4/terminal/terminalrc
-		.ctags
-		.gdbinit
-		.gitconfig
-		.hgrc
-		.inputrc
-		'.local/share/fonts/Roboto Mono for Powerline.ttf'
-		.profile
-		.tmux.conf
-		.tmuxinator
-		.vim
-		.vimrc
-	)
+    readonly files=(
+        .bashrc
+        .config/bash
+        .config/bleachbit/bleachbit.ini
+        .config/xfce4/terminal/terminalrc
+        .ctags
+        .gdbinit
+        .gitconfig
+        .hgrc
+        .inputrc
+        '.local/share/fonts/Roboto Mono for Powerline.ttf'
+        .profile
+        .tmux.conf
+        .tmuxinator
+        .vim
+        .vimrc
+    )
     declare -A LINKS=( [".vimrc"]=".vim/init.vim" )
-	PREPARE_COMMIT=false
+    PREPARE_COMMIT=false
 
-	while getopts "hp" opt; do
-		case "${opt}" in
-			p)
-				PREPARE_COMMIT=true
-				;;
-			h)
-				cat << EOF
+    while getopts "hp" opt; do
+        case "${opt}" in
+            p)
+                PREPARE_COMMIT=true
+                ;;
+            h)
+                cat << EOF
 Usage: $(basename $0) [OPTION]...
 Options: -h: display this help message
-	 -p: prepare new commit by copying all files to repo dir
+     -p: prepare new commit by copying all files to repo dir
 EOF
-				exit 0
-				;;
-			?)
-				echo "Unknown option, exiting now"
-				exit 1
-				;;
-		esac
-	done
+                exit 0
+                ;;
+            ?)
+                echo "Unknown option, exiting now"
+                exit 1
+                ;;
+        esac
+    done
 
-	if ${PREPARE_COMMIT}; then
-		for f in "${files[@]}"; do
-			dir="$(dirname "${f}")"
-			file="$(basename "${f}")"
-			mkdir -p "./${dir}"
-			rm -rf "./${dir}/${file}"
-			cp -rv "$HOME/$f" "./${dir}/"
-		done
+    if ${PREPARE_COMMIT}; then
+        for f in "${files[@]}"; do
+            dir="$(dirname "${f}")"
+            file="$(basename "${f}")"
+            mkdir -p "./${dir}"
+            rm -rf "./${dir}/${file}"
+            cp -rv "$HOME/$f" "./${dir}/"
+        done
         for src in "${!LINKS[@]}"; do
             dst="${LINKS[$src]}"
             test -f "${dst}" || test -L "${dst}" || ln -sv "$src" "$dst"
         done
-	else
-		for f in "${files[@]}"; do
-			dir="$(dirname "${f}")"
-			file="$(basename "${f}")"
-			mkdir -p "${HOME}/${dir}"
-			rm -rf "${HOME}/${dir}/${file}"
-			cp -rv "$f" "${HOME}/${dir}/"
-		done
+    else
+        for f in "${files[@]}"; do
+            dir="$(dirname "${f}")"
+            file="$(basename "${f}")"
+            mkdir -p "${HOME}/${dir}"
+            rm -rf "${HOME}/${dir}/${file}"
+            cp -rv "$f" "${HOME}/${dir}/"
+        done
         for src in "${!LINKS[@]}"; do
             dst="${LINKS[$src]}"
             test -f "$HOME/${dst}" || test -L "${dst}" || ln -sv "$HOME/$src" "$HOME/$dst"
         done
         prepare_rootenv
-	fi
+    fi
 }
 
 if [ "${BASH_SOURCE[0]}" == "$0" ]; then
-	main "$@"
+    main "$@"
 fi
