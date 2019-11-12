@@ -13,11 +13,15 @@ set incsearch                           " Incremental search
 set autowrite                           " Automatically save before commands like :next and :make
 set mouse=a                             " Enable mouse usage (all modes)
 set number                              " display line numbers on left
+set relativenumber                      " display relative numbers
 set hlsearch                            " highlighting of search term
 set autoindent
 set scrolloff=5                         " show 5 lines above or below cursor position
 set backspace=indent,eol,start          " allow backspace across lines and automatic indentation
 set expandtab                           " expand tabs to spaces
+set shiftwidth=4                        " number of spaces to use for autoindenting
+set smarttab                            " insert tabs on the start of a line according to shiftwidth, not tabstop
+set shiftround                          " use multiple of shiftwidth when indenting with '<' and '>'
 set tabstop=4                           " tabs have a width of 4 chars
 set splitright                          " new window opens on right instead of left
 set splitbelow                          " new window opens on bottom instead of top
@@ -33,6 +37,10 @@ set nomodeline                          " disable modelines (security)
 set shortmess+=aI                       " avoid 'hit enter', no welcome message
 set ttyfast                             " fast internet connection
 set autoread                            " automatically reread modified files, this turns out to be BS but I'm leaving it anyways
+set title                               " change the terminal's title
+
+set list
+set listchars=tab:>.,trail:.,extends:#,nbsp:. " show trailing tabs and spaces
 
 if has('cmdline_info')
     " a ruler
@@ -64,6 +72,10 @@ highlight CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred gu
 " \c will toggle highlighting on and off (to make it easy to locate the cursor in a large file)
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
+" no sudo? no problem! save with 'w!!'
+cmap w!! w !sudo tee % >/dev/null
+
+
 " highlight the 81st column when we go past it
 call matchadd('ColorColumn', '\%81v', 100)
 
@@ -87,7 +99,49 @@ if has("autocmd")
     filetype plugin indent on
 " Vim jumps to the last position when reopening a file
     au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" In some files, like HTML and XML files, tabs are fine and showing them is really annoying,
+    autocmd filetype html,xml set listchars-=tab:>.
 endif
+
+function! ShowSpaces(...)
+    let @/='\v(\s+$)|( +\ze\t)'
+    let oldhlsearch=&hlsearch
+    if !a:0
+        let &hlsearch=!&hlsearch
+    else
+        let &hlsearch=a:1
+    end
+    return oldhlsearch
+endfunction
+
+function! TrimSpaces() range
+    let oldhlsearch=ShowSpaces(0)
+    execute a:firstline.",".a:lastline."substitute ///gec"
+    let &hlsearch=oldhlsearch
+endfunction
+
+command! -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
+" Create the 'tags' file
+command! MakeTags !maketags
+command! -nargs=0 Reload source ~/.vimrc
+
+" Use more natural key movement on wrapped lines.
+nnoremap j gj
+nnoremap k gk
+nnoremap gj 5j
+nnoremap gk 5k
+" Keep selection when indent/dedenting in select mode.
+vnoremap > >gv
+vnoremap < <gv
+" Make Y copy to end of line instead of be an alias for yy
+nnoremap Y y$
+" Who uses ';' anyways?
+nnoremap ; :
+
+" Ctrl+\ : open ctag definition in new tab
+map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+" Alt+] : open ctag definition in vertical split
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Swap 2 panes with 4 keystrokes
 " 'sw' to select 1st pane
@@ -112,52 +166,11 @@ function! MoveWindowSwap()
     exe 'hide buf' markedBuf
 endfunction
 
-function! ShowSpaces(...)
-    let @/='\v(\s+$)|( +\ze\t)'
-    let oldhlsearch=&hlsearch
-    if !a:0
-        let &hlsearch=!&hlsearch
-    else
-        let &hlsearch=a:1
-    end
-    return oldhlsearch
+function! Bgrep(pattern)
+    exe vimgrep a:pattern %
+    exe cwin
 endfunction
 
-function! TrimSpaces() range
-    let oldhlsearch=ShowSpaces(0)
-    execute a:firstline.",".a:lastline."substitute ///gec"
-    let &hlsearch=oldhlsearch
-endfunction
-
-command! -nargs=0 FlappyVird call flappyvird#start()
-" Create the 'tags' file
-command! MakeTags !maketags
-command! -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
-command! -nargs=0 Reload source ~/.vimrc
-
-" Use more natural key movement on wrapped lines.
-nnoremap j gj
-nnoremap k gk
-nnoremap gj 5j
-nnoremap gk 5k
-" Keep selection when indent/dedenting in select mode.
-vnoremap > >gv
-vnoremap < <gv
-" Make Y copy to end of line instead of be an alias for yy
-nnoremap Y y$
-" Who uses ';' anyways?
-nnoremap ; :
-
-" Ctrl+\ : open ctag definition in new tab
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-" Alt+] : open ctag definition in vertical split
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-
-vmap  <expr>  <LEFT>   DVB_Drag('left')
-vmap  <expr>  <RIGHT>  DVB_Drag('right')
-vmap  <expr>  <DOWN>   DVB_Drag('down')
-vmap  <expr>  <UP>     DVB_Drag('up')
-vmap  <expr>  D        DVB_Duplicate()
 noremap <leader>sw :call SelectWindowSwap()<CR>
 noremap <leader>mw :call MoveWindowSwap()<CR>
 
@@ -167,13 +180,28 @@ noremap <leader>clang :r ~/.vim/snippets/c-snippet<CR>kdd
 noremap <leader>java :r ~/.vim/snippets/java-snippet<CR>kdd
 
 nmap <F4> :TagbarToggle<CR>
-nnoremap <F5> :UndotreeToggle<CR>
+nnoremap <leader>udt :UndotreeToggle<CR>
+
+nnoremap <leader>no :set nonumber<CR>:set norelativenumber<CR>
+nnoremap <leader>nr :set norelativenumber<CR>
+nnoremap <leader>nb :set number<CR>:set relativenumber<CR>
 
 " to please the Olde Gods
 iabbrev cthuf Ia! Ia! Cthulhu fhtagn! Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn! Cthulhu fhtagn! Cthulhu fhtagn!
 
+" dragvisuals plugin key bindings
+vmap  <expr>  <LEFT>   DVB_Drag('left')
+vmap  <expr>  <RIGHT>  DVB_Drag('right')
+vmap  <expr>  <DOWN>   DVB_Drag('down')
+vmap  <expr>  <UP>     DVB_Drag('up')
+vmap  <expr>  D        DVB_Duplicate()
+
+" vim-vmath keybindings
+vmap <expr>  ++  VMATH_YankAndAnalyse()
+nmap         ++  vip++
+
 call plug#begin('~/.vim/plugged')
-    Plug 'shinokada/dragvisuals.vim'
+    Plug 'mariappan/dragvisuals.vim'
     Plug 'keith/swift.vim'
     Plug 'majutsushi/tagbar'
     Plug 'mbbill/undotree'
@@ -182,6 +210,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'nixon/vim-vmath'
     Plug 'udalov/kotlin-vim'
     Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-surround'
     " Plug 'vim-syntastic/syntastic'
     " Plug 'mxw/vim-jsx'
 call plug#end()
