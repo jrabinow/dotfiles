@@ -1,0 +1,30 @@
+-- don't print out anything when running the following commands
+\set QUIET 1
+
+-- don't ignore errors, abort immediately at first error
+\set ON_ERROR_ROLLBACK interactive
+
+-- print time it took to execute query after every statement
+\timing
+
+\set VERBOSITY verbose
+
+-- print columns on separate lines if columns are too wide - disabled because this is stupid, make your terminal wider
+-- \x auto
+
+\set PROMPT1 '%[%033[1m%]%M/%/%R%[%033[0m%]%# '
+\set PROMPT2 ''
+
+-- histfile name
+\set HISTFILE ~/.psql_history/psql_history- :DBNAME
+-- don't record duplicates in histfile
+\set HISTCONTROL ignoredups
+
+-- print [null] instead of empty string when a value is null
+\pset null [null]
+
+-- autocomplete with uppercase
+\set COMP_KEYWORD_CASE upper
+
+-- restore printing stuff
+\unset QUIET
