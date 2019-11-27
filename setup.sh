@@ -50,6 +50,9 @@ function main ()
         .vim
         .vimrc
     )
+    readonly createdirs=(
+        .psql_history
+    )
     declare -A LINKS=( [".vimrc"]=".vim/init.vim" )
     PREPARE_COMMIT=false
 
@@ -98,6 +101,9 @@ EOF
             test -f "$HOME/${dst}" || test -L "${dst}" || ln -sv "$HOME/$src" "$HOME/$dst"
         done
         prepare_rootenv
+        for dir in  "${createdirs[@]}"; do
+            mkdir -p "$HOME/${dir}"
+        done
     fi
 }
 
