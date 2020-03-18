@@ -34,7 +34,8 @@ function passgen ()
 {
     len=${1:-30}
     domain="${2:-[[:print:]]}"
-    strings /dev/urandom|grep -o "${domain}"|head -n"${len}"|tr -d '\n'; echo
+    # can't do `strings /dev/urandom` because apparently strings on mac os X sucks
+    cat /dev/urandom|strings|grep -o "${domain}"|head -n"${len}"|tr -d '\n'; echo
 }
 
 # Stolen from ~meyering
@@ -118,4 +119,12 @@ function notify ()
 function pronmode ()
 {
 	unset HISTFILE
+}
+
+# https://stackoverflow.com/a/16610385
+function log_http_requests ()
+{
+    portno="${1:-80}"
+    # 0x48545450 = 'HTTP' 0x2030 = ' 0'
+    sudo tcpdump -A -s 0 "tcp port ${portno} and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)" #tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x48545450" #and tcp[(((tcp[12:1] & 0xf0) >> 2) + 8):2] = 0x2030"
 }

@@ -1,3 +1,5 @@
+set disassembly-flavor intel
+
 define assemble
  # dont enter routine again if user hits enter
  dont-repeat

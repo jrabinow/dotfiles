@@ -46,6 +46,27 @@ function start_db ()
 
 function replicate_db ()
 {
+    set -e -u
+    set -o pipefail
+    oldpwd=$(pwd)
+    pg_dump service=integration > ~/dbexport.pgsql
+    stop_db
+    cd
+    rm -r "${DBDIR}/postgres"
+    mkdir -p "${DBDIR}/postgres"; cd "${DBDIR}"
+    pg_ctl -D ./postgres initdb
+    start_db
+    sleep 2
+    createuser jobox_staging
+    createdb jobox_staging
+    psql service=local < ~/dbexport.pgsql
+    cd "${oldpwd}"
+}
+
+function replicate_stag_db ()
+{
+    set -e -u
+    set -o pipefail
     oldpwd=$(pwd)
     pg_dump service=staging > ~/dbexport.pgsql
     stop_db
@@ -61,8 +82,11 @@ function replicate_db ()
     cd "${oldpwd}"
 }
 
+
 function replicate_prod_db ()
 {
+    set -e -u
+    set -o pipefail
     oldpwd=$(pwd)
     pg_dump service=prod-rw > ~/dbexport.pgsql
     stop_db
@@ -146,3 +170,6 @@ function decruft_joblogs ()
 alias reset_db="stop_db && rm -r \"${DBDIR}\" && cp -R \"${DBDIR}.bak\" \"${DBDIR}\" && start_db"
 alias backup_localdb="stop_db && rm -rf \"${DBDIR}.bak\" && cp -R \"${DBDIR}\" \"${DBDIR}.bak\" && start_db"
 alias mipemode="cd mipe && venv && cd -"
+alias testnpush="gradle clean build && git push"
+alias format-check="java-format-check -t 30"
+alias format="java-format-check -a format -t 30"

@@ -4,6 +4,8 @@
 set -o vi
 # report status of terminated bg jobs immediately
 set -o notify
+# bash does not overwrite an existing file with the >, >&, and <> redirection operators. Use >| and consorts instead
+set -o noclobber
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -35,10 +37,10 @@ fi
 
 # enable programmable completion features
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-	. /etc/bash_completion
+    . /etc/bash_completion
 fi
 
-# when the STOP character pressed (^s), allow resuming with any key combo
+# when the STOP character pressed (^s), allow resuming with any key combo instead of restricting to ^q
 stty ixany
 # disable modem control signals
 stty clocal
@@ -49,5 +51,5 @@ stty iexten
 
 # The next line enables shell command completion for gcloud.
 if [ -f "${GCLOUD_SDK_BASEDIR}/completion.bash.inc" ]; then
-	source "${GCLOUD_SDK_BASEDIR}/completion.bash.inc"
+    source "${GCLOUD_SDK_BASEDIR}/completion.bash.inc"
 fi
