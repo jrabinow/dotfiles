@@ -8,6 +8,7 @@ alias egrep='echo "Fuck you nigga, dat shit is deprecated" #'
 alias fgrep='echo "Fuck you nigga, dat shit is deprecated" #'
 alias info="info --vi-keys"
 alias reload='source ~/.bashrc'
+alias hreload="history -r"
 alias savepane='tmux capture-pane -S -; tmux save-buffer'
 alias tmux_alert='tmux select-pane -P "bg=colour1"'
 alias treset='tmux select-pane -P "bg=colour0"'
@@ -15,6 +16,7 @@ alias uhtop="htop -u $USER"
 alias venv="source ./venv/bin/activate"
 alias watch="watch --differences"
 alias sat="sudo sat"
+alias psql="env PGCONNECT_TIMEOUT=2 psql"
 
 # enable color support of ls and also add handy aliases
 if [ -x "$(which dircolors)" ]; then

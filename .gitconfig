@@ -3,10 +3,10 @@
 	name = Julien Rabinow
 
 [core]
-	longpaths = true
+    longpaths = true
 
 [credential]
-	helper = cache --timeout=7200
+    helper = cache --timeout=7200
 
 [alias]
   st = status
@@ -14,8 +14,11 @@
   ci = commit
   br = branch
   cob = checkout -b
+  diff = "diff -w --word-diff"
+  show = "show -w --word-diff"
   lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  lg3 = log --graph --all --decorate --stat --date=iso
   lg = !"git lg2"
   url = config --get remote.origin.url
   yolo = !git commit -am \"$(curl -s http://whatthecommit.com/index.txt)\"
@@ -26,6 +29,11 @@
   fpull = "!git branch -u origin $(git rev-parse --abbrev-ref HEAD)"
   delbr = "!git push $(git remote) -d "
   prtxt = "log -n1 --pretty=format:%B"
+  leaderboard = "shortlog -sn --all --no-merges"
+  recent = "for-each-ref --count=10 --sort=-committerdate refs/heads/ --format=\"%(refname:short)\""
+  # commented out because unreliable (weird commits included and looks disordered)
+  #recap = "!git log --all --oneline --no-merges --author=$(git config user.email)"
+  changelog = "!git log --oneline --no-merges $(git tag --sort=creatordate|tail -1)..HEAD"
 
 [color]
 	ui = auto
@@ -38,10 +46,10 @@
   chainreplyto = no
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
 
 [commit]
 	gpgsign = true

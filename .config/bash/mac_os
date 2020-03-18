@@ -5,6 +5,10 @@ if [ "$(type -t ls)" != "alias" ]; then
     alias grep='grep --color=always'
 fi
 alias utop="top -U $USER"
+alias updatedb="sudo bash -c 'cd / && /opt/local/bin/slocate -u'"
+alias locate=slocate
+
+
 export COCOAPODS_DISABLE_STATS='true'
 #alias simulator="/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/MacOS/Simulator -CurrentDeviceUDID AE350978-A3A3-44E5-A77F-45028962E4E7"
 function free ()

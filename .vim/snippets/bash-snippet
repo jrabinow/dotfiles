@@ -5,18 +5,36 @@ set -o pipefail
 
 # write some cool doc here
 
-function main () {
-    while getopts "h" opt; do
-        case ${opt} in
-            h)    # help message
-                cat << EOF
+function usage ()
+{
+    cat << EOF
 Usage: $(basename $0) [OPTION]...
-Options: -h: show this help dialog
+Options: --help, -h: show this help dialog
 EOF
+}
+
+function main ()
+{
+    while getopts "h-:" opt; do
+        case ${opt} in
+            h)  # help message
+                usage
                 exit 0
                 ;;
+            -)
+                case "${OPTARG}" in
+                    help)
+                        usage
+                        exit 0
+                        ;;
+                    *)
+                        printf 'Unknown option, exiting now\n' >&2
+                        exit 1
+                        ;;
+                esac
+                ;;
             ?)
-                echo "Unknown option, exiting now" >&2
+                printf "Unknown option, exiting now\n" >&2
                 exit 1
                 ;;
         esac
