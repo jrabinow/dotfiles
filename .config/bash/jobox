@@ -1,6 +1,7 @@
 #!/bin/bash
 
 alias deploy_server="cp -v ${jobox}/Kili/build/libs/Kili.war /opt/tomcat9/webapps/"
+DBDIR="$HOME/Documents/infra_data/db"
 
 function start_tomcat ()
 {
@@ -23,63 +24,65 @@ function twlookup ()
 {
     phone_number="$1"; shift
     curl -sX GET "https://lookups.twilio.com/v1/PhoneNumbers/${phone_number}?CountryCode=US&Type=carrier&Type=caller-name" \
-       -u 'TWILIO_KEY_HERE'|jq
+       -u "${TWILIO_TOKEN}"|jq
 }
 
-function troll_hong ()
+function twlookup_test ()
 {
-    while true; do curl -s -X POST -H 'Content-Type: application/json' --data '{"text": "hi"}' https://hooks.slack.com/services/FOO/BAR/BAZ; sleep 30; done
+    phone_number="$1"; shift
+    curl -sX GET "https://lookups.twilio.com/v1/PhoneNumbers/${phone_number}?AddOns=whitepages_pro_caller_id" \
+       -u "${TWILIO_TOKEN}"|jq
 }
 
 function stop_db ()
 {
-    PGDATA=~/Documents/db/postgres pg_ctl stop
+    pg_ctl -D "${DBDIR}/postgres" stop
 }
 
 function start_db ()
 {
-    pg_ctl -D ~/Documents/db/postgres -l ~/Documents/db/logfile start
+    PGDATA="${DBDIR}/postgres" pg_ctl -l "${DBDIR}/logfile" start
 }
 
 function replicate_db ()
 {
     oldpwd=$(pwd)
+    pg_dump service=staging > ~/dbexport.pgsql
     stop_db
     cd
-    rm -r ~/Documents/db/postgres
-    mkdir -p ~/Documents/db/postgres; cd ~/Documents/db
+    rm -r "${DBDIR}/postgres"
+    mkdir -p "${DBDIR}/postgres"; cd "${DBDIR}"
     pg_ctl -D ./postgres initdb
-    pg_dump -h haha.nope.com -U jobox_staging > ~/dbexport.pgsql
     start_db
     sleep 2
     createuser jobox_staging
     createdb jobox_staging
-    psql -h localhost -U jobox_staging < ~/dbexport.pgsql
+    psql service=local < ~/dbexport.pgsql
     cd "${oldpwd}"
 }
 
 function replicate_prod_db ()
 {
     oldpwd=$(pwd)
+    pg_dump service=prod-rw > ~/dbexport.pgsql
     stop_db
     cd
-    rm -r ~/Documents/db/postgres
-    mkdir -p ~/Documents/db/postgres
-    cd ~/Documents/db
+    rm -r "${DBDIR}/postgres"
+    mkdir -p "${DBDIR}/postgres"
+    cd "${DBDIR}"
     pg_ctl -D ./postgres initdb
-    pg_dump -h haha.nope.com > ~/dbexport.pgsql
     start_db
     sleep 2
     createuser jobox_staging
     createdb jobox_staging
-    psql -h localhost -U jobox_staging < ~/dbexport.pgsql
+    psql service=local < ~/dbexport.pgsql
     cd "${oldpwd}"
 }
 
 function intercom_lookup ()
 {
     uid="${@}"
-    curl -s -H 'Authorization:Bearer INTERCOM_TOKEN' -H 'Accept: application/json' -H 'Content-Type: application/json' "https://api.intercom.io/users?user_id=${uid}" | jq '.'
+    curl -s -H "Authorization:Bearer ${INTERCOM_TOKEN}" -H 'Accept: application/json' -H 'Content-Type: application/json' "https://api.intercom.io/users?user_id=${uid}" | jq '.'
 }
 
 function android_api ()
@@ -92,13 +95,13 @@ function ios_api ()
     vim $jobox/Himalaya/Jobox/JoboxAPI.swift
 }
 
-alias testcurl="curl -sH 'User-Id: 1' -H 'Authorization: 000000000' -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Accept-Encoding = gzip;q=1.0, compress;q=0.5'"
-alias prodcurl="curl -sH 'User-Id: 1' -H 'Authorization: 000000000' -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Accept-Encoding = gzip;q=1.0, compress;q=0.5'"
+alias testcurl="curl -sH 'User-Id: 68' -H 'Password: ${KILI_PW}' -H 'Authorization: ${KILI_STAG_AUTH}' -H 'Timestamp: ${KILI_STAG_TIMESTAMP}' -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Accept-Encoding = gzip;q=1.0, compress;q=0.5'"
+alias prodcurl="curl -sH 'User-Id: 68' -H 'Password: ${KILI_PW}' -H 'Authorization: ${KILI_PROD_AUTH}' -H 'Timestamp: ${KILI_PROD_TIMESTAMP}' -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Accept-Encoding = gzip;q=1.0, compress;q=0.5'"
 
 function stripe_charge ()
 {
     charge_id="${1}"; shift
-    curl -su 'STRIPE_KEY_HERE:' "https://api.stripe.com/v1/charges/${charge_id}"
+    curl -su "${STRIPE_TOKEN}" "https://api.stripe.com/v1/charges/${charge_id}"
 }
 
 function backfill_tls ()
@@ -107,8 +110,39 @@ function backfill_tls ()
     prodcurl "https://api.jobox.ai/Kili/admin/backfill/transactions?uid=${uid}"
 }
 
+function local_backfill_tls ()
+{
+    uid="${1}"; shift
+    psql service=local -c "DELETE FROM transaction_log WHERE user_id = ${uid}" && prodcurl "http://localhost:8080/Kili/admin/backfill/transactions?uid=${uid}"
+}
+
 function show_job ()
 {
     jid="${1}"; shift
-    prodcurl "https://api.jobox.ai/Kili/v2/jobs/${jid}"|jq '.'
+    prodcurl "https://api.jobox.ai/Kili/admin/jobs/${jid}"|jq '.'
 }
+
+function murder_java ()
+{
+    jps|grep -E 'Boostrap'|cut -d' ' -f1|xargs -r kill
+}
+
+function redis_staging ()
+{
+    ssh -t tools01.ops "sudo stunnel /opt/stunnel_configs/redis_staging.conf; REDISCLI_AUTH=${REDIS_AUTH_STAGING} redis-cli -c -h localhost -p 6379; sudo pkill stunnel; unset HISTFILE"
+}
+
+
+function redis_prod ()
+{
+    ssh -t tools01.ops "sudo stunnel /opt/stunnel_configs/redis_prod.conf; REDISCLI_AUTH=${REDIS_PROD_AUTH} redis-cli -c -h localhost -p 6379; sudo pkill stunnel; unset HISTFILE"
+}
+
+function decruft_joblogs ()
+{
+    jq -c '.[]|{sender: .sender_id, receiver: .receiver_id, status: .status}'
+}
+
+alias reset_db="stop_db && rm -r \"${DBDIR}\" && cp -R \"${DBDIR}.bak\" \"${DBDIR}\" && start_db"
+alias backup_localdb="stop_db && rm -rf \"${DBDIR}.bak\" && cp -R \"${DBDIR}\" \"${DBDIR}.bak\" && start_db"
+alias mipemode="cd mipe && venv && cd -"
