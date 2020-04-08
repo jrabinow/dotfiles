@@ -1,7 +1,48 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <errno.h>
+#include <errno.h>
+#include <getopt.h>
+
+typedef struct {
+    int optind;
+} ParsedArgs;
+
+void usage(const char* progname, FILE* stream)
+{
+    fprintf(stream, "Usage: %s [OPTION]...\n"
+        "\t-h, --help\tdisplay this help message\n"
+        "\t-n\t\tnumber of threads to use\n", progname);
+}
+
+
+ParsedArgs parse_args(int argc, char* argv[])
+{
+    ParsedArgs parsed_args;
+    int c, option_index = 0;
+
+    static struct option longopts[] = {
+        {"help", no_argument, 0, 'h'},
+        {0, 0, 0, 0}
+    };
+
+    while((c = getopt_long(argc, argv, "hn:", longopts, &option_index)) != -1) {
+        switch(c) {
+            case 'h':
+                usage(argv[0], stdout);
+                exit(EXIT_SUCCESS);
+            default:
+                usage(argv[0], stderr);
+                exit(EXIT_FAILURE);
+        }
+    }
+    parsed_args.optind = optind;
+
+    return parsed_args;
+}
 
 int main(int argc, char *argv[])
 {
+    ParsedArgs parsed_args = parse_args(argc, argv);
     return 0;
 }
