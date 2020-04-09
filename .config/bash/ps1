@@ -2,43 +2,80 @@
 
 PROMPT_DIRTRIM=3
 
-function format_pipestatus ()
-{
-    exes="["
-    for val in "${PIPESTATUS[@]}"; do
-        echo "[\[\033[01;37m\]\342\234\227$sq_color]$line_h"
-    done
-}
-
 if [[ ${EUID} == 0 ]]; then
-	# red
-	sq_color="\[\033[0;31m\]"
+    # red
+    sq_color="\[\033[0;31m\]"
 else
-	# light blue
-	sq_color="\[\033[0;36m\]"
+    # light blue
+    sq_color="\[\033[0;36m\]"
 fi
 reset_color="\[\033[01;37m\]"
 remove_bold="\\[\\033[0m\\]"
-line_h='\342\224\200'
 angle_se='\342\224\214'
 angle_ne='\342\224\224'
+line_h='\342\224\200'
 error_symbol='\342\234\227'
+error_string="[${reset_color}${error_symbol}${sq_color}]${line_h}"
+preamble_line1="${sq_color}${angle_se}${line_h}"
+info_line1="[$reset_color\t$sq_color]$line_h[$reset_color\u@\H$sq_color]"
+preamble_line2="${angle_ne}${line_h}${line_h}> ${reset_color}"
+info_line2="\w\$(_dotfiles_scm_info \(%s\))"
+closing_line2=" ${sq_color}\\$ $reset_color>>$remove_bold "
 
-PS1="$sq_color$angle_se$line_h\$([[ \$? != 0 ]] && echo \"[\[\033[01;37m\]$error_symbol$sq_color]$line_h\")[$reset_color\A$sq_color]$line_h[$reset_color\u@\h$sq_color]\n$angle_ne$line_h$line_h> $reset_color\w\$(_dotfiles_scm_info \(%s\))$sq_color \\$ $reset_color>>$remove_bold "
+function format_pipestatus ()
+{
+    # save PIPESTATUS very first thing https://unix.stackexchange.com/a/163660
+    _pipestatus=( "${PIPESTATUS[@]}" )
+    status_str=""
+    reset_color="\033[01;37m"
+    success_symbol='\342\234\223'
+    error_symbol='\342\234\227'
+    line_h='\342\224\200'
+    if [[ ${EUID} == 0 ]]; then
+        # red
+        sq_color="\033[0;31m"
+    else
+        # light blue
+        sq_color="\033[0;36m"
+    fi
+    display=0
+    for val in "${_pipestatus[@]}"; do
+        if [[ ${val} == 0 ]]; then
+            status_str="${status_str}[${reset_color}${success_symbol}${sq_color}]${line_h}"
+        else
+            status_str="${status_str}[${reset_color}${error_symbol}${sq_color}]${line_h}"
+            display=1
+        fi
+    done
+    if [[ ${display} -ne 0 ]]; then
+        printf ${status_str}
+    fi
+}
+
+#PS1="${preamble_line1}\$([[ \$? != 0 ]] && echo \"${error_string}\")${info_line1}\n${preamble_line2}${info_line2}${closing_line2}"
+PS1="${preamble_line1}\$(format_pipestatus )${info_line1}\n${preamble_line2}${info_line2}${closing_line2}"
 unset sq_color
 unset reset_color
 unset remove_bold
 unset angle_se
 unset angle_ne
 unset line_h
+unset error_symbol
+unset success_symbol
+unset error_string
+unset preamble_line1
+unset info_line1
+unset preamble_line2
+unset info_line2
+unset closing_line2
 
 ## If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm*|mterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
+    xterm*|mterm*|rxvt*)
+        PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+        ;;
+    *)
+        ;;
 esac
 
 # for failed commands, show exit code and signal if killed by one
@@ -60,4 +97,5 @@ function prompt_show_status ()
     return 0
 }
 
-PROMPT_COMMAND="prompt_show_status;$PROMPT_COMMAND"
+#PROMPT_COMMAND="prompt_show_status;$PROMPT_COMMAND"
+[[ ! "${PROMPT_COMMAND}" =~ "prompt_show_status;" ]] && PROMPT_COMMAND="prompt_show_status;$PROMPT_COMMAND"
