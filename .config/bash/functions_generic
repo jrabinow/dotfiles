@@ -128,3 +128,32 @@ function log_http_requests ()
     # 0x48545450 = 'HTTP' 0x2030 = ' 0'
     sudo tcpdump -A -s 0 "tcp port ${portno} and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)" #tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x48545450" #and tcp[(((tcp[12:1] & 0xf0) >> 2) + 8):2] = 0x2030"
 }
+
+# Move up n directories
+function up () {
+    if [[ $# > 1 || $# == 0 ]]; then
+        echo "Usage: up [int]"
+        return 2
+    else
+        pdirs="${1:-1}"; shift
+        # only works with ZSH https://stackoverflow.com/a/6191382
+        #cd $(builtin printf "../"%.0s {1..${pdirs}})
+        cd $(builtin printf "../"%.0s $(seq -s' ' ${pdirs}))
+    fi
+}
+
+function mkcd () {
+    mkdir -p $1 && cd $1
+}
+
+# Shorthand clone from github
+function hclone () {
+    local url
+    if [[ "$1" == "-p" ]]; then
+        url="git@github.com:$2.git"
+        shift
+    else
+        url="git://github.com/$1.git"
+    fi
+    git clone "$url" $2
+}
