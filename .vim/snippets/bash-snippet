@@ -34,7 +34,7 @@ function main ()
                 esac
                 ;;
             ?)
-                printf "Unknown option, exiting now\n" >&2
+                printf 'Unknown option, exiting now\n' >&2
                 exit 1
                 ;;
         esac
