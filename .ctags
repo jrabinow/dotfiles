@@ -40,3 +40,11 @@
 --langmap=js:.js
 --langmap=js:+.jsx
 --regex-js=/[ \t.]([A-Z][A-Z0-9._$]+)[ \t]*[=:][ \t]*([0-9"'\[\{]|null)/\1/n,constant/
+
+--exclude=.git
+--exclude=*.min.js
+--exclude=*-min.js
+--exclude=node_modules
+--exclude=bower_components
+--languages=-sql
+--tag-relative
