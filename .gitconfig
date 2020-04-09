@@ -4,10 +4,32 @@
 
 [core]
     longpaths = true
-
+    pager = less -isXF
+[push]
+    default = current
+[diff]
+    tool = vimdiff
 [credential]
     helper = cache --timeout=7200
-
+[color]
+  ui = auto
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+[color "diff"]
+  whitespace = red reverse
+[rerere]
+  enabled = true
+[sendemail]
+  chainreplyto = no
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+[commit]
+    gpgsign = true
 [alias]
   st = status
   co = checkout
@@ -34,22 +56,3 @@
   # commented out because unreliable (weird commits included and looks disordered)
   #recap = "!git log --all --oneline --no-merges --author=$(git config user.email)"
   changelog = "!git log --oneline --no-merges $(git tag --sort=creatordate|tail -1)..HEAD"
-
-[color]
-	ui = auto
-  diff = auto
-
-[color "diff"]
-  whitespace = red reverse
-
-[sendemail]
-  chainreplyto = no
-
-[filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
-
-[commit]
-	gpgsign = true
