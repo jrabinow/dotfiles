@@ -9,7 +9,7 @@ else
     # light blue
     sq_color="\[\033[0;36m\]"
 fi
-reset_color="\[\033[01;37m\]"
+reset_color="\[\033[01;39m\]"
 remove_bold="\\[\\033[0m\\]"
 angle_se='\342\224\214'
 angle_ne='\342\224\224'
@@ -27,7 +27,7 @@ function format_pipestatus ()
     # save PIPESTATUS very first thing https://unix.stackexchange.com/a/163660
     _pipestatus=( "${PIPESTATUS[@]}" )
     status_str=""
-    reset_color="\033[01;37m"
+    reset_color="\033[01;39m"
     success_symbol='\342\234\223'
     error_symbol='\342\234\227'
     line_h='\342\224\200'
