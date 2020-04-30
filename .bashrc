@@ -36,6 +36,9 @@ case $(uname) in
     Darwin)
         MODULE_NAMES=(mac_os ${MODULE_NAMES[@]})
         ;;
+    OpenBSD)
+        MODULE_NAMES=(bsd ${MODULE_NAMES[@]})
+        ;;
 esac
 
 MODULE_NAMES=(${MODULE_NAMES[@]} fortune) # load this guy last

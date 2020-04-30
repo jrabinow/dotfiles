@@ -138,6 +138,7 @@ function main ()
         .config/bash
         .config/bleachbit
         .config/coc
+        .config/fontconfig
         .config/gdb
         .config/git
         .config/hg
@@ -152,7 +153,10 @@ function main ()
         .ipython/profile_default/ipython_config.py
         '.local/share/fonts/Roboto Mono for Powerline.ttf'
         .profile
+        .ssh/config
         .vim
+        .xsession
+        .Xresources
     )
     readonly createdirs=(
         .local/share/bash

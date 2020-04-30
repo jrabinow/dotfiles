@@ -1,0 +1,3 @@
+#!/usr/bi/env bash
+
+alias dircolors=gdircolors
