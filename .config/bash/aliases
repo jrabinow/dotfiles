@@ -4,8 +4,6 @@
 unalias ln cp mv 2>/dev/null
 
 alias diff="diff -wbBdu"
-alias egrep='echo "Fuck you nigga, dat shit is deprecated" #'
-alias fgrep='echo "Fuck you nigga, dat shit is deprecated" #'
 alias info="info --vi-keys"
 alias reload='source ~/.bashrc'
 alias hreload="history -r"
