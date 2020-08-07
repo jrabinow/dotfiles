@@ -70,6 +70,8 @@ function main ()
         .config/xfce4/terminal/terminalrc
         .ctags
         .gdbinit
+        .gnupg/gpg.conf
+        .gnupg/gpg-agent.conf
         .inputrc
         '.local/share/fonts/Roboto Mono for Powerline.ttf'
         .profile
