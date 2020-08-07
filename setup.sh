@@ -81,7 +81,7 @@ EOF
                 exit 0
                 ;;
             ?)
-                echo "Unknown option, exiting now"
+                printf "Unknown option, exiting now\n"
                 exit 1
                 ;;
         esac
@@ -109,7 +109,7 @@ EOF
         done
         for src in "${!LINKS[@]}"; do
             dst="${LINKS[$src]}"
-            test -f "$HOME/${dst}" || test -L "${dst}" || ln -sv "$HOME/$src" "$HOME/$dst"
+            test -f "$HOME/${dst}" || test -L "$HOME/${dst}" || ln -sv "$HOME/$src" "$HOME/$dst"
         done
         prepare_rootenv
         for dir in  "${createdirs[@]}"; do
