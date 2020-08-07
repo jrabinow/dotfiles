@@ -104,6 +104,12 @@ EOF
         for dir in  "${createdirs[@]}"; do
             mkdir -p "$HOME/${dir}"
         done
+
+        case $(uname) in
+            Darwin)
+                ./platform_specific/macos
+                ;;
+        esac
     fi
 }
 
