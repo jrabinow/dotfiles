@@ -1,33 +1,37 @@
 #!/usr/bin/env bash
 
 function prepare_rootenv () {
-    local ROOTENV_DIR="$HOME/.root-env"
+    local ROOTENV_DIR="$HOME/.config/root-env"
+
     local LNFILES=(
         .bashrc
         .inputrc
         .profile
-        .tmux.conf
+        .gdbinit
+        .inputrc
         .vim
-        .vimrc
-        ../bin/clean_env
-        ../bin/cleanup
-        ../bin/dirdiff
-        ../bin/dmesg-human-readable-time
-        ../bin/flushcache
-        ../bin/group_by
-        ../bin/pathsearch
-        ../bin/rlor
-        ../bin/splitlines
-        ../bin/trimspaces
-        ../bin/zombiekiller
-        ../.config/bash
+        .config/tmux
+        .config/bash
+        .config/tmux
+        .config/tmuxinator
+        bin/clean_env
+        bin/cleanup
+        bin/dirdiff
+        bin/dmesg-human-readable-time
+        bin/flushcache
+        bin/group_by
+        bin/pathsearch
+        bin/rlor
+        bin/splitlines
+        bin/trimspaces
+        bin/zombiekiller
     )
 
     mkdir -p "${ROOTENV_DIR}"/{bin,.config}
     cd "${ROOTENV_DIR}"
     for f in "${LNFILES[@]}"; do
-        test -L ${f#../} && echo "link .root-env/${f#../} already exists, skipping" \
-            || ln -s ../$f ${f#../}
+        test -L ${f} && printf "link $HOME/${f} already exists, skipping\n" \
+            || ln -s ~/$f ${f}
     done
 }
 
