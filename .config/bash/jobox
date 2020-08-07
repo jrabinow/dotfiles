@@ -27,7 +27,7 @@ function twlookup ()
        -u "${TWILIO_TOKEN}"|jq
 }
 
-function twlookup_test ()
+function twlookup_whitepages ()
 {
     phone_number="$1"; shift
     curl -sX GET "https://lookups.twilio.com/v1/PhoneNumbers/${phone_number}?AddOns=whitepages_pro_caller_id" \
