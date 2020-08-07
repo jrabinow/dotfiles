@@ -1,7 +1,6 @@
 [user]
-	email = jnr305@nyu.edu
-	name = Julien Rabinow
-
+    email = jnr305@nyu.edu
+    name = Julien Rabinow
 [core]
     longpaths = true
     pager = less -isXF
@@ -28,8 +27,8 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
-[commit]
-    gpgsign = true
+[include]
+    path = ~/.config/git/creds
 [alias]
   st = status
   co = checkout
@@ -56,3 +55,5 @@
   # commented out because unreliable (weird commits included and looks disordered)
   #recap = "!git log --all --oneline --no-merges --author=$(git config user.email)"
   changelog = "!git log --oneline --no-merges $(git tag --sort=creatordate|tail -1)..HEAD"
+[pull]
+	rebase = false
