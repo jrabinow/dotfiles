@@ -48,12 +48,11 @@ function main ()
         .tmux.conf
         .tmuxinator
         .vim
-        .vimrc
     )
     readonly createdirs=(
         .psql_history
     )
-    declare -A LINKS=( [".vimrc"]=".vim/init.vim" )
+    declare -A LINKS=( [".vim/.vimrc"]=".vim/init.vim" )
     PREPARE_COMMIT=false
 
     while getopts "hp" opt; do
