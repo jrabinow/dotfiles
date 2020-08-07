@@ -201,16 +201,20 @@ vmap <expr>  ++  VMATH_YankAndAnalyse()
 nmap         ++  vip++
 
 call plug#begin('~/.vim/plugged')
-    Plug 'mariappan/dragvisuals.vim'
+    " Plug 'mxw/vim-jsx'
+    " Plug 'vim-syntastic/syntastic'
     Plug 'keith/swift.vim'
     Plug 'majutsushi/tagbar'
+    Plug 'mariappan/dragvisuals.vim'
     Plug 'mbbill/undotree'
-    Plug 'vim-airline/vim-airline'
-    Plug 'pangloss/vim-javascript'
     Plug 'nixon/vim-vmath'
-    Plug 'udalov/kotlin-vim'
+    Plug 'pangloss/vim-javascript'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-surround'
-    " Plug 'vim-syntastic/syntastic'
-    " Plug 'mxw/vim-jsx'
+    Plug 'udalov/kotlin-vim'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-erlang/vim-erlang-compiler'
+    Plug 'vim-erlang/vim-erlang-omnicomplete'
+    Plug 'vim-erlang/vim-erlang-runtime'
+    Plug 'vim-erlang/vim-erlang-tags'
 call plug#end()
