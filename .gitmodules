@@ -16,3 +16,12 @@
 [submodule ".vim/plugged/vim-surround"]
 	path = .vim/plugged/vim-surround
 	url = https://github.com/jrabinow/dotfiles.git
+[submodule ".vim/plugged/vim-erlang-runtime"]
+	path = .vim/plugged/vim-erlang-runtime
+	url = https://github.com/vim-erlang/vim-erlang-runtime.git
+[submodule ".vim/plugged/vim-erlang-compiler"]
+	path = .vim/plugged/vim-erlang-compiler
+	url = https://github.com/vim-erlang/vim-erlang-compiler.git
+[submodule ".vim/plugged/vim-erlang-tags"]
+	path = .vim/plugged/vim-erlang-tags
+	url = https://github.com/vim-erlang/vim-erlang-tags.git
