@@ -123,7 +123,7 @@ endfunction
 command! -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
 " Create the 'tags' file
 command! MakeTags !maketags
-command! -nargs=0 Reload source ~/.vimrc
+command! -nargs=0 Reload source ~/.vim/vimrc
 
 " Use more natural key movement on wrapped lines.
 nnoremap j gj
