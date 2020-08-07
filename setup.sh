@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -e -u
+set -o pipefail
+
 function prepare_rootenv () {
     local ROOTENV_DIR="$HOME/.config/root-env"
 
@@ -43,6 +46,17 @@ function prepare_rootenv () {
     cd -
 }
 
+function usage()
+{
+    cat << EOF
+Usage: $(basename $0) [OPTION]...
+Options: -h, --help: display this help message
+     --initial-account-config: run scripts to configure account (new hardware, OS reinstall, new account, etc)
+     -p: prepare new commit by copying all files to repo dir
+EOF
+}
+
+
 function main ()
 {
     readonly files=(
@@ -65,27 +79,44 @@ function main ()
         .psql_history
     )
     declare -A LINKS=( [".vim/.vimrc"]=".vim/init.vim" )
-    PREPARE_COMMIT=false
+    local PREPARE_COMMIT=false
+    local INITIAL_ACCOUNT_CONFIG=false
 
-    while getopts "hp" opt; do
+    while getopts "hp-:" opt; do
         case "${opt}" in
             p)
                 PREPARE_COMMIT=true
                 ;;
-            h)
-                cat << EOF
-Usage: $(basename $0) [OPTION]...
-Options: -h: display this help message
-     -p: prepare new commit by copying all files to repo dir
-EOF
+            h)  # help message
+                usage
                 exit 0
+                ;;
+            -)
+                case "${OPTARG}" in
+                    help)
+                        usage
+                        exit 0
+                        ;;
+                    initial-account-config)
+                        INITIAL_ACCOUNT_CONFIG=true
+                        ;;
+                    *)
+                        printf 'Unknown option, exiting now\n' >&2
+                        exit 1
+                        ;;
+                esac
                 ;;
             ?)
                 printf "Unknown option, exiting now\n"
+                usage
                 exit 1
                 ;;
         esac
     done
+    shift $((OPTIND - 1))
+    [[ "${1:-}" == '--' ]] && shift
+    readonly PREPARE_COMMIT
+    readonly INITIAL_ACCOUNT_CONFIG
 
     if ${PREPARE_COMMIT}; then
         for f in "${files[@]}"; do
@@ -116,11 +147,13 @@ EOF
             mkdir -p "$HOME/${dir}"
         done
 
-        case $(uname) in
-            Darwin)
-                ./platform_specific/macos
-                ;;
-        esac
+        if "${INITIAL_ACCOUNT_CONFIG}"; then
+            case $(uname) in
+                Darwin)
+                    ./platform_specific/macos
+                    ;;
+            esac
+        fi
     fi
 }
 
