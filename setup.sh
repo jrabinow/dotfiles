@@ -36,17 +36,17 @@ function main ()
     readonly files=(
         .bashrc
         .config/bash
-        .config/bleachbit/bleachbit.ini
-        .config/xfce4/terminal/terminalrc
+        .config/bleachbit
         .config/git
+        .config/hg
+        .config/tmux
+        .config/tmuxinator
+        .config/xfce4/terminal/terminalrc
         .ctags
         .gdbinit
-        .hgrc
         .inputrc
         '.local/share/fonts/Roboto Mono for Powerline.ttf'
         .profile
-        .tmux.conf
-        .tmuxinator
         .vim
     )
     readonly createdirs=(
