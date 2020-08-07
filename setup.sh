@@ -33,6 +33,14 @@ function prepare_rootenv () {
         test -L ${f} && printf "link $HOME/${f} already exists, skipping\n" \
             || ln -s ~/$f ${f}
     done
+
+    if [ $(which tmux) != "" ]; then
+        # if tmux version is less than 3.0
+        if [[ "$(tmux -V|sed -En "s/^tmux ([0-9]+(\.[0-9]+)?).*/\1/p")" < 3.0 ]]; then
+            ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf
+        fi
+    fi
+    cd -
 }
 
 function main ()
