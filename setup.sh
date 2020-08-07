@@ -38,9 +38,9 @@ function main ()
         .config/bash
         .config/bleachbit/bleachbit.ini
         .config/xfce4/terminal/terminalrc
+        .config/git
         .ctags
         .gdbinit
-        .gitconfig
         .hgrc
         .inputrc
         '.local/share/fonts/Roboto Mono for Powerline.ttf'
