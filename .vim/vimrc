@@ -183,8 +183,8 @@ nmap <F4> :TagbarToggle<CR>
 nnoremap <leader>udt :UndotreeToggle<CR>
 
 nnoremap <leader>no :set nonumber<CR>:set norelativenumber<CR>
-nnoremap <leader>nr :set norelativenumber<CR>
-nnoremap <leader>nb :set number<CR>:set relativenumber<CR>
+nnoremap <leader>nb :set number<CR>:set norelativenumber<CR>
+nnoremap <leader>nr :set number<CR>:set relativenumber<CR>
 
 " to please the Olde Gods
 iabbrev cthuf Ia! Ia! Cthulhu fhtagn! Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn! Cthulhu fhtagn! Cthulhu fhtagn!
