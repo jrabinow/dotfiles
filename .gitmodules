@@ -25,3 +25,6 @@
 [submodule ".vim/plugged/vim-erlang-tags"]
 	path = .vim/plugged/vim-erlang-tags
 	url = https://github.com/vim-erlang/vim-erlang-tags.git
+[submodule ".config/tmux/plugins/tmux-resurrect"]
+	path = .config/tmux/plugins/tmux-resurrect
+	url = https://github.com/tmux-plugins/tmux-resurrect
