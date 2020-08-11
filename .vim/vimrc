@@ -38,6 +38,7 @@ set shortmess+=aI                       " avoid 'hit enter', no welcome message
 set ttyfast                             " fast internet connection
 set autoread                            " automatically reread modified files, this turns out to be BS but I'm leaving it anyways
 set title                               " change the terminal's title
+set viminfo+=n~/.local/share/vim/viminfo " store viminfo somewhere sensible
 
 set list
 set listchars=tab:>.,trail:.,extends:#,nbsp:. " show trailing tabs and spaces

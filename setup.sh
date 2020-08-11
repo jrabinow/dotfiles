@@ -78,7 +78,7 @@ function main ()
         .vim
     )
     readonly createdirs=(
-        .psql_history
+        .local/share/psql_history
     )
     declare -A LINKS=( [".vim/.vimrc"]=".vim/init.vim" )
     local PREPARE_COMMIT=false
