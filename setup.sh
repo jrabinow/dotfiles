@@ -3,7 +3,8 @@
 set -e -u
 set -o pipefail
 
-function prepare_rootenv () {
+function prepare_rootenv ()
+{
     local ROOTENV_DIR="$HOME/.config/root-env"
 
     local LNFILES=(
@@ -46,7 +47,76 @@ function prepare_rootenv () {
     cd -
 }
 
-function usage()
+function install_coc_ext ()
+{
+    # Install extensions
+    mkdir -p ~/.config/coc/extensions
+    cd ~/.config/coc/extensions
+    if [ ! -f package.json ]; then
+        echo '{"dependencies":{}}'> package.json
+    fi
+    # Change extension names to the extensions you need
+    npm install --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
+}
+
+function manage_vim_plugins ()
+{
+    for submodule in $(git st --short|\
+        grep '?? \.vim/plugged' | \
+        awk '{print $2}'); do
+        cd "${submodule}"
+        remote_url=$(git url)
+        cd - 2>/dev/null
+        git submodule add --name "vim/$(basename "${submodule}")" "${remote_url}" "${submodule}"
+    done
+}
+
+function prepare_commit ()
+{
+    for f in "${files[@]}"; do
+        dir="$(dirname "${f}")"
+        file="$(basename "${f}")"
+        mkdir -p "./${dir}"
+        rm -rf "./${dir}/${file}"
+        cp -rv "$HOME/$f" "./${dir}/"
+    done
+    for src in "${!LINKS[@]}"; do
+        dst="${LINKS[$src]}"
+        test -f "${dst}" || test -L "${dst}" || ln -sv "$src" "$dst"
+    done
+    manage_vim_plugins
+}
+
+function setup_homedir ()
+{
+        for dir in  "${createdirs[@]}"; do
+            mkdir -p "$HOME/${dir}"
+        done
+
+        for f in "${files[@]}"; do
+            dir="$(dirname "${f}")"
+            file="$(basename "${f}")"
+            mkdir -p "${HOME}/${dir}"
+            rm -rf "${HOME}/${dir}/${file}"
+            cp -rv "$f" "${HOME}/${dir}/"
+        done
+        for src in "${!LINKS[@]}"; do
+            dst="${LINKS[$src]}"
+            test -f "$HOME/${dst}" || test -L "$HOME/${dst}" || ln -sv "$HOME/$src" "$HOME/$dst"
+        done
+        prepare_rootenv
+        install_coc_ext
+
+        if "${INITIAL_ACCOUNT_CONFIG}"; then
+            case $(uname) in
+                Darwin)
+                    ./platform_specific/macos
+                    ;;
+            esac
+        fi
+}
+
+function usage ()
 {
     cat << EOF
 Usage: $(basename $0) [OPTION]...
@@ -121,41 +191,9 @@ function main ()
     readonly INITIAL_ACCOUNT_CONFIG
 
     if ${PREPARE_COMMIT}; then
-        for f in "${files[@]}"; do
-            dir="$(dirname "${f}")"
-            file="$(basename "${f}")"
-            mkdir -p "./${dir}"
-            rm -rf "./${dir}/${file}"
-            cp -rv "$HOME/$f" "./${dir}/"
-        done
-        for src in "${!LINKS[@]}"; do
-            dst="${LINKS[$src]}"
-            test -f "${dst}" || test -L "${dst}" || ln -sv "$src" "$dst"
-        done
+        prepare_commit
     else
-        for f in "${files[@]}"; do
-            dir="$(dirname "${f}")"
-            file="$(basename "${f}")"
-            mkdir -p "${HOME}/${dir}"
-            rm -rf "${HOME}/${dir}/${file}"
-            cp -rv "$f" "${HOME}/${dir}/"
-        done
-        for src in "${!LINKS[@]}"; do
-            dst="${LINKS[$src]}"
-            test -f "$HOME/${dst}" || test -L "$HOME/${dst}" || ln -sv "$HOME/$src" "$HOME/$dst"
-        done
-        prepare_rootenv
-        for dir in  "${createdirs[@]}"; do
-            mkdir -p "$HOME/${dir}"
-        done
-
-        if "${INITIAL_ACCOUNT_CONFIG}"; then
-            case $(uname) in
-                Darwin)
-                    ./platform_specific/macos
-                    ;;
-            esac
-        fi
+        setup_homedir
     fi
 }
 
