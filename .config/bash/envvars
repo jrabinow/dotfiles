@@ -6,4 +6,4 @@ export EDITOR=vim
 #export LANG="C"
 #export LC_ALL="C"
 GCLOUD_SDK_BASEDIR='/opt/local/google-cloud-sdk'
-export HISTTIMEFORMAT="%d/%m/%y %T "
+HISTTIMEFORMAT="%d/%m/%y %T "
