@@ -56,13 +56,13 @@ Options: -h, --help: display this help message
 EOF
 }
 
-
 function main ()
 {
     readonly files=(
         .bashrc
         .config/bash
         .config/bleachbit
+        .config/coc/extensions/package.json
         .config/git
         .config/hg
         .config/tmux
