@@ -46,3 +46,12 @@
 [submodule "vim/vim-fugitive"]
 	path = .vim/plugged/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vim/undotree"]
+	path = .vim/plugged/undotree
+	url = https://github.com/mbbill/undotree.git
+[submodule ".vim/plugged/vim-erlang-omnicomplete"]
+	path = .vim/plugged/vim-erlang-omnicomplete
+	url = https://github.com/vim-erlang/vim-erlang-omnicomplete.git
+[submodule ".vim/plugged/vim-vmath"]
+	path = .vim/plugged/vim-vmath
+	url = https://github.com/nixon/vim-vmath.git
