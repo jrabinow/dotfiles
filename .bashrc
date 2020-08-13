@@ -25,14 +25,13 @@ MODULE_NAMES=(
     jobox
     programming
     ps1
-    qubes
     scm_prompt_setup
     shellconfig
 )
 
 case $(uname) in
     Linux)
-        MODULE_NAMES=(linux ${MODULE_NAMES[@]})
+        MODULE_NAMES=(linux qubes ${MODULE_NAMES[@]})
         ;;
     Darwin)
         MODULE_NAMES=(mac_os ${MODULE_NAMES[@]})
@@ -41,7 +40,7 @@ esac
 
 MODULE_NAMES=(${MODULE_NAMES[@]} fortune) # load this guy last
 
-BASH_MOD_DIR="${HOME}/.config/bash"
+BASH_MOD_DIR="${XDG_CONFIG_HOME:-${HOME}/.config/}/bash"
 
 function missing_module ()
 {
