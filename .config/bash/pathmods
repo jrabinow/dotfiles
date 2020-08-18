@@ -20,7 +20,7 @@ test $EUID != 0 &&
     PATH_DIRS_PREPEND="
     $PATH_DIRS_PREPEND
     "
- 
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "${GCLOUD_SDK_BASEDIR}/path.bash.inc" ]; then
     [[ ! $PATH =~ (^|:)"${GCLOUD_SDK_BASEDIR}"/bin(:|\$) ]] && \

@@ -118,7 +118,7 @@ function notify ()
 
 function pronmode ()
 {
-	unset HISTFILE
+    unset HISTFILE
 }
 
 # https://stackoverflow.com/a/16610385
