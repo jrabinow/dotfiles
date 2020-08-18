@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# List of dirs to be added to PATH if they exist 
+# List of dirs to be added to PATH if they exist
 PATH_DIRS_PREPEND="
     "$TESTBINARYDIR"
     $HOME/bin
@@ -32,14 +32,20 @@ fi
 # http://stackoverflow.com/questions/1527049/join-elements-of-an-array
 PREPEND=""
 for i in ${PATH_DIRS_PREPEND}; do
-    PATH=$(sed -e "s#:$i:*#:#g" <<< $PATH)
+    # we want to avoid duplicates
+    # we remove the component from the PATH and add it back, because we want to
+    # force prepending (deals with the case where the component is already added
+    # to middle of PATH)
+    PATH=$(sed -E "s#(^|:)$i(:*|$)#:#g" <<< $PATH)
     test -d $i && PREPEND="$PREPEND:$i"
 done
 
-[ ! -z "${PREPEND}" ] && PATH=${PREPEND#:}:${PATH%:}
+[ ! -z "${PREPEND}" ] && PATH=${PREPEND#:}:${PATH#:}
 unset PREPEND
 for i in ${PATH_DIRS_APPEND}; do
-    test -d $i && PATH=$(sed -e "s#:$i:*#:#g" <<< $PATH):$i
+    # we do NOT force append entries to end of PATH; we only add if
+    # PATH does not already contain this entry
+    test -d $i && [[ ! $PATH =~ (^|:)"${i}"(:|$) ]] && PATH=$PATH:$i
 done
 unset PATH_DIRS_APPEND
 unset PATH_DIRS_PREPEND
