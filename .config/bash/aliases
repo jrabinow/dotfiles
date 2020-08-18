@@ -26,7 +26,7 @@ fi
 
 # rename from util-linux sucks, use perl rename utility for PCRE
 if [ -x /usr/bin/prename ]; then
-	alias rename=prename
+    alias rename=prename
 fi
 
 # personal
