@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # calculator integrated in command-line
 function ? () { echo "$@"|bc -l; }

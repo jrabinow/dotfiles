@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # BASH_MOD_DIR defined in ~/.bashrc
 
