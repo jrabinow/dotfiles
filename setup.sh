@@ -38,9 +38,10 @@ function prepare_rootenv ()
             || ln -s ~/$f ${f}
     done
 
-    if [ $(which tmux) != "" ]; then
+    if command -v tmux >/dev/null; then
         # if tmux version is less than 3.0
-        if [[ "$(tmux -V|sed -En "s/^tmux ([0-9]+(\.[0-9]+)?).*/\1/p")" < 3.0 ]]; then
+        tmux_version="$(tmux -V|sed -En "s/^tmux ([0-9]+(\.[0-9]+)?).*/\1/p")"
+        if [[ "$(echo "${tmux_version} < 3.1"|bc)" == 1 ]] && [ ! -L ~/.tmux.conf ]; then
             ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf
         fi
     fi
@@ -55,8 +56,12 @@ function install_coc_ext ()
     if [ ! -f package.json ]; then
         printf '{"dependencies":{}}\n'> package.json
     fi
-    # Change extension names to the extensions you need
-    npm install --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
+    if command -v npm 2>/dev/null; then
+        npm install --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
+    else
+        sed -i -E "s#(\s*)(Plug 'neoclide/coc.nvim')#\1\"\2#" ~/.vim/vimrc
+    fi
+    cd - 2>/dev/null
 }
 
 function manage_vim_plugins ()
@@ -149,6 +154,7 @@ function main ()
     )
     readonly createdirs=(
         .local/share/psql_history
+        .local/share/vim
     )
     declare -A LINKS=( [".vim/.vimrc"]=".vim/init.vim" )
     local PREPARE_COMMIT=false
