@@ -1,70 +1,89 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+alias qvm-running='qvm-ls --running'
+# shellcheck disable=SC2142
+alias qvm-reset-menus="qvm-ls|tail -n +2|awk '{print \$1}'|xargs -n1 qvm-appmenus --update --force"
 
 function qvm-shell ()
 {
-	qvm-run -a $1 xfce4-terminal
+    vm="${1}"; shift
+    desktopfile="$(ls "$HOME/.local/share/applications/$vm-*erminal.desktop")"
+    cmd="$(grep '^Exec' "${desktopfile}"|cut -d'=' -f2-)"
+    eval "${cmd}"
 }
-
-alias qvm-running='qvm-ls --raw-data name state template netvm|grep Running|cut -d"|" -f1,3-|tr "|" " "|column -t'
-
 
 function qubes-sync-dotfiles ()
 {
-	vm=$1; shift
-	if [ -z "${vm}" ]; then
-		echo "USAGE: qubes-sync-dotfiles VMNAME"
-	else
-		running=$(qvm-running|grep "${vm}")
-		if [ -z "${running}" ]; then
-			echo "VM ${vm} not running; mounting image"
-			dir=$(mktemp -d)
-			find /var/lib/qubes -maxdepth 2 -type d -name "${vm}" 2>/dev/null \
-				| xargs -n1 -I% sudo mount %/private.img "${dir}"
-			rm -rf $HOME/Documents/dotfiles
-			cp -R "${dir}/home/user/Documents/dotfiles" $HOME/Documents
-			sudo umount "${dir}"
-			rmdir "${dir}"
-		else
-			echo "VM ${vm} running; using pass-through"
-			qvm-run -p "${vm}" \
-				'tar -C /home/$(whoami)/Documents -Jcf \
-				/tmp/dotfiles.txz dotfiles;\
-				cat /tmp/dotfiles.txz;\
-				rm /tmp/dotfiles.txz' > ~/Documents/dotfiles.txz
-			rm -rf ~/Documents/dotfiles
-			(cd ~/Documents/ && tar -Jxf dotfiles.txz)
-			rm ~/Documents/dotfiles.txz
-		fi
-	fi
+    vm=$1; shift
+    if [ -z "${vm}" ]; then
+        echo "USAGE: qubes-sync-dotfiles VMNAME"
+    else
+        running=$(qvm-running|grep "${vm}")
+        if [ -z "${running}" ]; then
+            echo "VM ${vm} not running; mounting image"
+            dir=$(mktemp -d)
+            find /var/lib/qubes -maxdepth 2 -type d -name "${vm}" -print0 2>/dev/null \
+                | xargs -0 -n1 -I% sudo mount %/private.img "${dir}"
+            rm -rf "$HOME/Documents/dotfiles"
+            cp -R "${dir}/home/user/Documents/dotfiles" "$HOME/Documents"
+            sudo umount "${dir}"
+            rmdir "${dir}"
+        else
+            echo "VM ${vm} running; using pass-through"
+            # shellcheck disable=SC2016,SC1004
+            qvm-run -p "${vm}" \
+                'archive_file=$(mktemp --suffix .txz); \
+                tar -C ~/Documents -Jcf \
+                "${archive_file}" dotfiles;\
+                cat "${archive_file}";\
+                rm "${archive_file}"' > ~/Documents/dotfiles.txz
+            rm -rf ~/Documents/dotfiles
+            (cd ~/Documents/ && tar -Jxf dotfiles.txz)
+            rm ~/Documents/dotfiles.txz
+        fi
+    fi
 }
 
 function qvm-sc ()
 {
-	cat << EOF
-personal		F2
-media			F3
-work			F4
-finance			F5
-vault			F6
-sys-usb			F7
-sys-net			F8
-sys-firewall	F9
-anon-whonix		F10
-fedora-25		F11
-debian-stable		F12
+    cat << EOF
+personal        F2
+media           F3
+work            F4
+finance         F5
+vault           F6
+webtrackers     F7
+sys-net         F8
+sys-firewall    F9
+debian          F10
+fedora-32       F12
 EOF
 }
 
 function qvm-restart ()
 {
-	vmname=$1; shift
-    qvm-shutdown ${vmname}
-	if [ $? == 0 ]; then
-	    is_running=$(qvm-ls --raw-data name state|grep -E ".?${vmname}.?\|(Running|Transient|Dying)")
-	    while [ ! -z $is_running ]; do
-	    	sleep 1
-	    	is_running=$(qvm-ls --raw-data name state|grep -E ".?${vmname}.?\|(Running|Transient|Dying)")
-	    done
-	    qvm-start ${vmname}
-	fi
+    vmname="${1}"; shift
+    if qvm-shutdown --wait "${vmname}"; then
+        qvm-start "${vmname}"
+    fi
+}
+
+function qvm-restart-netvm ()
+{
+    netvm_name="${1}"; shift
+    if [ -n "${netvm_name}" ]; then
+        affected_vms="$(qvm-running|grep "${netvm_name}$"|awk '{print $1}')"
+        for vm in ${affected_vms}; do
+            qvm-prefs "${vm}" netvm none
+        done
+
+        qvm-shutdown --wait  "${netvm_name}"
+        qvm-start "${netvm_name}"
+
+        for vm in ${affected_vms}; do
+            qvm-prefs "${vm}" netvm "${netvm_name}"
+        done
+    else
+        printf "Usage: qvm-restart-netvm NETVM_NAME\n"
+    fi
 }
