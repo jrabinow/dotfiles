@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # List of dirs to be added to PATH if they exist
 PATH_DIRS_PREPEND="
