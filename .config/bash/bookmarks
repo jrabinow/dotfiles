@@ -29,39 +29,48 @@ BMARKS_FILE="${XDG_DATA_DIR:-$HOME/.local/share}/bash/bookmarks"
 
 # setup
 BMARKS_DIR="$(dirname "${BMARKS_FILE}")"
-test -d "${BMARKS_DIR}" || mkdir -p "${BMARKS_DIR}"
-[ $? == 0 ] && test -f "${BMARKS_FILE}" || \
+(test -d "${BMARKS_DIR}" || mkdir -p "${BMARKS_DIR}") && \
+    test -f "${BMARKS_FILE}" || \
     touch "${BMARKS_FILE}" ||
     (echo "ERROR SETTING UP BOOKMARKS MODULE" >&2 && return)
 
 shopt -s cdable_vars
 
-function bma () {
+function bma ()
+{
     if [ $# -eq 1 ]; then
-        export $1="$(pwd)"
+        export "${1}"="$(pwd)"
         echo -e "export $1=\"$(pwd)\"	# Bookmark" >> "${BMARKS_FILE}"
     elif [ $# -eq 2 ] && [ -d "$2" ]; then
-        export $1="$2"
+        export "${1}"="$2"
         echo -e "export $1=\"$2\"	# Bookmark" >> "${BMARKS_FILE}"
-    elif [ $# -eq 3 ] && [ $1 == "-f" ] && [ -d "$(pwd)/$3" ]; then
-        export $2="$(pwd)/$3"
+    elif [ $# -eq 3 ] && [ "${1}" == "-f" ] && [ -d "$(pwd)/${3}" ]; then
+        # shellcheck disable=SC2140
+        export "${2}"="$(pwd)/${3}"
         echo -e "export $2=\"$(pwd)/$3\"	# Bookmark" >> "${BMARKS_FILE}"
     else
         echo "Usage: bma BMARKNAME [ PATH ]" >&2
     fi
 }
 
-function bmd () {
+function bmd ()
+{
     if [ $# -eq 1 ]; then
         sed -i -e "/^export $1=.*	# Bookmark$/d" "${BMARKS_FILE}"
-        unset $1
+        unset "${1}"
     else
         echo "Usage: bmd BMARKNAME" >&2
     fi
 }
 
-function bml () {
-    grep '# Bookmark$' "${BMARKS_FILE}" | cut -f1 | cut -d' ' -f2- | sed -e 's/=/	->	/' | sort | column -t
+function bml ()
+{
+    grep '# Bookmark$' "${BMARKS_FILE}" | \
+        cut -f1 | \
+        cut -d' ' -f2- | \
+        sed -e 's/=/	->	/' | \
+        sort | \
+        column -t
 }
 
 source "${BMARKS_FILE}"

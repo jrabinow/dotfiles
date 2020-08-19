@@ -1,12 +1,12 @@
 #!/bin/bash
 
-alias deploy_server="cp -v ${jobox}/Kili/build/libs/Kili.war /opt/tomcat9/webapps/"
+alias deploy_server='cp -v ${jobox}/Kili/build/libs/Kili.war /opt/tomcat9/webapps/'
 DBDIR="$HOME/Documents/infra_data/db"
 
 function start_tomcat ()
 {
     tomcat_pid=$(pgrep -f tomcat)
-    if [ ! -z "${tomcat_pid}" ]; then
+    if [ -n "${tomcat_pid}" ]; then
         echo "Found running tomcat server pid ${tomcat_pid}; killing now"
         kill "${tomcat_pid}"
         sleep 2
@@ -105,21 +105,24 @@ function replicate_prod_db ()
 
 function intercom_lookup ()
 {
-    uid="${@}"
+    uid="${*}"
     curl -s -H "Authorization:Bearer ${INTERCOM_TOKEN}" -H 'Accept: application/json' -H 'Content-Type: application/json' "https://api.intercom.io/users?user_id=${uid}" | jq '.'
 }
 
 function android_api ()
 {
-    vim $jobox/unicron/app/src/main/java/us/jobox/app/network/JoboxApi.kt
+    # shellcheck disable=SC2154
+    vim "${jobox}/unicron/app/src/main/java/us/jobox/app/network/JoboxApi.kt"
 }
 
 function ios_api ()
 {
-    vim $jobox/Himalaya/Jobox/JoboxAPI.swift
+    vim "${jobox}/Himalaya/Jobox/JoboxAPI.swift"
 }
 
+# shellcheck disable=SC2139
 alias testcurl="curl -sH 'User-Id: 68' -H 'Password: ${KILI_PW}' -H 'Authorization: ${KILI_STAG_AUTH}' -H 'Timestamp: ${KILI_STAG_TIMESTAMP}' -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Accept-Encoding = gzip;q=1.0, compress;q=0.5'"
+# shellcheck disable=SC2139
 alias prodcurl="curl -sH 'User-Id: 68' -H 'Password: ${KILI_PW}' -H 'Authorization: ${KILI_PROD_AUTH}' -H 'Timestamp: ${KILI_PROD_TIMESTAMP}' -H 'Content-Type: application/json' -H 'Accept: application/json' -H 'Accept-Encoding = gzip;q=1.0, compress;q=0.5'"
 
 function stripe_charge ()
@@ -167,8 +170,8 @@ function decruft_joblogs ()
     jq -c '.[]|{sender: .sender_id, receiver: .receiver_id, status: .status}'
 }
 
-alias reset_db="stop_db && rm -r \"${DBDIR}\" && cp -R \"${DBDIR}.bak\" \"${DBDIR}\" && start_db"
-alias backup_localdb="stop_db && rm -rf \"${DBDIR}.bak\" && cp -R \"${DBDIR}\" \"${DBDIR}.bak\" && start_db"
+alias reset_db='stop_db && rm -r "${DBDIR}" && cp -R "${DBDIR}.bak" "${DBDIR}" && start_db'
+alias backup_localdb='stop_db && rm -rf "${DBDIR}.bak" && cp -R "${DBDIR}" "${DBDIR}.bak" && start_db'
 alias mipemode="cd mipe && venv && cd -"
 alias testnpush="gradle clean build && git push"
 alias format-check="java-format-check -t 30"

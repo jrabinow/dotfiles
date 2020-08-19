@@ -10,14 +10,15 @@ alias hreload="history -r"
 alias savepane='tmux capture-pane -S -; tmux save-buffer'
 alias tmux_alert='tmux select-pane -P "bg=colour1"'
 alias treset='tmux select-pane -P "bg=colour0"'
-alias uhtop="htop -u $USER"
+alias uhtop='htop -u $USER'
 alias venv="source ./venv/bin/activate"
 alias watch="watch --differences"
-alias sat="sudo $(which sat)"
+# shellcheck disable=SC2139
+alias sat="sudo $(command sat)"
 alias psql="env PGCONNECT_TIMEOUT=2 psql"
 
 # enable color support of ls and also add handy aliases
-if [ -x "$(which dircolors)" ]; then
+if command -v dircolors >/dev/null; then
     eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     alias grep='grep --color=auto'
@@ -37,7 +38,7 @@ alias syncstatus='dropbox filestatus $(find ~/Dropbox -type f)|grep "syncing"|un
 alias 42='echo The answer to Life, the Universe and Everything.'
 alias starwars='telnet towel.blinkenlights.nl'
 
-if [ ! -z $(which cowsay 2>/dev/null) ]; then
+if command -v cowsay >/dev/null; then
     alias allcows='cowsay -l | sed "1d"|tr " " "\n"|while read f; do cowsay -f $f $f;done'
     alias randcow='cowsay -f $(cowsay -l|sed "1d"|tr " " "\n"|grep -vE "sodomized|telebears|head-in"|shuf -n1)'
 fi

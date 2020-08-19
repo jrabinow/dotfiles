@@ -4,12 +4,12 @@ COLUMNS=$(tput cols)
 LINES=$(tput lines)
 
 
-FORTUNE_BASEDIR=/opt/local/share/games/fortune
 shopt -s extglob
-command -v fortune >/dev/null 2>&1
-if [ $? == 0 ]; then
-    command -v cowsay >/dev/null 2>&1
-    if [ $? == 0 ] && [[ $COLUMNS -ge 80 ]] && [[ $LINES -ge 28 ]]; then
+
+if command -v fortune >/dev/null 2>&1; then
+    if command -v cowsay >/dev/null 2>&1 && \
+        [[ $COLUMNS -ge 80 ]] && \
+        [[ $LINES -ge 28 ]]; then
       fortune -a|randcow
     else
       fortune -a

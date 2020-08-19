@@ -18,7 +18,7 @@ alias ldapsearch="ldapsearch -x -b dc=thefacebook,dc=com" # uid=foobar
 
 function fqdn () { echo "$1.facebook.com" ; }
 
-function cutfqdn () { echo $1|sed 's/\.facebook\.com//'; }
+function cutfqdn () { echo "${1%\.facebook\.com}"; }
 
 # print list of buck targets under a dir in fbcode
 function targets ()
@@ -28,9 +28,9 @@ function targets ()
     if [ ! -d "${basedir}" ]; then
         basedir="$HOME/fbcode/${dir}"; shift
     fi
-    target_files=($(find "${basedir}" -name TARGETS))
-    for t in ${target_files[@]}; do
-        dir="$(echo $(dirname $t)|perl -pe 's/.*fbcode\///')"
+    target_files=("$(find "${basedir}" -name TARGETS)")
+    for t in "${target_files[@]}"; do
+        dir="$(dirname "${t}"|perl -pe 's/.*fbcode\///')"
         perl -lne 'm!\s*name\s*=\s*['\''"](\w+)['\''"],$! and print q('"$dir:"').$1' "${t}"
     done|sort
 }
@@ -52,7 +52,7 @@ function ssh_tier ()
     echo "sush -r TIERNAME"
     echo "----------------------------------------------"
     echo
-    if [ "$(echo ${tiers}|wc -l)" == 1 ]; then
+    if [ "$(wc -l <<< "${tiers}")" == 1 ]; then
         sush -r "${tiers}"
     fi
 }

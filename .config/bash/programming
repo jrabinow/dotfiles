@@ -10,7 +10,7 @@ function init_cscope ()
 
     case $lang in
         c)
-            find -name '*.cpp' -o -name '*.c++' -o -name '*.c' -o \
+            find . -name '*.cpp' -o -name '*.c++' -o -name '*.c' -o \
                 -name '*.cu' \
                 -name '*.hpp' -o -name '*.h' \
                 | grep -v 'CMakeFiles' > cscope.in
