@@ -11,6 +11,41 @@ function ensure_source_present ()
         curl $REMOTE_URL | sed -e 's/^__git_ps1 ()$/_dotfiles_scm_info ()/g' > "${GIT_PROMPT}"
 }
 
+# stolen from Gary Bernhardt https://github.com/garybernhardt/dotfiles/blob/master/.bashrc
+# Git prompt components
+function minutes_since_last_commit ()
+{
+    now="$(date +%s)"
+    last_commit="$(git log --pretty=format:'%at' -1)"
+    seconds_since_last_commit=$((now-last_commit))
+    minutes_since_last_commit=$((seconds_since_last_commit/60))
+    printf "%s\n" "${minutes_since_last_commit}"
+}
+
+function grb_git_prompt()
+{
+    local g
+    g="$(__gitdir)"
+    if [ -n "${g}" ]; then
+        local MINUTES_SINCE_LAST_COMMIT
+        MINUTES_SINCE_LAST_COMMIT=$(minutes_since_last_commit)
+        local COLOR
+        if [ "${MINUTES_SINCE_LAST_COMMIT}" -gt 30 ]; then
+            COLOR=$(color red)
+        elif [ "${MINUTES_SINCE_LAST_COMMIT}" -gt 10 ]; then
+            COLOR=$(color yellow)
+        else
+            COLOR=$(color green)
+        fi
+        local SINCE_LAST_COMMIT
+        SINCE_LAST_COMMIT="${COLOR}$(minutes_since_last_commit)m$(color default)"
+        # The _dotfiles_scm_info function inserts the current git branch where %s is
+        local SCM_PROMPT
+        SCM_PROMPT="$(_dotfiles_scm_info "(%s|${SINCE_LAST_COMMIT})")"
+        printf "%s\n" "${SCM_PROMPT}"
+    fi
+}
+
 # shellcheck disable=SC2120
 function scmmode ()
 {

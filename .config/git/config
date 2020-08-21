@@ -57,3 +57,5 @@
   changelog = "!git log --oneline --no-merges $(git tag --sort=creatordate|tail -1)..HEAD"
 [pull]
 	rebase = false
+[merge]
+    tool = vimdiff
