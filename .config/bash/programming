@@ -29,3 +29,11 @@ function init_cscope ()
 
 # stupid godoc program just throws text at stdout without paging
 function godoc () { $(command -v godoc) "$@"|less; }
+
+function venv ()
+{
+    while [ "$(pwd)" != "/" ] && [ ! -f ./venv/bin/activate ]; do
+        up
+    done
+    test -f ./venv/bin/activate && source ./venv/bin/activate
+}
