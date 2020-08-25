@@ -156,6 +156,27 @@ function up ()
     fi
 }
 
+# Move down n directories towards $OLDPWD.
+# if OLDPWD is higher in the hierarchy than pwd, then do nothing
+function down ()
+{
+    if [[ $# -gt 1 || $# -lt 0 ]]; then
+        echo "Usage: down [int]"
+        return 2
+    else
+        pdirs="${1:-1}"; shift
+        if [ -z "${OLDPWD}" ]; then
+            # shellcheck disable=SC2016
+            printf 'Cannot go down on $OLDPWD: not set!\n' >&2
+            return
+        fi
+        local current_pwd
+        current_pwd="$(pwd)"
+        working="$(sed -E "s/^${current_pwd//\//\\/}//;s/^(\/[^\/]*){${pdirs}}.*/\1/" <<< "${OLDPWD}")"
+        cd "${working#/}" || return
+    fi
+}
+
 function mkcd () {
     mkdir -p "${1}" && cd "${1}" || return
 }
