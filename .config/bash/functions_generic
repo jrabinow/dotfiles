@@ -100,23 +100,25 @@ function num_proc()
 
 function color ()
 {
+    local COLOR="${1}"
+    local TYPE="${2}"
     declare -A COLOR_MAP=(
         [default]=39 [black]=30 [red]=31 [green]=32 [yellow]=33
         [blue]=34 [magenta]=35 [cyan]=36 [ltgray]=37 [dkgray]=90
         [ltred]=91 [ltgreen]=92 [ltyellow]=93 [ltblue]=94
         [ltmagenta]=95 [ltcyan]=96 [white]=97
     )
-    BG=10
-    OFFSET=0
-    COLOR=$1
-    TYPE=$2
-    NUM=
-    test -z "$COLOR" && COLOR=default
-    test "$TYPE" = "bg" && OFFSET=$BG
-    NUM=${COLOR_MAP[$COLOR]}
-    test -z "$NUM" && return
+    local BG=10
+    local OFFSET=0
+    local NUM=
+    test -z "${COLOR}" && COLOR=default
+    test "${TYPE}" = "bg" && OFFSET="${BG}"
+    NUM="${COLOR_MAP[$COLOR]}"
+    test -z "${NUM}" && return
     ((NUM = NUM + OFFSET))
-    echo -ne "\e[${NUM}m"
+    # make sure readline keeps track of non-printable chars in all circumstances, to avoid glitchy prompts
+    # https://stackoverflow.com/a/19501528
+    printf '\001\033[%sm\002' "${NUM}"
 }
 
 function notify ()

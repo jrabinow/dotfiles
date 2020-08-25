@@ -40,9 +40,7 @@ function grb_git_prompt()
         local SINCE_LAST_COMMIT
         SINCE_LAST_COMMIT="${COLOR}$(minutes_since_last_commit)m$(color default)"
         # The _dotfiles_scm_info function inserts the current git branch where %s is
-        local SCM_PROMPT
-        SCM_PROMPT="$(_dotfiles_scm_info "(%s|${SINCE_LAST_COMMIT})")"
-        printf "%s\n" "${SCM_PROMPT}"
+        printf "%s" "$(_dotfiles_scm_info "(%s|${SINCE_LAST_COMMIT})")"
     fi
 }
 
