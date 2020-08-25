@@ -153,6 +153,7 @@ function main ()
         .vim
     )
     readonly createdirs=(
+        .local/share/bash
         .local/share/psql_history
         .local/share/vim
     )

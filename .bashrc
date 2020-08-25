@@ -13,7 +13,7 @@ esac
 if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
-HISTFILE=$HOME/.bash_history
+HISTFILE="${XDG_DATA_HOME:-${HOME}/.local/share}/bash/bash_history"
 
 MODULE_NAMES=(
     envvars
