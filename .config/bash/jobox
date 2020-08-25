@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC2154
 alias deploy_server='cp -v ${jobox}/Kili/build/libs/Kili.war /opt/tomcat9/webapps/'
 DBDIR="$HOME/Documents/infra_data/db"
 
