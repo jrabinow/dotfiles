@@ -12,8 +12,7 @@ alias tmux_alert='tmux select-pane -P "bg=colour1"'
 alias treset='tmux select-pane -P "bg=colour0"'
 alias uhtop='htop -u $USER'
 alias watch="watch --differences"
-# shellcheck disable=SC2139
-alias sat="sudo $(command sat)"
+alias sat='sudo $(which sat)'
 alias psql="env PGCONNECT_TIMEOUT=2 psql"
 
 # enable color support of ls and also add handy aliases
@@ -38,6 +37,7 @@ alias 42='echo The answer to Life, the Universe and Everything.'
 alias starwars='telnet towel.blinkenlights.nl'
 
 if command -v cowsay >/dev/null; then
+    # shellcheck disable=SC2154
     alias allcows='cowsay -l | sed "1d"|tr " " "\n"|while read f; do cowsay -f $f $f;done'
     alias randcow='cowsay -f $(cowsay -l|sed "1d"|tr " " "\n"|grep -vE "sodomized|telebears|head-in"|shuf -n1)'
 fi

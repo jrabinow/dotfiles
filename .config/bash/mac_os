@@ -2,7 +2,6 @@
 
 if [ "$(type -t ls)" != "alias" ]; then
     alias ls="ls -G"
-    alias grep='grep --color=always'
 fi
 alias utop='top -U $USER'
 alias updatedb="sudo bash -c 'cd / && /opt/local/bin/slocate -u'"
