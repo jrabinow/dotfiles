@@ -59,7 +59,7 @@ function install_coc_ext ()
     if command -v npm 2>/dev/null; then
         npm install --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
     else
-        sed -i -E "s#(\s*)(Plug 'neoclide/coc.nvim')#\1\"\2#" ~/.vim/vimrc
+        sed -i -E "s%(\s*)(Plug 'neoclide/coc.nvim')%\1\"\2%" ~/.vim/vimrc
     fi
     cd - 2>/dev/null
 }
