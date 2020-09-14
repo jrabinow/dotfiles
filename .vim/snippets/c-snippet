@@ -3,6 +3,9 @@
 #include <errno.h>
 #include <errno.h>
 #include <getopt.h>
+#ifdef __linux__
+# include <closeout.h>
+#endif
 
 typedef struct {
     int optind;
@@ -44,5 +47,8 @@ ParsedArgs parse_args(int argc, char* argv[])
 int main(int argc, char *argv[])
 {
     ParsedArgs parsed_args = parse_args(argc, argv);
+#ifdef __linux__
+    atexit(close_stdout);
+#endif
     return 0;
 }
