@@ -91,4 +91,4 @@ unset load_modules
 HISTSIZE=30000
 HISTFILESIZE=30000
 # don't put duplicate lines in the history
-HISTCONTROL=ignoreboth:erasedups
+HISTCONTROL="erasedups:ignoreboth"

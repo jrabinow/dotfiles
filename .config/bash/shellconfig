@@ -19,8 +19,13 @@ shopt -s checkwinsize
 shopt -s no_empty_cmd_completion
 # extended glob pattern matching
 shopt -s extglob
+# Enable history expansion with space
+# E.g. typing !!<space> will replace the !! with your last command
+bind Space:magic-space
+# Immediately add a trailing slash when autocompleting symlinks to directories, disabling for now
+#bind "set mark-symlinked-directories on"
 
-if [ "${BASH_VERSINFO[0]}" == "4" ]; then
+if [ "${BASH_VERSINFO[0]}" -ge 4 ]; then
     # perform shell expansion when completing with tab
     shopt -s direxpand
     # ** pattern represents all files in current directory and subdirectories

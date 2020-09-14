@@ -192,3 +192,15 @@ function hclone () {
     fi
     git clone "$url"
 }
+
+function cheatsheet ()
+{
+    topic="${@}"
+    curl "cheat.sh/${topic}"
+}
+
+function weather ()
+{
+    location="${@}"
+    curl "v2.wttr.in/${location}"
+}
