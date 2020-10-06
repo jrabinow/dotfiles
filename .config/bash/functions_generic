@@ -3,6 +3,8 @@
 # calculator integrated in command-line
 function ? () { echo "$@"|bc -l; }
 
+function d? () { printf "%.2f\n" $(? "$@"); }
+
 # shortcut for find all files containing pattern in name under current dir
 function search () { find . -path '*.git' -prune -o -path '*.idea' -prune -o -iname "*${1}*" -print; }
 
