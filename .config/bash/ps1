@@ -4,13 +4,13 @@ PROMPT_DIRTRIM=3
 
 if [[ ${EUID} == 0 ]]; then
     # red
-    sq_color="\[\033[0;31m\]"
+    sq_color="\001\033[0;31m\002"
 else
     # light blue
-    sq_color="\[\033[0;36m\]"
+    sq_color="\001\033[0;36m\002"
 fi
-reset_color="\[\033[01;39m\]"
-remove_bold="\\[\\033[0m\\]"
+reset_color="\001\033[01;39m\002"
+remove_bold="\001\033[0m\002"
 angle_se='\342\224\214'
 angle_ne='\342\224\224'
 line_h='\342\224\200'
@@ -27,16 +27,16 @@ function format_pipestatus ()
     # save PIPESTATUS very first thing https://unix.stackexchange.com/a/163660
     _pipestatus=( "${PIPESTATUS[@]}" )
     status_str=""
-    reset_color="\033[01;39m"
+    reset_color="\001\033[01;39m\002"
     success_symbol='\342\234\223'
     error_symbol='\342\234\227'
     line_h='\342\224\200'
     if [[ ${EUID} == 0 ]]; then
         # red
-        sq_color="\033[0;31m"
+        sq_color="\001\033[0;31m\002"
     else
         # light blue
-        sq_color="\033[0;36m"
+        sq_color="\001\033[0;36m\002"
     fi
     display=0
     for val in "${_pipestatus[@]}"; do
