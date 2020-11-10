@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+set -e -u
+set -o pipefail
+
+# write some cool doc here
+
+function install_sudo ()
+{
+    mkdir -p ~/bin
+    curl 'https://gitlab.com/st42/termux-sudo/-/raw/master/sudo' -o ~/bin/sudo
+    chmod +x ~/bin/sudo
+}
+
+function usage ()
+{
+    cat << EOF
+Usage: $(basename $0) [OPTION]...
+Options: --help, -h: show this help dialog
+EOF
+}
+
+function main ()
+{
+    while getopts "h-:" opt; do
+        case ${opt} in
+            h)  # help message
+                usage
+                exit 0
+                ;;
+            -)
+                case "${OPTARG}" in
+                    help)
+                        usage
+                        exit 0
+                        ;;
+                    *)
+                        printf 'Unknown option, exiting now\n' >&2
+                        exit 1
+                        ;;
+                esac
+                ;;
+            ?)
+                printf 'Unknown option, exiting now\n' >&2
+                exit 1
+                ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+    [[ "${1:-}" == '--' ]] && shift
+
+    install_sudo
+}
+
+if [ "${BASH_SOURCE[0]}" == "$0" ]; then
+    main "$@"
+fi

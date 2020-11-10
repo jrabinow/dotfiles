@@ -113,9 +113,12 @@ function setup_homedir ()
         install_coc_ext
 
         if "${INITIAL_ACCOUNT_CONFIG}"; then
-            case $(uname) in
-                Darwin)
+            case $(uname -a) in
+                Darwin*)
                     ./platform_specific/macos
+                    ;;
+                *Android)
+                    ./platform_specific/android
                     ;;
             esac
         fi
