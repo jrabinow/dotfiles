@@ -55,3 +55,6 @@
 [submodule "vim/vim-vmath"]
 	path = .vim/plugged/vim-vmath
 	url = https://github.com/nixon/vim-vmath.git
+[submodule ".config/gdb/gdb-dashboard"]
+	path = .config/gdb/gdb-dashboard
+	url = https://github.com/cyrus-and/gdb-dashboard.git

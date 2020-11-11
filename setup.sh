@@ -138,6 +138,7 @@ function main ()
         .config/bash
         .config/bleachbit
         .config/coc
+        .config/gdb
         .config/git
         .config/hg
         .config/tmux
