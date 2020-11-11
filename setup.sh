@@ -85,10 +85,6 @@ function prepare_commit ()
         rm -rf "./${dir}/${file}"
         cp -rv "$HOME/$f" "./${dir}/"
     done
-    for src in "${!LINKS[@]}"; do
-        dst="${LINKS[$src]}"
-        test -f "${dst}" || test -L "${dst}" || ln -sv "$src" "$dst"
-    done
     manage_vim_plugins
 }
 
@@ -106,8 +102,9 @@ function setup_homedir ()
             cp -rv "$f" "${HOME}/${dir}/"
         done
         for src in "${!LINKS[@]}"; do
-            dst="${LINKS[$src]}"
-            test -f "$HOME/${dst}" || test -L "$HOME/${dst}" || ln -sv "$HOME/$src" "$HOME/$dst"
+            dst="${LINKS[${src}]}"
+            mkdir -p "$(dirname "${dst}")"
+            test -f "~/${dst}" || test -L "~/${dst}" || ln -sv "$HOME/${src}" "$HOME/${dst}"
         done
         prepare_rootenv
         install_coc_ext
@@ -140,7 +137,7 @@ function main ()
         .bashrc
         .config/bash
         .config/bleachbit
-        .config/coc/extensions/package.json
+        .config/coc
         .config/git
         .config/hg
         .config/tmux
@@ -161,7 +158,11 @@ function main ()
         .local/share/psql_history
         .local/share/vim
     )
-    declare -A LINKS=( [".vim/.vimrc"]=".vim/init.vim" )
+    declare -A LINKS=(
+        [".vim/vimrc"]=".vim/init.vim"
+        [".local/share/coc/extensions"]=".config/coc/extensions"
+        [".config/coc/package.json"]="./local/share/coc/extensions/package.json"
+    )
     local PREPARE_COMMIT=false
     local INITIAL_ACCOUNT_CONFIG=false
 
