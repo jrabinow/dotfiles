@@ -162,7 +162,7 @@ function main ()
     declare -A LINKS=(
         [".vim/vimrc"]=".vim/init.vim"
         [".local/share/coc/extensions"]=".config/coc/extensions"
-        [".config/coc/package.json"]="./local/share/coc/extensions/package.json"
+        [".config/coc/package.json"]="./.local/share/coc/extensions/package.json"
     )
     local PREPARE_COMMIT=false
     local INITIAL_ACCOUNT_CONFIG=false
