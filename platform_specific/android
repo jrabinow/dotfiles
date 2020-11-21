@@ -12,6 +12,12 @@ function install_sudo ()
     chmod +x ~/bin/sudo
 }
 
+function disable_crypt ()
+{
+    sed -i -E 's/^    creds$/    #creds/' ~/.bashrc
+    sed -i -E 's/^\[include\]$/#[include]/;s@    path = ~/.config/git/creds@    #path = ~/.config/git/creds@' ~/.config/git/config
+}
+
 function usage ()
 {
     cat << EOF

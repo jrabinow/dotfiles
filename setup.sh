@@ -126,7 +126,7 @@ function usage ()
     cat << EOF
 Usage: $(basename $0) [OPTION]...
 Options: -h, --help: display this help message
-     --initial-account-config: run scripts to configure account (new hardware, OS reinstall, new account, etc)
+     --init: run scripts to configure account (new hardware, OS reinstall, new account, etc)
      -p: prepare new commit by copying all files to repo dir
 EOF
 }
@@ -182,7 +182,7 @@ function main ()
                         usage
                         exit 0
                         ;;
-                    initial-account-config)
+                    init)
                         INITIAL_ACCOUNT_CONFIG=true
                         ;;
                     *)
