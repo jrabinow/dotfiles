@@ -7,7 +7,7 @@ alias qvm-reset-menus="qvm-ls|tail -n +2|awk '{print \$1}'|xargs -n1 qvm-appmenu
 function qvm-shell ()
 {
     vm="${1}"; shift
-    desktopfile="$(ls "$HOME/.local/share/applications/$vm-*erminal.desktop")"
+    desktopfile="$(ls $HOME/.local/share/applications/$vm-*erminal.desktop)"
     cmd="$(grep '^Exec' "${desktopfile}"|cut -d'=' -f2-)"
     eval "${cmd}"
 }
@@ -83,6 +83,12 @@ function qvm-restart-netvm ()
         for vm in ${affected_vms}; do
             qvm-prefs "${vm}" netvm "${netvm_name}"
         done
+        if [ "${netvm_name}" == sys-net ]; then
+            qvm-usb \
+                |grep Realtek \
+                |awk '{print $1}' \
+                |xargs -r -n1 qvm-device usb attach sys-net
+        fi
     else
         printf "Usage: qvm-restart-netvm NETVM_NAME\n"
     fi
