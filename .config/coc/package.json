@@ -5,7 +5,6 @@
     "coc-erlang_ls": ">=0.0.1",
     "coc-git": ">=1.8.2",
     "coc-html": ">=1.2.4",
-    "coc-java": ">=1.4.12",
     "coc-jedi": ">=0.16.0",
     "coc-json": ">=1.2.6",
     "coc-sh": ">=0.5.1",

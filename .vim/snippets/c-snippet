@@ -25,15 +25,34 @@ ParsedArgs parse_args(int argc, char* argv[])
     int c, option_index = 0;
 
     static struct option longopts[] = {
-        {"help", no_argument, 0, 'h'},
-        {0, 0, 0, 0}
+        {"help", no_argument, NULL, 'h'},
+    /*
+        {"foo-opt", required_argument, NULL, 'f'},
+        {"bar-opt", optional_argument, &check_optarg, 12345},
+    */
+        {NULL, 0, NULL, 0}
     };
 
-    while((c = getopt_long(argc, argv, "hn:", longopts, &option_index)) != -1) {
+    while((c = getopt_long(argc, argv, "hf=", longopts, &option_index)) != -1) {
         switch(c) {
             case 'h':
                 usage(argv[0], stdout);
                 exit(EXIT_SUCCESS);
+         /*
+            case 'f':
+                {
+                    const char* argval = optarg;
+                    puts(argval);
+                }
+                break;
+            case 0:
+                if (check_optarg == 12345) {
+                    printf("argument provided: %s\n", optarg);
+                }
+                break;
+         */
+            case ':':
+                fputs("missing argument", stderr);
             default:
                 usage(argv[0], stderr);
                 exit(EXIT_FAILURE);
@@ -47,6 +66,8 @@ ParsedArgs parse_args(int argc, char* argv[])
 int main(int argc, char *argv[])
 {
     ParsedArgs parsed_args = parse_args(argc, argv);
+    argc -= optind;
+    argv += optind;
 #ifdef __linux__
     atexit(close_stdout);
 #endif

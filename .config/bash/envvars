@@ -7,3 +7,7 @@ export EDITOR=vim
 #export LC_ALL="C"
 # Use standard ISO 8601 timestamp: %F=%Y-%m-%d;%T=%H:%M:%S (24-hours format)
 HISTTIMEFORMAT="%F %T "
+
+if command -v direnv >/dev/null; then
+    eval "$(direnv hook bash)"
+fi
