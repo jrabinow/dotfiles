@@ -79,11 +79,13 @@ function manage_vim_plugins ()
 function prepare_commit ()
 {
     for f in "${files[@]}"; do
-        dir="$(dirname "${f}")"
-        file="$(basename "${f}")"
-        mkdir -p "./${dir}"
-        rm -rf "./${dir}/${file}"
-        cp -rv "$HOME/$f" "./${dir}/"
+        if [ -e "$HOME/${f}" ]; then
+            dir="$(dirname "${f}")"
+            file="$(basename "${f}")"
+            mkdir -p "./${dir}"
+            rm -rf "./${dir}/${file}"
+            cp -rv "$HOME/$f" "./${dir}/"
+        fi
     done
     manage_vim_plugins
 }
@@ -162,6 +164,7 @@ function main ()
         .local/share/bash
         .local/share/psql_history
         .local/share/vim
+        .ssh/config.d
     )
     declare -A LINKS=(
         [".vim/vimrc"]=".vim/init.vim"

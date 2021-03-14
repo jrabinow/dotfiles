@@ -32,8 +32,30 @@ function godoc () { $(command -v godoc) "$@"|less; }
 
 function venv ()
 {
+    save_pwd="$(pwd)"
     while [ "$(pwd)" != "/" ] && [ ! -f ./venv/bin/activate ]; do
         up
     done
     test -f ./venv/bin/activate && source ./venv/bin/activate
+    cd "${save_pwd}"
+}
+
+# print list of buck targets under a dir in fbcode
+function targets ()
+{
+    dir="${1:-.}"; shift
+    basedir="$(realpath "${dir}" 2>/dev/null)"
+
+    while [ "${basedir}" != "/" ] && [ ! -f "${basedir}/WORKSPACE" ]; do
+        basedir="$(realpath "${basedir}/..")"
+    done
+    if [ ! -f "${basedir}/WORKSPACE" ]; then
+        return
+    fi
+
+    target_files=("$(find "${dir}" -name BUILD)")
+    for t in "${target_files[@]}"; do
+        dir="$(realpath $(dirname "${t}")|perl -pe "s#${basedir}#/#")"
+        perl -lne 'm!\s*name\s*=\s*['\''"](\w+)['\''"],$! and print q('"$dir:"').$1' "${t}"
+    done|sort
 }

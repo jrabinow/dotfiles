@@ -1,4 +1,6 @@
-.config/bash/data/bookmarks
 .vim/.netrwhist
+.vim/init.vim
 .*.swp
 .config/bash/jobox
+.config/coc/memos.json
+.config/git/credstore

@@ -91,7 +91,7 @@ unset load_modules
 
 # this goes here because putting it in another file means bash ignores it for
 # some reason :-(
-HISTSIZE=30000
-HISTFILESIZE=30000
+HISTSIZE=100000
+HISTFILESIZE=100000
 # don't put duplicate lines in the history
 HISTCONTROL="erasedups:ignoreboth"
