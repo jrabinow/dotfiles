@@ -5,10 +5,14 @@
 function ensure_source_present ()
 {
     local SCM_PROMPT="${BASH_MOD_DIR}/source_control/scm-prompt"
+    local REMOTE_SCM_URL=https://raw.githubusercontent.com/ryanmce/dotfiles/master/scm-prompt.sh
+    test -f "${SCM_PROMPT}" || \
+        curl "${REMOTE_SCM_URL}" > "${SCM_PROMPT}"
+
     local GIT_PROMPT="${BASH_MOD_DIR}/source_control/git-prompt"
-    local REMOTE_URL=https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-    test -f "${SCM_PROMPT}" || test -f "${GIT_PROMPT}" || \
-        curl $REMOTE_URL | sed -e 's/^__git_ps1 ()$/_dotfiles_scm_info ()/g' > "${GIT_PROMPT}"
+    local REMOTE_GIT_URL=https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+    test -f "${GIT_PROMPT}" || \
+        curl "${REMOTE_GIT_URL}" | sed -e 's/^__git_ps1 ()$/_dotfiles_scm_info ()/g' > "${GIT_PROMPT}"
 }
 
 # stolen from Gary Bernhardt https://github.com/garybernhardt/dotfiles/blob/master/.bashrc
