@@ -35,26 +35,37 @@
   ci = commit
   br = branch
   cob = checkout -b
-  diff = "diff -w --word-diff"
+  diff = "diff -w --word-diff --color-moved"
   show = "show -w --word-diff"
+  # push to non-existent upstream branch
+  fpush = "!branch=$(git rev-parse --abbrev-ref HEAD); remote=$(git remote); git branch -u \"${remote}\" \"${branch}\"; git push -u \"${remote}\" \"${branch}\""
+  # delete branch at remote
+  delbr = "!git push $(git remote) -d "
+  # pretty logging 1
   lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  # pretty logging 2
   lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-  lg3 = log --graph --all --decorate --stat --date=iso
+  # show log of filechanges
+  filelog = log --graph --all --decorate --stat --date=iso
+  # list of commit hash+message in reverse order
+  recap = "!git log --all --oneline --no-merges --author=$(git config user.email)"
+  changelog = "!git log --oneline --no-merges $(git tag --sort=creatordate|tail -1)..HEAD"
   lg = !"git lg2"
+  # show remote url
   url = config --get remote.origin.url
+  # commit everything yolo mode with accompanying commit message
   yolo = !git commit -am \"$(curl -s http://whatthecommit.com/index.txt)\"
   # keeping the below around till i find a good use for it
   stag = "!id=`git rev-parse --verify HEAD`; git tag tag_for_${id:0:8} -m \"Tag for commit $id\""
   vtag = !git tag -v `git describe`
-  fpush = "!branch=$(git rev-parse --abbrev-ref HEAD); remote=$(git remote); git branch -u \"${remote}\" \"${branch}\"; git push -u \"${remote}\" \"${branch}\""
-  fpull = "!git branch -u origin $(git rev-parse --abbrev-ref HEAD)"
-  delbr = "!git push $(git remote) -d "
-  prtxt = "log -n1 --pretty=format:%B"
+  # print last commit message
+  commitmsg = "log -n1 --pretty=format:%B"
+  # who committed the most to this repo
   leaderboard = "shortlog -sn --all --no-merges"
+  # which branch was updated most recently
   recent = "for-each-ref --count=10 --sort=-committerdate refs/heads/ --format=\"%(refname:short)\""
-  # commented out because unreliable (weird commits included and looks disordered)
-  #recap = "!git log --all --oneline --no-merges --author=$(git config user.email)"
-  changelog = "!git log --oneline --no-merges $(git tag --sort=creatordate|tail -1)..HEAD"
+  # Show the commits and content in this branch
+  unpushed = log --pretty=oneline origin/master..
 [pull]
 	rebase = false
 [merge]
