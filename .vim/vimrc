@@ -201,6 +201,10 @@ vmap  <expr>  D        DVB_Duplicate()
 vmap <expr>  ++  VMATH_YankAndAnalyse()
 nmap         ++  vip++
 
+" read various filetypes in vim
+" https://www.reddit.com/r/vim/comments/48zclk/i_just_found_a_simple_method_to_read_pdf_doc_odt/
+autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
+
 call plug#begin('~/.vim/plugged')
     Plug 'rhysd/git-messenger.vim'
     Plug 'keith/swift.vim'
