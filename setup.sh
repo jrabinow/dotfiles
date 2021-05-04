@@ -51,7 +51,7 @@ function prepare_rootenv ()
 function install_coc_ext ()
 {
     # Install extensions
-    mkdir -p ~/.config/coc/extensions
+    mkdir -p "${HOME}/.local/share/coc/extensions"
     cd ~/.config/coc/extensions
     if [ ! -f package.json ]; then
         printf '{"dependencies":{}}\n'> package.json
@@ -106,7 +106,7 @@ function setup_homedir ()
         for src in "${!LINKS[@]}"; do
             dst="${LINKS[${src}]}"
             mkdir -p "$(dirname "${dst}")"
-            test -f "~/${dst}" || test -L "~/${dst}" || ln -sv "$HOME/${src}" "$HOME/${dst}"
+            test -L ~/"${src}" || ln -sv ~/"${dst}" ~/"${src}"
         done
         prepare_rootenv
         install_coc_ext
@@ -167,9 +167,8 @@ function main ()
         .ssh/config.d
     )
     declare -A LINKS=(
-        [".vim/vimrc"]=".vim/init.vim"
-        [".local/share/coc/extensions"]=".config/coc/extensions"
-        [".config/coc/package.json"]="./.local/share/coc/extensions/package.json"
+        [".vim/init.vim"]=".vim/vimrc"
+        [".config/coc/extensions"]=".local/share/coc/extensions"
     )
     local PREPARE_COMMIT=false
     local INITIAL_ACCOUNT_CONFIG=false
