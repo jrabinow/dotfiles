@@ -12,6 +12,18 @@ sudo -v
 # Keep-alive: update existing `sudo` time stamp until `.macos` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+
+############
+# Security #
+############
+
+# Don't spit loads of gunk over the network
+sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool YES
+printf "[default]\nport445=no_netbios\n"| sudo tee /etc/nsmb.conf > /dev/null
+sudo launchctl disable system/netbiosd
+sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.netbiosd.plist
+
+
 ###############################################################################
 # General UI/UX                                                               #
 ###############################################################################

@@ -12,22 +12,29 @@ pager =
 color =
 #myparent =
 purge =
+# the following need py-hgexperimental installed
+githelp =
+smartlog =
+githelp =
+sparse =
+backups =
+undo =
 #remotenames = /usr/lib/python2.7/site-packages/remotenames.py
 #lz4revlog = /tmp/lz4revlog/lz4revlog.py
-#remotefilelog = /tmp/hg-experimental/remotefilelog/remotefilelog.py
-#smartlog = /tmp/hg-experimental/hgext3rd/smartlog.py
+remotefilelog =
 
 [revsetalias]
-cur = reverse(only(last(.::), master))
+cur = reverse(only(last(.::), present(master)+present(@)))
 r($1) = reverse($1)
 top = last(.::)
 bottom = first(. % master)
 below = first(. % master)~1
 child = children(.)
 stable = remote/fbcode/stable
+next = max(children(.))
+prev = .^
 
 [alias]
-# hg prev hg next
 #top = update top
 #bot = update bottom
 #bottom = update bottom

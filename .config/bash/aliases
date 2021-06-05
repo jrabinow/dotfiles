@@ -14,6 +14,7 @@ alias uhtop='htop -u $USER'
 alias watch="watch --differences"
 alias sat='sudo $(which sat)'
 alias psql="env PGCONNECT_TIMEOUT=2 psql"
+alias less="less -R"
 
 # enable color support of ls and also add handy aliases
 if command -v dircolors >/dev/null; then

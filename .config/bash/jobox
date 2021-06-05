@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC2154
 alias deploy_server='cp -v ${jobox}/Kili/build/libs/Kili.war /opt/tomcat9/webapps/'
-DBDIR="$HOME/Documents/infra_data/db"
+DBDIR="$HOME/Documents/work/jobox/infra_data/db"
 
 function start_tomcat ()
 {
@@ -175,5 +175,5 @@ alias reset_db='stop_db && rm -r "${DBDIR}" && cp -R "${DBDIR}.bak" "${DBDIR}" &
 alias backup_localdb='stop_db && rm -rf "${DBDIR}.bak" && cp -R "${DBDIR}" "${DBDIR}.bak" && start_db'
 alias mipemode="cd mipe && venv && cd -"
 alias testnpush="gradle clean build && git push"
-alias format-check="java-format-check -t 30"
-alias format="java-format-check -a format -t 30"
+alias jobox-format-check="java-format-check -t 30"
+alias jobox-format="java-format-check -a format -t 30"

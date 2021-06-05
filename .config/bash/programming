@@ -27,9 +27,6 @@ function init_cscope ()
     esac
 }
 
-# stupid godoc program just throws text at stdout without paging
-function godoc () { $(command -v godoc) "$@"|less; }
-
 function venv ()
 {
     save_pwd="$(pwd)"

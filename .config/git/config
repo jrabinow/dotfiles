@@ -9,6 +9,7 @@
 [diff]
     tool = vimdiff
 [credential]
+    helper = store --file ~/.config/git/credstore
     helper = cache --timeout=7200
 [color]
   ui = auto
@@ -66,6 +67,11 @@
   recent = "for-each-ref --count=10 --sort=-committerdate refs/heads/ --format=\"%(refname:short)\""
   # Show the commits and content in this branch
   unpushed = log --pretty=oneline origin/master..
+  # hide a branch for later
+  hide = "!f() { git update-ref refs/hidden/$1 $1 && git br -D $1; }; f"
+  unhide = "!f() { git br $1 && git update-ref $1 refs/hidden/$1; }; f"
+  hidden = "!f() { git show-ref | grep hidden; }; f"
+  root = "rev-parse --show-toplevel"
 [pull]
 	rebase = false
 [merge]

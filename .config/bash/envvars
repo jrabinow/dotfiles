@@ -3,6 +3,7 @@
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export EDITOR=vim
+export GOPATH=~/Documents/code/thirdparty/golang-libs
 #export LANG="C"
 #export LC_ALL="C"
 # Use standard ISO 8601 timestamp: %F=%Y-%m-%d;%T=%H:%M:%S (24-hours format)
