@@ -58,3 +58,6 @@
 [submodule "gdb/gdb-dashboard"]
 	path = .config/gdb/gdb-dashboard
 	url = https://github.com/cyrus-and/gdb-dashboard.git
+[submodule "vim/vim-go"]
+	path = .vim/plugged/vim-go
+	url = https://github.com/fatih/vim-go.git
