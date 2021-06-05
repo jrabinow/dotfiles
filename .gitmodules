@@ -1,3 +1,6 @@
+[submodule "gdb/gdb-dashboard"]
+	path = .config/gdb/gdb-dashboard
+	url = https://github.com/cyrus-and/gdb-dashboard.git
 [submodule "tmux/tmux-resurrect"]
 	path = .config/tmux/plugins/tmux-resurrect
 	url = https://github.com/tmux-plugins/tmux-resurrect
@@ -55,9 +58,6 @@
 [submodule "vim/vim-vmath"]
 	path = .vim/plugged/vim-vmath
 	url = https://github.com/nixon/vim-vmath.git
-[submodule "gdb/gdb-dashboard"]
-	path = .config/gdb/gdb-dashboard
-	url = https://github.com/cyrus-and/gdb-dashboard.git
 [submodule "vim/vim-go"]
 	path = .vim/plugged/vim-go
 	url = https://github.com/fatih/vim-go.git

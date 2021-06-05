@@ -122,6 +122,24 @@ function! TrimSpaces() range
 endfunction
 
 command! -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
+
+" kill any trailing whitespace on save
+autocmd FileType c,cabal,cpp,haskell,javascript,php,python,readme,text
+  \ autocmd BufWritePre <buffer>
+  \ :call <SID>StripTrailingWhitespaces()
+
+function! <SID>StripTrailingWhitespaces()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+
 " Create the 'tags' file
 command! MakeTags !maketags
 command! -nargs=0 Reload source ~/.vim/vimrc
