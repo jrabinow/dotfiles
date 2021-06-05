@@ -206,7 +206,7 @@ nmap         ++  vip++
 autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
 
 call plug#begin('~/.vim/plugged')
-    Plug 'rhysd/git-messenger.vim'
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
     Plug 'keith/swift.vim'
     Plug 'majutsushi/tagbar'
     Plug 'mariappan/dragvisuals.vim'
@@ -215,6 +215,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'nixon/vim-vmath'
     Plug 'pangloss/vim-javascript'
+    Plug 'rhysd/git-messenger.vim'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-surround'
     Plug 'udalov/kotlin-vim'
