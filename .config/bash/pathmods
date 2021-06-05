@@ -7,7 +7,8 @@ PATH_DIRS_PREPEND="
     /opt/local/bin
     /opt/local/sbin
     /opt/local/libexec/gnubin
-    /opt/local/lib/postgresql96/bin
+    /opt/local/libexec/llvm-10/bin
+    /opt/local/lib/postgresql13/bin
 "
 
 PATH_DIRS_APPEND="

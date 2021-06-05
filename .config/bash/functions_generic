@@ -3,7 +3,8 @@
 # calculator integrated in command-line
 function ? () { echo "$@"|bc -l; }
 
-function d? () { printf "%.2f\n" $(? "$@"); }
+# shellcheck disable=SC2211
+function d? () { printf "%.2f\n" "$(echo "$@"|bc -l)"; }
 
 # shortcut for find all files containing pattern in name under current dir
 function search () { find . -path '*.git' -prune -o -path '*.idea' -prune -o -iname "*${1}*" -print; }
@@ -197,18 +198,32 @@ function hclone () {
 
 function cheatsheet ()
 {
-    topic="${@}"
+    topic="${*}"
     curl "cheat.sh/${topic}"
 }
 
 function weather ()
 {
-    location="${@}"
+    location="${*}"
     curl "v2.wttr.in/${location}"
 }
 
 function unquote ()
 {
-    url="$1"; shift
+    url="${*}"; shift
     python3 -c "from urllib.parse import unquote; print(unquote('${url}'))"
+}
+
+function setup-ssh-key-login ()
+{
+    local desthost="${1}"; shift
+    local keyfile="${1:-${HOME}/.ssh/keys/${desthost}.id_ed25519}"; shift
+
+    if [ -n "${desthost}" ] && [ -n "${keyfile}" ]; then
+        ssh-keygen -t ed25519 -f "${keyfile}"
+        ssh-copy-id -i "${keyfile}" "${desthost}"
+    else
+        # shellcheck disable=SC2016
+        printf 'Undefined:\n$desthost=%s\n$keyfile=%s\n' "${desthost}" "${keyfile}"
+    fi
 }
