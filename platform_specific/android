@@ -21,7 +21,7 @@ function disable_crypt ()
 function usage ()
 {
     cat << EOF
-Usage: $(basename $0) [OPTION]...
+Usage: $(basename "$0") [OPTION]...
 Options: --help, -h: show this help dialog
 EOF
 }
