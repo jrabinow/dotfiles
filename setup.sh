@@ -34,22 +34,18 @@ function prepare_rootenv ()
     mkdir -p "${ROOTENV_DIR}"/{bin,.config}
     cd "${ROOTENV_DIR}"
     for f in "${LNFILES[@]}"; do
-        test -L ${f} && printf "link $HOME/${f} already exists, skipping\n" \
-            || ln -s ~/$f ${f}
-    done
-
-    if command -v tmux >/dev/null; then
-        # if tmux version is less than 3.0
-        tmux_version="$(tmux -V|sed -En "s/^tmux ([0-9]+(\.[0-9]+)?).*/\1/p")"
-        if [[ "$(echo "${tmux_version} < 3.1"|bc)" == 1 ]] && [ ! -L ~/.tmux.conf ]; then
-            ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf
+        if [ -L "${f}" ]; then
+            printf "link %s already exists, skipping\n" "$HOME/${f}"
+        else
+            ln -s ~/"${f}" "${f}"
         fi
-    fi
+    done
     cd -
 }
 
-function install_coc_ext ()
+function install_vim_plugins ()
 {
+    vim -c "PlugInstall" -c quit -c quit
     # Install extensions
     mkdir -p "${HOME}/.local/share/coc/extensions"
     cd ~/.config/coc/extensions
@@ -64,21 +60,9 @@ function install_coc_ext ()
     cd - 2>/dev/null
 }
 
-function manage_vim_plugins ()
-{
-    for submodule in $(git st --short|\
-        grep '?? \.vim/plugged' | \
-        awk '{print $2}'); do
-        cd "${submodule}"
-        remote_url=$(git url)
-        cd - 2>/dev/null
-        git submodule add --name "vim/$(basename "${submodule}")" "${remote_url}" "${submodule}"
-    done
-}
-
 function prepare_commit ()
 {
-    for f in "${files[@]}"; do
+    for f in "${FILES[@]}"; do
         if [ -e "$HOME/${f}" ]; then
             dir="$(dirname "${f}")"
             file="$(basename "${f}")"
@@ -87,46 +71,55 @@ function prepare_commit ()
             cp -rv "$HOME/$f" "./${dir}/"
         fi
     done
-    manage_vim_plugins
+    rm -rf ./.vim/plugged
 }
 
 function setup_homedir ()
 {
-        for dir in  "${createdirs[@]}"; do
-            mkdir -p "$HOME/${dir}"
-        done
+    for dir in  "${CREATEDIRS[@]}"; do
+        mkdir -p "$HOME/${dir}"
+    done
 
-        for f in "${files[@]}"; do
-            dir="$(dirname "${f}")"
-            file="$(basename "${f}")"
-            mkdir -p "${HOME}/${dir}"
-            rm -rf "${HOME}/${dir}/${file}"
-            cp -rv "$f" "${HOME}/${dir}/"
-        done
-        for src in "${!LINKS[@]}"; do
-            dst="${LINKS[${src}]}"
-            mkdir -p "$(dirname "${dst}")"
-            test -L ~/"${src}" || ln -sv ~/"${dst}" ~/"${src}"
-        done
-        prepare_rootenv
-        install_coc_ext
+    for f in "${FILES[@]}"; do
+        dir="$(dirname "${f}")"
+        file="$(basename "${f}")"
+        mkdir -p "${HOME}/${dir}"
+        rm -rf "${HOME:?}/${dir}/${file}"
+        cp -rv "$f" "${HOME}/${dir}/"
+    done
+    for src in "${!LINKS[@]}"; do
+        dst="${LINKS[${src}]}"
+        mkdir -p "$(dirname "${dst}")"
+        test -L ~/"${src}" || ln -sv ~/"${dst}" ~/"${src}"
+    done
 
-        if "${INITIAL_ACCOUNT_CONFIG}"; then
-            case $(uname -a) in
-                Darwin*)
-                    ./platform_specific/macos
-                    ;;
-                *Android)
-                    ./platform_specific/android
-                    ;;
-            esac
+    if command -v tmux >/dev/null; then
+        # if tmux version is less than 3.0
+        tmux_version="$(tmux -V|sed -En "s/^tmux ([0-9]+(\.[0-9]+)?).*/\1/p")"
+        if [[ "$(echo "${tmux_version} < 3.1"|bc)" == 1 ]] && [ ! -L ~/.tmux.conf ]; then
+            ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf
         fi
+    fi
+
+    prepare_rootenv
+    install_vim_plugins
+
+    if "${INITIAL_ACCOUNT_CONFIG}"; then
+        case $(uname -a) in
+            Darwin*)
+                ./platform_specific/macos
+                ;;
+            *Android)
+                ./platform_specific/android
+                ;;
+        esac
+    fi
 }
 
 function usage ()
 {
     cat << EOF
-Usage: $(basename $0) [OPTION]...
+Usage: $(basename "$0") [OPTION]...
 Options: -h, --help: display this help message
      --init: run scripts to configure account (new hardware, OS reinstall, new account, etc)
      -p: prepare new commit by copying all files to repo dir
@@ -135,7 +128,7 @@ EOF
 
 function main ()
 {
-    readonly files=(
+    readonly FILES=(
         .bashrc
         .config/bash
         .config/bleachbit
@@ -160,7 +153,7 @@ function main ()
         .xsession
         .Xresources
     )
-    readonly createdirs=(
+    readonly CREATEDIRS=(
         .local/share/bash
         .local/share/psql_history
         .local/share/vim
