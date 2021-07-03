@@ -12,6 +12,8 @@ PATH_DIRS_PREPEND="
 "
 
 PATH_DIRS_APPEND="
+    /bin
+    /usr/bin
     /sbin
     /usr/sbin
 "
