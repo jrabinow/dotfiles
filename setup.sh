@@ -112,6 +112,8 @@ function setup_homedir ()
             *Android)
                 ./platform_specific/android
                 ;;
+            GNU/Linux)
+                ./platform_specific/linux
         esac
     fi
 }
@@ -155,6 +157,8 @@ function main ()
     )
     readonly CREATEDIRS=(
         .local/share/bash
+        .local/share/discord
+        ".local/share/YouTube Music"
         .local/share/psql_history
         .local/share/vim
         .ssh/config.d
@@ -162,6 +166,7 @@ function main ()
     declare -A LINKS=(
         [".vim/init.vim"]=".vim/vimrc"
         [".config/coc/extensions"]=".local/share/coc/extensions"
+        [".local/share/coc/extensions/package.json"]=".config/coc/package.json"
     )
     local PREPARE_COMMIT=false
     local INITIAL_ACCOUNT_CONFIG=false

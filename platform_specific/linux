@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+ln -s ~/.local/share/discord ~/.config/discord
+ln -s ~/.local/share/YouTube\ Music ~/.config/YouTube\ Music
