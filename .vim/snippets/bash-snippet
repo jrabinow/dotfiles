@@ -8,7 +8,7 @@ set -o pipefail
 function usage ()
 {
     cat << EOF
-Usage: $(basename "$0") [OPTION]...
+Usage: ${0##*/}" [OPTION]...
 Options: --help, -h: show this help dialog
 EOF
 }
@@ -26,6 +26,10 @@ function main ()
                     help)
                         usage
                         exit 0
+                        ;;
+                    foobar)
+                        foobar="${!OPTIND}"
+                        OPTIND=$((OPTIND + 1))
                         ;;
                     *)
                         printf 'Unknown option, exiting now\n' >&2

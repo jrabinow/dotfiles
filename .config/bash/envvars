@@ -9,6 +9,8 @@ export GOPATH=~/Documents/code/thirdparty/golang-libs
 # Use standard ISO 8601 timestamp: %F=%Y-%m-%d;%T=%H:%M:%S (24-hours format)
 HISTTIMEFORMAT="%F %T "
 
+HGRCPATH="${HOME}/.config/hg/hgrc"
+
 if command -v direnv >/dev/null; then
     eval "$(direnv hook bash)"
 fi

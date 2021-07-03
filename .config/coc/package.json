@@ -7,6 +7,7 @@
     "coc-html": ">=1.2.4",
     "coc-jedi": ">=0.16.0",
     "coc-json": ">=1.2.6",
+    "coc-perl": ">=1.0.2",
     "coc-sh": ">=0.5.1",
     "coc-sql": ">=0.3.0",
     "coc-tsserver": ">=1.5.4",
