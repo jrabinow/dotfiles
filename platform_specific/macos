@@ -879,6 +879,8 @@ defaults write com.google.Chrome.canary PMPrintingExpandedStateForPrint2 -bool t
 # Randomize port on launch
 #defaults write org.m0k.transmission RandomPort -bool true
 
+sudo /usr/sbin/DevToolsSecurity -enable
+
 ###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
