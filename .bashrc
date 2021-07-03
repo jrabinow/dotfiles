@@ -31,7 +31,10 @@ MODULE_NAMES=(
 
 case $(uname) in
     Linux)
-        MODULE_NAMES=(linux qubes ${MODULE_NAMES[@]})
+        if [ $(hostname) == "dom0" ]; then
+            MODULE_NAMES=(qubes ${MODULE_NAMES[@]})
+        fi
+        MODULE_NAMES=(linux ${MODULE_NAMES[@]})
         ;;
     Darwin)
         MODULE_NAMES=(mac_os ${MODULE_NAMES[@]})
