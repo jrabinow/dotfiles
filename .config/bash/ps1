@@ -52,9 +52,7 @@ function format_pipestatus ()
     fi
 }
 
-#PS1="${preamble_line1}\$([[ \$? != 0 ]] && echo \"${error_string}\")${info_line1}\n${preamble_line2}${info_line2}${closing_line2}"
-line2="${preamble_line2}${info_line2}${closing_line2}"
-PS1="${preamble_line1}\$(format_pipestatus )${info_line1}\n${line2}"
+PS1="${preamble_line1}\$([[ \$? != 0 ]] && echo \"${error_string}\")${info_line1}\n${preamble_line2}${info_line2}${closing_line2}"
 unset sq_color
 unset reset_color
 unset remove_bold
