@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# stolen from Gary Bernhardt https://github.com/garybernhardt/dotfiles/blob/master/.bashrc
+# Git prompt components
+function minutes_since_last_commit ()
+{
+    now="$(date +%s)"
+    #last_commit="$(git log --pretty=format:'%at' -1 2>/dev/null || echo $now)"
+    last_commit="$(git log --pretty=format:'%at' -1)"  # 2>/dev/null || echo $now)"
+    seconds_since_last_commit=$((now-last_commit))
+    minutes_since_last_commit=$((seconds_since_last_commit/60))
+    printf "%s\n" "${minutes_since_last_commit}"
+}
+
+function grb_git_prompt()
+{
+    local g
+    g="$(__gitdir)"
+    if [ -n "${g}" ]; then
+        local MINUTES_SINCE_LAST_COMMIT
+        MINUTES_SINCE_LAST_COMMIT=$(minutes_since_last_commit)
+        local COLOR
+        if [ "${MINUTES_SINCE_LAST_COMMIT}" -gt 30 ]; then
+            COLOR=$(color red)
+        elif [ "${MINUTES_SINCE_LAST_COMMIT}" -gt 10 ]; then
+            COLOR=$(color yellow)
+        else
+            COLOR=$(color green)
+        fi
+        local SINCE_LAST_COMMIT
+        SINCE_LAST_COMMIT="${COLOR}${MINUTES_SINCE_LAST_COMMIT}m$(color default)"
+        # The _dotfiles_scm_info function inserts the current git branch where %s is
+        printf "%s" "$(_dotfiles_scm_info "(%s|${SINCE_LAST_COMMIT})")"
+    fi
+}
+
+
+if [ -f "$BASH_MOD_DIR/source_control/git-prompt" ]; then
+    # shellcheck disable=SC2034
+    GIT_PS1_SHOWDIRTYSTATE=1
+    # shellcheck disable=SC2034
+    GIT_PS1_SHOWSTASHSTATE=1
+    # shellcheck disable=SC2034
+    GIT_PS1_SHOWUPSTREAM="auto"
+    source "$BASH_MOD_DIR/source_control/git-prompt"
+elif [ -f "$BASH_MOD_DIR/source_control/scm-prompt" ]; then
+    source "$BASH_MOD_DIR/source_control/scm-prompt"
+else
+    printf "ERROR: file %s/source_control/*-prompt NOT FOUND\n" "${BASH_MOD_DIR}" >&2
+fi
