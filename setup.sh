@@ -89,7 +89,7 @@ function setup_homedir ()
     done
     for src in "${!LINKS[@]}"; do
         dst="${LINKS[${src}]}"
-        mkdir -p "$(dirname "${dst}")"
+        mkdir -p ~/"$(dirname "${dst}")" ~/"$(dirname "${src}")"
         test -L ~/"${src}" || ln -sv ~/"${dst}" ~/"${src}"
     done
 
