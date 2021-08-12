@@ -1,16 +1,18 @@
 {
   "dependencies": {
-    "coc-clangd": ">=0.4.13",
-    "coc-css": ">=1.2.4",
+    "coc-clangd": ">=0.13.0",
+    "coc-css": ">=1.2.6",
     "coc-erlang_ls": ">=0.0.1",
-    "coc-git": ">=1.8.2",
-    "coc-html": ">=1.2.4",
-    "coc-jedi": ">=0.16.0",
+    "coc-git": ">=2.4.3",
+    "coc-go": ">=0.13.3",
+    "coc-html": ">=1.4.1",
+    "coc-jedi": ">=0.29.1",
     "coc-json": ">=1.2.6",
     "coc-perl": ">=1.0.2",
-    "coc-sh": ">=0.5.1",
-    "coc-sql": ">=0.3.0",
-    "coc-tsserver": ">=1.5.4",
-    "coc-vimlsp": ">=0.10.1"
+    "coc-python": ">=1.2.13",
+    "coc-sh": ">=0.6.0",
+    "coc-sql": ">=0.6.0",
+    "coc-tsserver": ">=1.8.3",
+    "coc-vimlsp": ">=0.12.3"
   }
 }

@@ -4,3 +4,9 @@
 .config/bash/jobox
 .config/coc/memos.json
 .config/git/credstore
+.config/coc/list-commands-history.json
+.config/coc/list-extensions-history.json
+.config/coc/list-lists-history.json
+.config/coc/list-sources-history.json
+.config/coc/lists
+.config/coc/commands

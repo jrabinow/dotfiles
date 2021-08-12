@@ -38,10 +38,14 @@ set shortmess+=aI                       " avoid 'hit enter', no welcome message
 set ttyfast                             " fast internet connection
 set autoread                            " automatically reread modified files, this turns out to be BS but I'm leaving it anyways
 set title                               " change the terminal's title
-set viminfo+=n~/.local/share/vim/viminfo " store viminfo somewhere sensible
-
+set undodir=~/.local/share/vim          " set persistent undo dir
+set undofile                            " activate persistent undo
 set list
 set listchars=tab:>.,trail:.,extends:#,nbsp:. " show trailing tabs and spaces
+
+if ! has('nvim')
+ set viminfo+=n~/.local/share/vim/viminfo " store viminfo somewhere sensible
+endif
 
 if has('cmdline_info')
     " a ruler
@@ -224,7 +228,8 @@ nmap         ++  vip++
 autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
 
 call plug#begin('~/.vim/plugged')
-    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+    Plug 'fatih/vim-go'
+    Plug 'junegunn/fzf'
     Plug 'keith/swift.vim'
     Plug 'majutsushi/tagbar'
     Plug 'mariappan/dragvisuals.vim'
