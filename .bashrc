@@ -18,7 +18,6 @@ HISTFILE="${XDG_DATA_HOME:-${HOME}/.local/share}/bash/bash_history"
 MODULE_NAMES=(
     envvars
     pathmods        # pathmods comes first because we want the PATH setup right for everything that comes next
-    creds
     aliases
     bookmarks
     functions_generic

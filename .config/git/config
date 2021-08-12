@@ -1,11 +1,18 @@
 [user]
     email = randprefix.github@fastmail.com
     name = Julien Rabinow
+    signingkey = 0BEF65B5CE49D21E72CAAA8FECA72D7635A93214
 [core]
     longpaths = true
     pager = less -isXF
+[init]
+	defaultBranch = main
 [push]
     default = current
+[pull]
+	rebase = false
+[merge]
+    tool = vimdiff
 [diff]
     tool = vimdiff
 [credential]
@@ -28,8 +35,6 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
-[include]
-    path = ~/.config/git/creds
 [alias]
   st = status
   co = checkout
@@ -72,9 +77,3 @@
   unhide = "!f() { git br $1 && git update-ref $1 refs/hidden/$1; }; f"
   hidden = "!f() { git show-ref | grep hidden; }; f"
   root = "rev-parse --show-toplevel"
-[pull]
-	rebase = false
-[merge]
-    tool = vimdiff
-[init]
-	defaultBranch = main
