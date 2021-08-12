@@ -31,7 +31,10 @@ def parse_args():
         nargs="+",
         help="WRITE_SOMETHING_SMART_HERE"
     )
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.debug:
+        LOG.setLevel(logging.DEBUG)
+    return args
 
 
 def main():
