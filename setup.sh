@@ -48,7 +48,7 @@ function install_vim_plugins ()
     vim -c "PlugInstall" -c quit -c quit
     # Install extensions
     mkdir -p "${HOME}/.local/share/coc/extensions"
-    cd ~/.config/coc/extensions
+    cd ~/.config/coc
     if [ ! -f package.json ]; then
         printf '{"dependencies":{}}\n'> package.json
     fi
