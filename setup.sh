@@ -17,7 +17,6 @@ function prepare_rootenv ()
         .config/tmux
         .config/bash
         .config/tmux
-        .config/tmuxinator
         bin/clean_env
         bin/cleanup
         bin/dirdiff
@@ -140,7 +139,6 @@ function main ()
         .config/git
         .config/hg
         .config/tmux
-        .config/tmuxinator
         .config/xfce4/terminal/terminalrc
         .ctags
         .gdbinit
