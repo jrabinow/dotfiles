@@ -244,6 +244,8 @@ let g:lightline = {
     \ }
 \ }
 
+let g:coc_data_home = '~/.local/share/coc/'
+
 call plug#begin('~/.vim/plugged')
     Plug 'fatih/vim-go'
     Plug 'itchyny/lightline.vim'

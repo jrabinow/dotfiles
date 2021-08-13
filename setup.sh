@@ -46,15 +46,10 @@ function install_vim_plugins ()
 {
     vim -c "PlugInstall" -c quit -c quit
     # Install extensions
-    mkdir -p "${HOME}/.local/share/coc/extensions"
-    cd ~/.config/coc
-    if [ ! -f package.json ]; then
+    mkdir -p "${HOME}/.local/share/coc/"
+    cd ~/.local/share/coc
+    if [ ! -L package.json ]; then
         printf '{"dependencies":{}}\n'> package.json
-    fi
-    if command -v npm 2>/dev/null; then
-        npm install --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
-    else
-        sed -i -E "s%(\s*)(Plug 'neoclide/coc.nvim')%\1\"\2%" ~/.vim/vimrc
     fi
     cd - 2>/dev/null
 }
@@ -163,8 +158,7 @@ function main ()
     )
     declare -A LINKS=(
         [".vim/init.vim"]=".vim/vimrc"
-        [".config/coc/extensions"]=".local/share/coc/extensions"
-        [".local/share/coc/extensions/package.json"]=".config/coc/package.json"
+        [".local/share/coc/package.json"]=".config/coc/package.json"
     )
     local PREPARE_COMMIT=false
     local INITIAL_ACCOUNT_CONFIG=false
