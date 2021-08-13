@@ -1,8 +1,7 @@
 " ensures compatibility with ViM-related packages in Debian
 runtime! debian.vim
 
-syntax on
-colorscheme koehler
+colorscheme hypsteria
 
 set nocompatible
 set showcmd                             " Show partial command in status line and selected characters/lines in visual mode
@@ -38,13 +37,16 @@ set shortmess+=aI                       " avoid 'hit enter', no welcome message
 set ttyfast                             " fast internet connection
 set autoread                            " automatically reread modified files, this turns out to be BS but I'm leaving it anyways
 set title                               " change the terminal's title
-set undodir=~/.local/share/vim          " set persistent undo dir
-set undofile                            " activate persistent undo
 set list
 set listchars=tab:>.,trail:.,extends:#,nbsp:. " show trailing tabs and spaces
 
 if ! has('nvim')
  set viminfo+=n~/.local/share/vim/viminfo " store viminfo somewhere sensible
+endif
+
+if has("persistent_undo")
+    set undodir=~/.local/share/vim      " set persistent undo dir
+    set undofile                        " activate persistent undo
 endif
 
 if has('cmdline_info')
@@ -96,9 +98,6 @@ let g:netrw_liststyle=3
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor = "latex"
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts=1
-
 if has("autocmd")
 " Vim loads indentation rules and plugins according to the detected filetype.
     filetype plugin indent on
@@ -145,7 +144,6 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 
 " Create the 'tags' file
-command! MakeTags !maketags
 command! -nargs=0 Reload source ~/.vim/vimrc
 
 " Use more natural key movement on wrapped lines.
@@ -189,11 +187,6 @@ function! MoveWindowSwap()
     exe 'hide buf' markedBuf
 endfunction
 
-function! Bgrep(pattern)
-    exe vimgrep a:pattern %
-    exe cwin
-endfunction
-
 noremap <leader>sw :call SelectWindowSwap()<CR>
 noremap <leader>mw :call MoveWindowSwap()<CR>
 
@@ -227,8 +220,33 @@ nmap         ++  vip++
 " https://www.reddit.com/r/vim/comments/48zclk/i_just_found_a_simple_method_to_read_pdf_doc_odt/
 autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
 
+" https://github.com/itchyny/lightline.vim/blob/master/README.md#advanced-configuration
+let g:lightline = {
+    \ 'colorscheme': 'wombat',
+    \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+    \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
+    \ 'active': {
+    \     'left': [
+    \         [ 'mode', 'paste' ],
+    \         [ 'gitbranch', 'readonly', 'relativepath', 'modified', 'charvaluehex' ]
+    \     ],
+    \     'right': [
+    \         [ 'lineinfo' ],
+    \         [ 'column', 'line', 'percent' ],
+    \         [ 'fileformat', 'fileencoding', 'filetype' ]
+    \     ]
+    \ },
+    \ 'component_function': {
+    \     'gitbranch': 'FugitiveHead'
+    \ },
+    \ 'component': {
+    \     'charvaluehex': '0x%B'
+    \ }
+\ }
+
 call plug#begin('~/.vim/plugged')
     Plug 'fatih/vim-go'
+    Plug 'itchyny/lightline.vim'
     Plug 'junegunn/fzf'
     Plug 'keith/swift.vim'
     Plug 'majutsushi/tagbar'
@@ -239,13 +257,14 @@ call plug#begin('~/.vim/plugged')
     Plug 'nixon/vim-vmath'
     Plug 'pangloss/vim-javascript'
     Plug 'rhysd/git-messenger.vim'
+    Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-surround'
     Plug 'udalov/kotlin-vim'
-    Plug 'vim-airline/vim-airline'
     Plug 'vim-erlang/vim-erlang-compiler'
     Plug 'vim-erlang/vim-erlang-omnicomplete'
     Plug 'vim-erlang/vim-erlang-runtime'
     Plug 'vim-erlang/vim-erlang-tags'
     Plug 'vim-syntastic/syntastic'
+    Plug 'J4CKR3D/Hypsteria'
 call plug#end()
