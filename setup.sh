@@ -20,7 +20,6 @@ function prepare_rootenv ()
         bin/clean_env
         bin/cleanup
         bin/dirdiff
-        bin/dmesg-human-readable-time
         bin/flushcache
         bin/group_by
         bin/pathsearch
@@ -33,13 +32,14 @@ function prepare_rootenv ()
     mkdir -p "${ROOTENV_DIR}"/{bin,.config}
     cd "${ROOTENV_DIR}"
     for f in "${LNFILES[@]}"; do
-        if [ -L "${f}" ]; then
-            printf "link %s already exists, skipping\n" "$HOME/${f}"
-        else
-            ln -s ~/"${f}" "${f}"
-        fi
+        test -L "${f}" || ln -s ~/"${f}" "${f}"
     done
-    cd -
+    cd - >/dev/null
+}
+
+function ensure_submodules_exist ()
+{
+    git submodule update --init --recursive
 }
 
 function install_vim_plugins ()
@@ -48,10 +48,7 @@ function install_vim_plugins ()
     # Install extensions
     mkdir -p "${HOME}/.local/share/coc/"
     cd ~/.local/share/coc
-    if [ ! -L package.json ]; then
-        printf '{"dependencies":{}}\n'> package.json
-    fi
-    cd - 2>/dev/null
+    cd - >/dev/null
 }
 
 function prepare_commit ()
@@ -59,10 +56,10 @@ function prepare_commit ()
     for f in "${FILES[@]}"; do
         if [ -e "$HOME/${f}" ]; then
             dir="$(dirname "${f}")"
-            file="$(basename "${f}")"
-            mkdir -p "./${dir}"
+            file="${f##*/}"
+            test -f "./${dir}" || mkdir -p "./${dir}"
             rm -rf "./${dir}/${file}"
-            cp -rv "$HOME/$f" "./${dir}/"
+            cp -r "$HOME/$f" "./${dir}/"
         fi
     done
     rm -rf ./.vim/plugged
@@ -75,16 +72,16 @@ function setup_homedir ()
     done
 
     for f in "${FILES[@]}"; do
-        dir="$(dirname "${f}")"
-        file="$(basename "${f}")"
-        mkdir -p "${HOME}/${dir}"
+        dir="${f%/*}"
+        file="${f##*/}"
+        test -f  "${HOME}/${dir}" || mkdir -p "${HOME}/${dir}"
         rm -rf "${HOME:?}/${dir}/${file}"
-        cp -rv "$f" "${HOME}/${dir}/"
+        cp -r "$f" "${HOME}/${dir}/"
     done
     for src in "${!LINKS[@]}"; do
         dst="${LINKS[${src}]}"
         mkdir -p ~/"$(dirname "${dst}")" ~/"$(dirname "${src}")"
-        test -L ~/"${src}" || ln -sv ~/"${dst}" ~/"${src}"
+        test -L ~/"${src}" || ln -s ~/"${dst}" ~/"${src}"
     done
 
     if command -v tmux >/dev/null; then
@@ -115,7 +112,7 @@ function setup_homedir ()
 function usage ()
 {
     cat << EOF
-Usage: $(basename "$0") [OPTION]...
+Usage: ${0##*/} [OPTION]...
 Options: -h, --help: display this help message
      --init: run scripts to configure account (new hardware, OS reinstall, new account, etc)
      -p: prepare new commit by copying all files to repo dir
@@ -202,6 +199,7 @@ function main ()
     if ${PREPARE_COMMIT}; then
         prepare_commit
     else
+        ensure_submodules_exist
         setup_homedir
     fi
 }
