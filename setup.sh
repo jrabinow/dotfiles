@@ -140,6 +140,7 @@ function main ()
         .ipython/profile_default/ipython_config.py
         '.local/share/fonts/Roboto Mono for Powerline.ttf'
         .profile
+        .psqlrc
         .ssh/config
         .vim
         .xsession

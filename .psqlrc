@@ -16,7 +16,7 @@
 \set PROMPT2 ''
 
 -- histfile name
-\set HISTFILE ~/.psql_history/psql_history- :DBNAME
+\set HISTFILE ~/.local/share/psql_history/psql_history- :DBNAME
 -- don't record duplicates in histfile
 \set HISTCONTROL ignoredups
 
@@ -25,6 +25,13 @@
 
 -- autocomplete with uppercase
 \set COMP_KEYWORD_CASE upper
+
+-- pager setup
+\set x '\\setenv PAGER less'
+\set xx '\\setenv PAGER \'pspg -bX --no-mouse -s 7\''
+:xx
+
+\set lock_timeout 2
 
 -- restore printing stuff
 \unset QUIET
