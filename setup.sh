@@ -115,7 +115,7 @@ function usage ()
 Usage: ${0##*/} [OPTION]...
 Options: -h, --help: display this help message
      --init: run scripts to configure account (new hardware, OS reinstall, new account, etc)
-     -p: prepare new commit by copying all files to repo dir
+     -p: prepare new commit by copying all files from homedir to repo dir
 EOF
 }
 
