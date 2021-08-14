@@ -105,18 +105,18 @@ function color ()
 {
     local COLOR="${1}"
     local TYPE="${2}"
-    declare -A COLOR_MAP=(
-        [default]=39 [black]=30 [red]=31 [green]=32 [yellow]=33
-        [blue]=34 [magenta]=35 [cyan]=36 [ltgray]=37 [dkgray]=90
-        [ltred]=91 [ltgreen]=92 [ltyellow]=93 [ltblue]=94
-        [ltmagenta]=95 [ltcyan]=96 [white]=97
-    )
     local BG=10
     local OFFSET=0
     local NUM=
+
+    local default=39; local black=30; local red=31; local green=32; local yellow=33;
+    local blue=34; local magenta=35; local cyan=36; local ltgray=37; local dkgray=90;
+    local ltred=91; local ltgreen=92; local ltyellow=93; local ltblue=94;
+    local ltmagenta=95; local ltcyan=96; local white=97
+
     test -z "${COLOR}" && COLOR=default
     test "${TYPE}" = "bg" && OFFSET="${BG}"
-    NUM="${COLOR_MAP[$COLOR]}"
+    NUM="${!COLOR}"
     test -z "${NUM}" && return
     ((NUM = NUM + OFFSET))
     # make sure readline keeps track of non-printable chars in all circumstances, to avoid glitchy prompts
