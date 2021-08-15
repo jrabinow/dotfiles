@@ -154,6 +154,7 @@ function main()
         .config/gdb
         .config/git
         .config/hg
+        .config/task
         .config/tmux
         .config/xfce4/terminal/terminalrc
         .ctags

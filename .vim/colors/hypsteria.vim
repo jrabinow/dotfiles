@@ -147,3 +147,6 @@ hi link vimBracket         Identifier
 hi link pythonOperator     Preproc 
 
 hi link QuickFixLine Visual
+
+" coc highlighting
+hi CocWarningFloat ctermfg=208
