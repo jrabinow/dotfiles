@@ -8,18 +8,20 @@ runtime modules/plugin_config.vim
 runtime modules/autocmds.vim
 
 call plug#begin('~/.vim/plugged')
+    Plug 'albfan/ag.vim'
     Plug 'fatih/vim-go'
     Plug 'itchyny/lightline.vim'
     Plug 'junegunn/fzf'
     Plug 'keith/swift.vim'
     Plug 'majutsushi/tagbar'
     Plug 'mariappan/dragvisuals.vim'
-    Plug 'MaxMEllon/vim-jsx-pretty'
+    Plug 'maxmellon/vim-jsx-pretty'
     Plug 'mbbill/undotree'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'nixon/vim-vmath'
     Plug 'pangloss/vim-javascript'
     Plug 'rhysd/git-messenger.vim'
+    Plug 'rking/ag.vim'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-surround'

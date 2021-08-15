@@ -10,6 +10,10 @@ let g:netrw_liststyle=3
 let g:coc_data_home = '~/.local/share/coc/'
 let g:node_client_debug = 0
 
+hi link CocUnderline ErrorMsg
+hi CocCurColumn ctermfg=15 ctermbg=7
+hi CocErrorSign ctermfg=12 ctermbg=7
+
 " compatibility with vim-latexsuite
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor = "latex"

@@ -47,7 +47,12 @@ function install_vim_plugins()
     vim -c "PlugInstall" -c quit -c quit
     # Install extensions
     mkdir -p "${HOME}/.local/share/coc/"
-    cd ~/.local/share/coc
+    cd ~/.local/share/coc/extensions
+    if command -v npm; then
+        npm install --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
+    else
+        vim -c "CocDisable" -c quit -c quit
+    fi
     cd - > /dev/null
 }
 
@@ -186,7 +191,7 @@ function main()
     )
     declare -A LINKS=(
         [".vim/init.vim"]=".vim/vimrc"
-        [".local/share/coc/package.json"]=".config/coc/package.json"
+        [".local/share/coc/extensions/package.json"]=".config/coc/package.json"
     )
     local PREPARE_COMMIT=false
     local INITIAL_ACCOUNT_CONFIG=false
