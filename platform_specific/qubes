@@ -13,7 +13,7 @@ function git_setup_qubes_pgp()
 function usage()
 {
     cat << EOF
-Usage: $(basename $0) [OPTION]...
+Usage: ${0##*/} [OPTION]...
 Options: --help, -h: show this help dialog
 EOF
 }

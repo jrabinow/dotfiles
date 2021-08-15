@@ -27,6 +27,7 @@ test $EUID != 0 \
 GCLOUD_SDK_BASEDIR='/opt/local/google-cloud-sdk'
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "${GCLOUD_SDK_BASEDIR}/path.bash.inc" ]; then
+    # shellcheck disable=SC1091
     [[ ! $PATH =~ (^|:)"${GCLOUD_SDK_BASEDIR}"/bin(:|\$) ]] \
         && source "${GCLOUD_SDK_BASEDIR}/path.bash.inc"
 fi

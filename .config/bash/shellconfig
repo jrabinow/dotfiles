@@ -42,6 +42,7 @@ fi
 
 # enable programmable completion features
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    # shellcheck disable=SC1091
     . /etc/bash_completion
 fi
 
@@ -56,5 +57,6 @@ stty iexten
 
 # The next line enables shell command completion for gcloud.
 if [ -f "${GCLOUD_SDK_BASEDIR}/completion.bash.inc" ]; then
+    # shellcheck disable=SC1091
     source "${GCLOUD_SDK_BASEDIR}/completion.bash.inc"
 fi

@@ -71,4 +71,5 @@ function bml()
         | column -t
 }
 
+# shellcheck disable=SC1090
 source "${BMARKS_FILE}"

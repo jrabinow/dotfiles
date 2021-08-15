@@ -34,8 +34,9 @@ function venv()
     while [ "$(pwd)" != "/" ] && [ ! -f ./venv/bin/activate ]; do
         up
     done
+    # shellcheck disable=SC1091
     test -f ./venv/bin/activate && source ./venv/bin/activate
-    cd "${save_pwd}"
+    cd "${save_pwd}" || return
 }
 
 # print list of buck targets under a dir in fbcode
@@ -54,7 +55,7 @@ function targets()
 
     target_files=("$(find "${dir}" -name BUILD)")
     for t in "${target_files[@]}"; do
-        dir="$(realpath $(dirname "${t}") | perl -pe "s#${basedir}#/#")"
+        dir="$(realpath "$(dirname "${t}")" | perl -pe "s#${basedir}#/#")"
         perl -lne 'm!\s*name\s*=\s*['\''"](\w+)['\''"],$! and print q('"$dir:"').$1' "${t}"
     done | sort
 }

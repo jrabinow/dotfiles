@@ -6,10 +6,8 @@ export EDITOR=vim
 export GOPATH=~/Documents/code/thirdparty/golang-libs
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
-# Use standard ISO 8601 timestamp: %F=%Y-%m-%d;%T=%H:%M:%S (24-hours format)
-HISTTIMEFORMAT="%F %T "
 
-HGRCPATH="${HOME}/.config/hg/hgrc"
+export HGRCPATH="${HOME}/.config/hg/hgrc"
 
 if command -v direnv > /dev/null; then
     eval "$(direnv hook bash)"

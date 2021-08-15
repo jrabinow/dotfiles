@@ -2,8 +2,10 @@
 
 # Source Facebook definitions
 if [ -f /usr/facebook/ops/rc/master.bashrc ]; then
+    # shellcheck disable=SC1091
     . /usr/facebook/ops/rc/master.bashrc
 elif [ -f /mnt/vol/engshare/admin/scripts/master.bashrc ]; then
+    # shellcheck disable=SC1091
     . /mnt/vol/engshare/admin/scripts/master.bashrc
 fi
 
@@ -11,6 +13,7 @@ export TESTBINARYDIR=$HOME/fbcode/buck-out/testbinarydir
 
 alias yum_extern="sudo http_proxy=http://fwdproxy:8080 https_proxy=http://fwdproxy:8080 yum"
 alias pcurl="curl --proxy http://fwdproxy:8080"
+# shellcheck disable=SC2142
 alias murder_java="jps|grep -vE '\s+Jps\$'|awk '{print \$1}'|xargs kill"
 # use with '-t NUM_HOURS' option
 alias stop_chef="sudo /usr/facebook/ops/scripts/chef/stop_chef_temporarily"

@@ -114,6 +114,7 @@ function num_proc()
     echo $n
 }
 
+# shellcheck disable=SC2034
 function color()
 {
     local COLOR="${1}"
