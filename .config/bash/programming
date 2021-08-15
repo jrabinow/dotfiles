@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-function init_cscope ()
+function init_cscope()
 {
     if [ $# != 1 ]; then
         lang=c
     else
-        lang=$1; shift
+        lang=$1
+        shift
     fi
 
     case $lang in
@@ -27,7 +28,7 @@ function init_cscope ()
     esac
 }
 
-function venv ()
+function venv()
 {
     save_pwd="$(pwd)"
     while [ "$(pwd)" != "/" ] && [ ! -f ./venv/bin/activate ]; do
@@ -38,10 +39,11 @@ function venv ()
 }
 
 # print list of buck targets under a dir in fbcode
-function targets ()
+function targets()
 {
-    dir="${1:-.}"; shift
-    basedir="$(realpath "${dir}" 2>/dev/null)"
+    dir="${1:-.}"
+    shift
+    basedir="$(realpath "${dir}" 2> /dev/null)"
 
     while [ "${basedir}" != "/" ] && [ ! -f "${basedir}/WORKSPACE" ]; do
         basedir="$(realpath "${basedir}/..")"
@@ -52,7 +54,7 @@ function targets ()
 
     target_files=("$(find "${dir}" -name BUILD)")
     for t in "${target_files[@]}"; do
-        dir="$(realpath $(dirname "${t}")|perl -pe "s#${basedir}#/#")"
+        dir="$(realpath $(dirname "${t}") | perl -pe "s#${basedir}#/#")"
         perl -lne 'm!\s*name\s*=\s*['\''"](\w+)['\''"],$! and print q('"$dir:"').$1' "${t}"
-    done|sort
+    done | sort
 }

@@ -1,58 +1,70 @@
 #!/usr/bin/env bash
 
 # calculator integrated in command-line
-function ? () { echo "$@"|bc -l; }
+function ?()
+{
+    echo "$@" | bc -l
+}
 
 # shellcheck disable=SC2211
-function d? () { printf "%.2f\n" "$(echo "$@"|bc -l)"; }
+function d?()
+{
+    printf "%.2f\n" "$(echo "$@" | bc -l)"
+}
 
 # shortcut for find all files containing pattern in name under current dir
-function search () { find . -path '*.git' -prune -o -path '*.idea' -prune -o -iname "*${1}*" -print; }
+function search()
+{
+    find . -path '*.git' -prune -o -path '*.idea' -prune -o -iname "*${1}*" -print
+}
 
 # if ag binary isn't installed, set it up
-if [ -z "$(command -v ag 2>/dev/null)" ]; then
-    function ag () {
-      if [ $# -eq 1 ]; then
-          grep -IRi "$@" --exclude=cscope.* --exclude=.git --exclude=tags --color=auto .
-      else
-          grep -IRi "$1" --exclude=cscope.* --exclude=.git --exclude=tags --color=auto "$2"
-      fi
+if [ -z "$(command -v ag 2> /dev/null)" ]; then
+    function ag()
+    {
+        if [ $# -eq 1 ]; then
+            grep -IRi "$@" --exclude=cscope.* --exclude=.git --exclude=tags --color=auto .
+        else
+            grep -IRi "$1" --exclude=cscope.* --exclude=.git --exclude=tags --color=auto "$2"
+        fi
     }
 fi
 
 # repeat command n times
 # 'repeat 5 ls -l' will run 'ls -l' 5 times
-function repeat ()
-{ 
-    local count="$1"; shift
-    for _ in $(seq 1 "$count");
-    do
-        eval "$@";
+function repeat()
+{
+    local count="$1"
+    shift
+    for _ in $(seq 1 "$count"); do
+        eval "$@"
     done
 }
 
 # generate password
 # 'passgen 10 [[:alnum:]]' will generate an alphanumeric password of length 10
-function passgen ()
+function passgen()
 {
     len=${1:-30}
     domain="${2:-[[:print:]]}"
     # can't do `strings /dev/urandom` because apparently strings on mac os X sucks
     # shellcheck disable=SC2002
-    cat /dev/urandom|\
-        strings|\
-        grep -o "${domain}"|\
-        head -n"${len}"|\
-        tr -d '\n'
+    cat /dev/urandom \
+        | strings \
+        | grep -o "${domain}" \
+        | head -n"${len}" \
+        | tr -d '\n'
     echo
 }
 
 # Stolen from ~meyering
-function date ()
+function date()
 {
     # shellcheck disable=SC2015
-    { test $# = 0 \
-        && command date +"%a %Y-%m-%d %T %z" ; } \
+    {
+        test $# = 0 \
+            && command date +"%a %Y-%m-%d %T %z"
+    } \
         || command date "$@"
 }
 
@@ -63,25 +75,25 @@ function date ()
 # sleep_until now+5min
 # sleep_until 24/12/2017
 # Stolen from ~meyering
-function sleep_until ()
+function sleep_until()
 {
-  local t
-  local now
-  local delta
-  t=$(date -d "$1" +%s)
-  now=$(date +%s)
-  delta=$((t - now))
-  printf "Sleeping for %d seconds\n" "${delta}"
-  case "${delta}" in
-      -*)
+    local t
+    local now
+    local delta
+    t=$(date -d "$1" +%s)
+    now=$(date +%s)
+    delta=$((t - now))
+    printf "Sleeping for %d seconds\n" "${delta}"
+    case "${delta}" in
+        -*)
             return 1
             ;;
-      esac
-  sleep "${delta}"
+    esac
+    sleep "${delta}"
 }
 
 # Stolen from ~meyering
-function bell ()
+function bell()
 {
     echo -en '\a\a\a'
 }
@@ -91,17 +103,18 @@ function bell ()
 function num_proc()
 {
     local n
-    n=$(getconf _NPROCESSORS_ONLN || nproc || echo 0) 2>/dev/null
+    n=$(getconf _NPROCESSORS_ONLN || nproc || echo 0) 2> /dev/null
     test "$n" -gt 0 \
         || n=$(grep -c '^processor[[:space:]]*:' /proc/cpuinfo)
     case $n in
         0)
-            n=1 ;;
+            n=1
+            ;;
     esac
     echo $n
 }
 
-function color ()
+function color()
 {
     local COLOR="${1}"
     local TYPE="${2}"
@@ -109,10 +122,23 @@ function color ()
     local OFFSET=0
     local NUM=
 
-    local default=39; local black=30; local red=31; local green=32; local yellow=33;
-    local blue=34; local magenta=35; local cyan=36; local ltgray=37; local dkgray=90;
-    local ltred=91; local ltgreen=92; local ltyellow=93; local ltblue=94;
-    local ltmagenta=95; local ltcyan=96; local white=97
+    local default=39
+    local black=30
+    local red=31
+    local green=32
+    local yellow=33
+    local blue=34
+    local magenta=35
+    local cyan=36
+    local ltgray=37
+    local dkgray=90
+    local ltred=91
+    local ltgreen=92
+    local ltyellow=93
+    local ltblue=94
+    local ltmagenta=95
+    local ltcyan=96
+    local white=97
 
     test -z "${COLOR}" && COLOR=default
     test "${TYPE}" = "bg" && OFFSET="${BG}"
@@ -124,21 +150,21 @@ function color ()
     printf '\001\033[%sm\002' "${NUM}"
 }
 
-function notify ()
+function notify()
 {
     for _ in $(seq 1 3); do
-        echo -ne '\a';
-        sleep .5;
+        echo -ne '\a'
+        sleep .5
     done
 }
 
-function pronmode ()
+function pronmode()
 {
     unset HISTFILE
 }
 
 # https://stackoverflow.com/a/16610385
-function log_http_requests ()
+function log_http_requests()
 {
     portno="${1:-80}"
     # 0x48545450 = 'HTTP' 0x2030 = ' 0'
@@ -146,13 +172,14 @@ function log_http_requests ()
 }
 
 # Move up n directories
-function up ()
+function up()
 {
     if [[ $# -gt 1 || $# -lt 0 ]]; then
         echo "Usage: up [int]"
         return 2
     else
-        pdirs="${1:-1}"; shift
+        pdirs="${1:-1}"
+        shift
         # only works with ZSH https://stackoverflow.com/a/6191382
         #cd $(builtin printf "../"%.0s {1..${pdirs}})
         cd "$(builtin printf "../"%.0s $(seq -s' ' "${pdirs}"))" || return
@@ -161,13 +188,14 @@ function up ()
 
 # Move down n directories towards $OLDPWD.
 # if OLDPWD is higher in the hierarchy than pwd, then do nothing
-function down ()
+function down()
 {
     if [[ $# -gt 1 || $# -lt 0 ]]; then
         echo "Usage: down [int]"
         return 2
     else
-        pdirs="${1:-1}"; shift
+        pdirs="${1:-1}"
+        shift
         if [ -z "${OLDPWD}" ]; then
             # shellcheck disable=SC2016
             printf 'Cannot go down on $OLDPWD: not set!\n' >&2
@@ -180,14 +208,16 @@ function down ()
     fi
 }
 
-function mkcd () {
+function mkcd()
+{
     mkdir -p "${1}" && cd "${1}" || return
 }
 
 # Shorthand clone from github
-function hclone () {
+function hclone()
+{
     local url
-    if [[ "$1" == "-p" ]]; then
+    if [[ $1 == "-p" ]]; then
         url="git@github.com:${2}.git"
         shift
     else
@@ -196,28 +226,31 @@ function hclone () {
     git clone "$url"
 }
 
-function cheatsheet ()
+function cheatsheet()
 {
     topic="${*}"
     curl "cheat.sh/${topic}"
 }
 
-function weather ()
+function weather()
 {
     location="${*}"
     curl "v2.wttr.in/${location}"
 }
 
-function unquote ()
+function unquote()
 {
-    url="${*}"; shift
+    url="${*}"
+    shift
     python3 -c "from urllib.parse import unquote; print(unquote('${url}'))"
 }
 
-function setup-ssh-key-login ()
+function setup-ssh-key-login()
 {
-    local desthost="${1}"; shift
-    local keyfile="${1:-${HOME}/.ssh/keys/${desthost}.id_ed25519}"; shift
+    local desthost="${1}"
+    shift
+    local keyfile="${1:-${HOME}/.ssh/keys/${desthost}.id_ed25519}"
+    shift
 
     if [ -n "${desthost}" ] && [ -n "${keyfile}" ]; then
         ssh-keygen -t ed25519 -f "${keyfile}"

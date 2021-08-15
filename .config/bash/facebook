@@ -2,9 +2,9 @@
 
 # Source Facebook definitions
 if [ -f /usr/facebook/ops/rc/master.bashrc ]; then
-  . /usr/facebook/ops/rc/master.bashrc
+    . /usr/facebook/ops/rc/master.bashrc
 elif [ -f /mnt/vol/engshare/admin/scripts/master.bashrc ]; then
-  . /mnt/vol/engshare/admin/scripts/master.bashrc
+    . /mnt/vol/engshare/admin/scripts/master.bashrc
 fi
 
 export TESTBINARYDIR=$HOME/fbcode/buck-out/testbinarydir
@@ -16,34 +16,44 @@ alias murder_java="jps|grep -vE '\s+Jps\$'|awk '{print \$1}'|xargs kill"
 alias stop_chef="sudo /usr/facebook/ops/scripts/chef/stop_chef_temporarily"
 alias ldapsearch="ldapsearch -x -b dc=thefacebook,dc=com" # uid=foobar
 
-function fqdn () { echo "$1.facebook.com" ; }
+function fqdn()
+{
+    echo "$1.facebook.com"
+}
 
-function cutfqdn () { echo "${1%\.facebook\.com}"; }
+function cutfqdn()
+{
+    echo "${1%\.facebook\.com}"
+}
 
 # print list of buck targets under a dir in fbcode
-function targets ()
+function targets()
 {
-    dir="${1:-.}"; shift
-    basedir="$(realpath "${dir}" 2>/dev/null)"
+    dir="${1:-.}"
+    shift
+    basedir="$(realpath "${dir}" 2> /dev/null)"
     if [ ! -d "${basedir}" ]; then
-        basedir="$HOME/fbcode/${dir}"; shift
+        basedir="$HOME/fbcode/${dir}"
+        shift
     fi
     target_files=("$(find "${basedir}" -name TARGETS)")
     for t in "${target_files[@]}"; do
-        dir="$(dirname "${t}"|perl -pe 's/.*fbcode\///')"
+        dir="$(dirname "${t}" | perl -pe 's/.*fbcode\///')"
         perl -lne 'm!\s*name\s*=\s*['\''"](\w+)['\''"],$! and print q('"$dir:"').$1' "${t}"
-    done|sort
+    done | sort
 }
 
-function search_tiers ()
+function search_tiers()
 {
-    pattern=$1; shift
+    pattern=$1
+    shift
     smcc list-tiers-like ".*${pattern}.*"
 }
 
-function ssh_tier ()
+function ssh_tier()
 {
-    pattern=$1; shift
+    pattern=$1
+    shift
     tiers="$(search_tiers "${pattern}")"
     echo
     echo "----------------------------------------------"
@@ -57,42 +67,46 @@ function ssh_tier ()
     fi
 }
 
-function cm_tier ()
+function cm_tier()
 {
-    pattern=$1; shift
+    pattern=$1
+    shift
     smcc list-tiers-like "[a-z]{3}[0-9]_mr${pattern}_cm"
 }
 
-function tt_tier ()
+function tt_tier()
 {
-    pattern=$1; shift
+    pattern=$1
+    shift
     smcc list-tiers-like "[a-z]{3}[0-9]_mr${pattern}_tasktrackers"
 }
 
 # needs updating
 #function hostlog ()
 #{
-#  
+#
 #    HOST=$1; shift
 #    DATE=$(date +%Y-%m-%d)
 #    presto --execute "select * from netcons_extended_syslog_messages where hostname='${HOST}' and ds='${DATE}';" infrastructure
 #}
 
-function tw_package_versions ()
+function tw_package_versions()
 {
-    jobname=$1; shift
-    tw job print --json "${jobname}"| jq -r '.[].requirements.packages[] | "\(.name):\(.version)"'
+    jobname=$1
+    shift
+    tw job print --json "${jobname}" | jq -r '.[].requirements.packages[] | "\(.name):\(.version)"'
 }
 
-function search_ods_keys ()
+function search_ods_keys()
 {
-    entity=$1; shift
+    entity=$1
+    shift
     rapido --entity="${entity}" --key='corr()' --transform=latest
 }
 
-function search_ods_entities ()
+function search_ods_entities()
 {
-    key=$1; shift
+    key=$1
+    shift
     rapido --entity='corr()' --key="${key}" --transform=latest
 }
-

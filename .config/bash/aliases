@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # seriously, fuck those aliases
-unalias ln cp mv 2>/dev/null
+unalias ln cp mv 2> /dev/null
 
 alias diff="diff -wbBdu"
 alias info="info --vi-keys"
@@ -17,7 +17,7 @@ alias psql="env PGCONNECT_TIMEOUT=2 psql"
 alias less="less -R"
 
 # enable color support of ls and also add handy aliases
-if command -v dircolors >/dev/null; then
+if command -v dircolors > /dev/null; then
     eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     alias grep='grep --color=auto'
@@ -37,7 +37,7 @@ alias syncstatus='dropbox filestatus $(find ~/Dropbox -type f)|grep "syncing"|un
 alias 42='echo The answer to Life, the Universe and Everything.'
 alias starwars='telnet towel.blinkenlights.nl'
 
-if command -v cowsay >/dev/null; then
+if command -v cowsay > /dev/null; then
     # shellcheck disable=SC2154
     alias allcows='cowsay -l | sed "1d"|tr " " "\n"|while read f; do cowsay -f $f $f;done'
     alias randcow='cowsay -f $(cowsay -l|sed "1d"|tr " " "\n"|grep -vE "sodomized|telebears|head-in"|shuf -n1)'

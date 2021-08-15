@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 # add bookmark for current dir:
 # $ bma bookmark
 
@@ -23,20 +22,19 @@
 # delete bookmark:
 # $ bmd bookmark
 
-
 # BASH_MOD_DIR defined in ~/.bashrc
 BMARKS_FILE="${XDG_DATA_DIR:-$HOME/.local/share}/bash/bookmarks"
 
 # setup
 BMARKS_DIR="$(dirname "${BMARKS_FILE}")"
-(test -d "${BMARKS_DIR}" || mkdir -p "${BMARKS_DIR}") && \
-    test -f "${BMARKS_FILE}" || \
-    touch "${BMARKS_FILE}" ||
-    (echo "ERROR SETTING UP BOOKMARKS MODULE" >&2 && return)
+(test -d "${BMARKS_DIR}" || mkdir -p "${BMARKS_DIR}") \
+    && test -f "${BMARKS_FILE}" \
+    || touch "${BMARKS_FILE}" \
+    || (echo "ERROR SETTING UP BOOKMARKS MODULE" >&2 && return)
 
 shopt -s cdable_vars
 
-function bma ()
+function bma()
 {
     if [ $# -eq 1 ]; then
         export "${1}"="$(pwd)"
@@ -53,7 +51,7 @@ function bma ()
     fi
 }
 
-function bmd ()
+function bmd()
 {
     if [ $# -eq 1 ]; then
         sed -i -e "/^export $1=.*	# Bookmark$/d" "${BMARKS_FILE}"
@@ -63,14 +61,14 @@ function bmd ()
     fi
 }
 
-function bml ()
+function bml()
 {
-    grep '# Bookmark$' "${BMARKS_FILE}" | \
-        cut -f1 | \
-        cut -d' ' -f2- | \
-        sed -e 's/=/	->	/' | \
-        sort | \
-        column -t
+    grep '# Bookmark$' "${BMARKS_FILE}" \
+        | cut -f1 \
+        | cut -d' ' -f2- \
+        | sed -e 's/=/	->	/' \
+        | sort \
+        | column -t
 }
 
 source "${BMARKS_FILE}"

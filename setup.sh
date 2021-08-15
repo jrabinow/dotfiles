@@ -3,7 +3,7 @@
 set -e -u
 set -o pipefail
 
-function prepare_rootenv ()
+function prepare_rootenv()
 {
     local ROOTENV_DIR="$HOME/.config/root-env"
 
@@ -34,24 +34,24 @@ function prepare_rootenv ()
     for f in "${LNFILES[@]}"; do
         test -L "${f}" || ln -s ~/"${f}" "${f}"
     done
-    cd - >/dev/null
+    cd - > /dev/null
 }
 
-function ensure_submodules_exist ()
+function ensure_submodules_exist()
 {
     git submodule update --init --recursive
 }
 
-function install_vim_plugins ()
+function install_vim_plugins()
 {
     vim -c "PlugInstall" -c quit -c quit
     # Install extensions
     mkdir -p "${HOME}/.local/share/coc/"
     cd ~/.local/share/coc
-    cd - >/dev/null
+    cd - > /dev/null
 }
 
-function prepare_commit ()
+function prepare_commit()
 {
     for f in "${FILES[@]}"; do
         if [ -e "$HOME/${f}" ]; then
@@ -68,9 +68,9 @@ function prepare_commit ()
     rm -rf ./.vim/plugged
 }
 
-function setup_homedir ()
+function setup_homedir()
 {
-    for dir in  "${CREATEDIRS[@]}"; do
+    for dir in "${CREATEDIRS[@]}"; do
         mkdir -p "$HOME/${dir}"
     done
 
@@ -107,10 +107,10 @@ function setup_homedir ()
         test -L ~/"${src}" || ln -s ~/"${dst}" ~/"${src}"
     done
 
-    if command -v tmux >/dev/null; then
+    if command -v tmux > /dev/null; then
         # if tmux version is less than 3.0
-        tmux_version="$(tmux -V|sed -En "s/^tmux ([0-9]+(\.[0-9]+)?).*/\1/p")"
-        if [[ "$(echo "${tmux_version} < 3.1"|bc)" == 1 ]] && [ ! -L ~/.tmux.conf ]; then
+        tmux_version="$(tmux -V | sed -En "s/^tmux ([0-9]+(\.[0-9]+)?).*/\1/p")"
+        if [[ "$(echo "${tmux_version} < 3.1" | bc)" == 1 ]] && [ ! -L ~/.tmux.conf ]; then
             ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf
         fi
     fi
@@ -128,11 +128,12 @@ function setup_homedir ()
                 ;;
             GNU/Linux)
                 ./platform_specific/linux
+                ;;
         esac
     fi
 }
 
-function usage ()
+function usage()
 {
     cat << EOF
 Usage: ${0##*/} [OPTION]...
@@ -142,7 +143,7 @@ Options: -h, --help: display this help message
 EOF
 }
 
-function main ()
+function main()
 {
     readonly FILES=(
         .bashrc
@@ -194,7 +195,7 @@ function main ()
             p)
                 PREPARE_COMMIT=true
                 ;;
-            h)  # help message
+            h) # help message
                 usage
                 exit 0
                 ;;

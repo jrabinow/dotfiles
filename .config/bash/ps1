@@ -21,10 +21,10 @@ preamble_line2="${angle_ne}${line_h}${line_h}> ${reset_color}"
 info_line2="\w\$(grb_git_prompt)"
 closing_line2=" ${sq_color}\\$ ${reset_color}>>${remove_bold} "
 
-function format_pipestatus ()
+function format_pipestatus()
 {
     # save PIPESTATUS very first thing https://unix.stackexchange.com/a/163660
-    _pipestatus=( "${PIPESTATUS[@]}" )
+    _pipestatus=("${PIPESTATUS[@]}")
     status_str=""
     reset_color="\001\033[01;39m\002"
     success_symbol='\342\234\223'
@@ -68,16 +68,16 @@ unset closing_line2
 
 ## If this is an xterm set the title to user@host:dir
 case "$TERM" in
-    xterm*|mterm*|rxvt*)
+    xterm* | mterm* | rxvt*)
         PS1="\[\e]0;${debian_chroot:+(${debian_chroot:-""})}\u@\h: \w\a\]$PS1"
         ;;
-    *)
-        ;;
+    *) ;;
+
 esac
 
 # for failed commands, show exit code and signal if killed by one
 # Stolen from ~meyering
-function prompt_show_status ()
+function prompt_show_status()
 {
     # Don't use `status'. It's read-only in zsh.
     local stat="$?"
@@ -86,7 +86,7 @@ function prompt_show_status ()
         # If process exited by a signal, determine name of signal.
         if test $stat -gt 128; then
             local signal
-            signal="$(builtin kill -l "$(("${stat}" - 128))" 2>/dev/null)"
+            signal="$(builtin kill -l "$(("${stat}" - 128))" 2> /dev/null)"
             test "${signal}" && signal=" (${signal})"
         fi
         echo "[Exit ${stat}${signal}]" 1>&2
@@ -96,4 +96,4 @@ function prompt_show_status ()
 }
 
 #PROMPT_COMMAND="prompt_show_status;$PROMPT_COMMAND"
-[[ ! "${PROMPT_COMMAND}" =~ "prompt_show_status;" ]] && PROMPT_COMMAND="prompt_show_status;$PROMPT_COMMAND"
+[[ ! ${PROMPT_COMMAND} =~ "prompt_show_status;" ]] && PROMPT_COMMAND="prompt_show_status;$PROMPT_COMMAND"

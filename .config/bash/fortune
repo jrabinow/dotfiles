@@ -3,15 +3,14 @@
 COLUMNS=$(tput cols)
 LINES=$(tput lines)
 
-
 shopt -s extglob
 
-if command -v fortune >/dev/null 2>&1; then
-    if command -v cowsay >/dev/null 2>&1 && \
-        [[ $COLUMNS -ge 80 ]] && \
-        [[ $LINES -ge 28 ]]; then
-      fortune -a|randcow
+if command -v fortune > /dev/null 2>&1; then
+    if command -v cowsay > /dev/null 2>&1 \
+        && [[ $COLUMNS -ge 80 ]] \
+        && [[ $LINES -ge 28 ]]; then
+        fortune -a | randcow
     else
-      fortune -a
+        fortune -a
     fi
 fi

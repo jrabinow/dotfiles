@@ -11,6 +11,6 @@ HISTTIMEFORMAT="%F %T "
 
 HGRCPATH="${HOME}/.config/hg/hgrc"
 
-if command -v direnv >/dev/null; then
+if command -v direnv > /dev/null; then
     eval "$(direnv hook bash)"
 fi

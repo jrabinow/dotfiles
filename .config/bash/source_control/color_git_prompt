@@ -2,13 +2,13 @@
 
 # stolen from Gary Bernhardt https://github.com/garybernhardt/dotfiles/blob/master/.bashrc
 # Git prompt components
-function minutes_since_last_commit ()
+function minutes_since_last_commit()
 {
     now="$(date +%s)"
     #last_commit="$(git log --pretty=format:'%at' -1 2>/dev/null || echo $now)"
-    last_commit="$(git log --pretty=format:'%at' -1)"  # 2>/dev/null || echo $now)"
-    seconds_since_last_commit=$((now-last_commit))
-    minutes_since_last_commit=$((seconds_since_last_commit/60))
+    last_commit="$(git log --pretty=format:'%at' -1)" # 2>/dev/null || echo $now)"
+    seconds_since_last_commit=$((now - last_commit))
+    minutes_since_last_commit=$((seconds_since_last_commit / 60))
     printf "%s\n" "${minutes_since_last_commit}"
 }
 
@@ -33,7 +33,6 @@ function grb_git_prompt()
         printf "%s" "$(_dotfiles_scm_info "(%s|${SINCE_LAST_COMMIT})")"
     fi
 }
-
 
 if [ -f "$BASH_MOD_DIR/source_control/git-prompt" ]; then
     # shellcheck disable=SC2034

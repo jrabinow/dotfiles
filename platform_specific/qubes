@@ -5,12 +5,12 @@ set -o pipefail
 
 # write some cool doc here
 
-function git_setup_qubes_pgp ()
+function git_setup_qubes_pgp()
 {
     git config --global include.path ~/.config/git/qubes-gpg
 }
 
-function usage ()
+function usage()
 {
     cat << EOF
 Usage: $(basename $0) [OPTION]...
@@ -18,11 +18,11 @@ Options: --help, -h: show this help dialog
 EOF
 }
 
-function main ()
+function main()
 {
     while getopts "h-:" opt; do
         case ${opt} in
-            h)  # help message
+            h) # help message
                 usage
                 exit 0
                 ;;
@@ -45,7 +45,7 @@ function main ()
         esac
     done
     shift $((OPTIND - 1))
-    [[ "${1:-}" == '--' ]] && shift
+    [[ ${1:-} == '--' ]] && shift
 
     git_setup_qubes_pgp
 }
