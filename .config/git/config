@@ -41,7 +41,7 @@
   ci = commit
   br = branch
   cob = checkout -b
-  diff = "diff -w --word-diff --color-moved"
+  diff = "diff --color-moved --ws-error-highlight all"
   show = "show -w --word-diff"
   # push to non-existent upstream branch
   fpush = "!branch=$(git rev-parse --abbrev-ref HEAD); remote=$(git remote); git branch -u \"${remote}\" \"${branch}\"; git push -u \"${remote}\" \"${branch}\""
