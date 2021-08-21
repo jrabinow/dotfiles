@@ -161,6 +161,8 @@ function main()
         .config/hg
         .config/task
         .config/tmux
+        .config/wireshark/preferences
+        .config/wireshark/dfilters
         .config/xfce4/terminal/terminalrc
         .ctags
         .gdbinit
