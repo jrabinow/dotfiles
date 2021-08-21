@@ -11,10 +11,10 @@
         "yaml"
     ],
     // python config
-    "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": false,
+    "python.linting.pylintEnabled": false,
+    "python.linting.pylintPath": "/opt/local/bin/pylint",
     "python.formatting.provider": "black",
-
     // diagnostics config
     "diagnostic-languageserver.filetypes": {
         // lint `sh` (includes `bash`) files
@@ -33,7 +33,14 @@
             // primarily listed here to call out that flags which take an
             // argument (such as `-i <num-spaces>` for specifying indentation)
             // should be split into two strings, the flag and then the value
-            "args": ["-i", "4", "-bn", "-ci", "-sr", "-fn"]
+            "args": [
+                "-i",
+                "4",
+                "-bn",
+                "-ci",
+                "-sr",
+                "-fn"
+            ]
         }
     }
 }

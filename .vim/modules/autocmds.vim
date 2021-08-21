@@ -13,5 +13,5 @@ if has("autocmd")
 
     " read various filetypes in vim
     " https://www.reddit.com/r/vim/comments/48zclk/i_just_found_a_simple_method_to_read_pdf_doc_odt/
-    autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
+    autocmd BufReadPost *.doc,*.docx,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
 endif
