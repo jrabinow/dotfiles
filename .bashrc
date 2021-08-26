@@ -34,7 +34,7 @@ MODULE_NAMES=(
 
 case $(uname) in
     Linux)
-        if command -v hostname && [ "$(hostname)" == "dom0" ]; then
+        if command -v hostname >/dev/null && [ "$(hostname)" == "dom0" ]; then
             MODULE_NAMES=(qubes "${MODULE_NAMES[@]}")
         fi
         MODULE_NAMES=(linux "${MODULE_NAMES[@]}")

@@ -34,9 +34,11 @@ function venv()
     while [ "$(pwd)" != "/" ] && [ ! -f ./venv/bin/activate ]; do
         up
     done
+    retval=0
     # shellcheck disable=SC1091
-    test -f ./venv/bin/activate && source ./venv/bin/activate
-    cd "${save_pwd}" || return
+    test -f ./venv/bin/activate && source ./venv/bin/activate || retval=1
+    cd "${save_pwd}"
+    return "${retval}"
 }
 
 # print list of buck targets under a dir in fbcode

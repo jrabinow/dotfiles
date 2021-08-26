@@ -36,6 +36,7 @@ set autoread                            " automatically reread modified files, t
 set title                               " change the terminal's title
 set list
 set listchars=tab:>.,trail:.,extends:#,nbsp:. " show trailing tabs and spaces
+set secure                              " autocmd commands not allowed in vimrc/exrc in current directory
 
 if $TMUX == ''
   set clipboard+=unnamed

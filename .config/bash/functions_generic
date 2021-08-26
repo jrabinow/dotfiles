@@ -202,9 +202,8 @@ function down()
             printf 'Cannot go down on $OLDPWD: not set!\n' >&2
             return
         fi
-        local current_pwd
         current_pwd="$(pwd)"
-        working="$(sed -E "s/^${current_pwd//\//\\/}//;s/^(\/[^\/]*){${pdirs}}.*/\1/" <<< "${OLDPWD}")"
+        working="$(sed -E "s#^${current_pwd}/?##;s#^(([^/]*/?){${pdirs}}).*#\1#" <<< "${OLDPWD}")"
         cd "${working#/}" || return
     fi
 }
