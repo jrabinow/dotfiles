@@ -64,7 +64,7 @@ if has('statusline')
     " always show a status line
     set laststatus=2
     " a statusline, also on steroids
-    set statusline=%<%f\ %=\:\b%n\[%{strlen(&ft)?&ft:'none'}/%{&encoding}/%{&fileformat}]%m%r%w\ %l,%c%V\ %P
+    " set statusline=%<%f\ %=\:\b%n\[%{strlen(&ft)?&ft:'none'}/%{&encoding}/%{&fileformat}]%m%r%w\ %l,%c%V\ %P
 endif
 
 " highlight the 81st column when we go past it

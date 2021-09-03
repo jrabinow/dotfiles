@@ -21,7 +21,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'nixon/vim-vmath'
     Plug 'pangloss/vim-javascript'
     Plug 'rhysd/git-messenger.vim'
-    Plug 'albfan/ag.vim'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-surround'
