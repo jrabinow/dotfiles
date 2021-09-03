@@ -29,17 +29,8 @@ if [ -x /usr/bin/prename ]; then
     alias rename=prename
 fi
 
-# personal
-alias binclock='watch -n1 "echo \"obase=2;\$(date +%s)\" | bc"'
-alias syncstatus='dropbox filestatus $(find ~/Dropbox -type f)|grep "syncing"|uniq'
-
-# I did a funny
-alias 42='echo The answer to Life, the Universe and Everything.'
-alias starwars='telnet towel.blinkenlights.nl'
-
 if command -v cowsay > /dev/null; then
-    # shellcheck disable=SC2154
-    alias allcows='cowsay -l | sed "1d"|tr " " "\n"|while read f; do cowsay -f $f $f;done'
+    alias allcows='cowsay -l | sed "1d"|tr " " "\n"|while read f; do cowsay -f $REPLY $REPLY;done'
     alias randcow='cowsay -f $(cowsay -l|sed "1d"|tr " " "\n"|grep -vE "sodomized|telebears|head-in"|shuf -n1)'
 fi
 alias canihazip="curl -s https://icanhazip.com"
