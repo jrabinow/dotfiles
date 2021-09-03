@@ -32,12 +32,12 @@ function qubes-sync-dotfiles()
             rmdir "${dir}"
         else
             echo "VM ${vm} running; using pass-through"
-            # shellcheck disable=SC2016,SC1004
+            # shellcheck disable=SC2016
             qvm-run -p "${vm}" \
-                'archive_file=$(mktemp --suffix .txz); \
-                tar -C ~/Documents -Jcf \
-                "${archive_file}" dotfiles;\
-                cat "${archive_file}";\
+                'archive_file=$(mktemp --suffix .txz);
+                tar -C ~/Documents -Jcf
+                "${archive_file}" dotfiles;
+                cat "${archive_file}";
                 rm "${archive_file}"' > ~/Documents/dotfiles.txz
             rm -rf ~/Documents/dotfiles
             (cd ~/Documents/ && tar -Jxf dotfiles.txz)

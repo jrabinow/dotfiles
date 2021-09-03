@@ -4,18 +4,19 @@
 
 function ensure_source_present()
 {
+    # shellcheck disable=SC1091
     local SCM_PROMPT="${BASH_MOD_DIR}/source_control/scm-prompt"
     local REMOTE_SCM_URL=https://raw.githubusercontent.com/ryanmce/dotfiles/master/scm-prompt.sh
     test -f "${SCM_PROMPT}" \
         || curl "${REMOTE_SCM_URL}" > "${SCM_PROMPT}"
 
+    # shellcheck disable=SC1091
     local GIT_PROMPT="${BASH_MOD_DIR}/source_control/git-prompt"
     local REMOTE_GIT_URL=https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
     test -f "${GIT_PROMPT}" \
         || curl "${REMOTE_GIT_URL}" | sed -e 's/^__git_ps1 ()$/_dotfiles_scm_info ()/g' > "${GIT_PROMPT}"
 }
 
-# shellcheck disable=SC2120
 function scmmode()
 {
     if [ $# -eq 1 ] && [ "${1}" == 'off' ]; then
@@ -26,12 +27,14 @@ function scmmode()
     elif [ $# -eq 0 ] || {
         [ $# -eq 1 ] && [ "${1}" == 'on' ]
     }; then
-        source "$BASH_MOD_DIR/source_control/color_git_prompt"
+        # shellcheck disable=SC1091
+        source "${BASH_MOD_DIR}/source_control/color_git_prompt"
     else
         printf "Usage: scmmode [on|off]\n" >&2
     fi
 }
 
 ensure_source_present
-scmmode
+scmmode on
+# shellcheck disable=SC1091
 test -r "${BASH_MOD_DIR}/source_control/git-completion" && source "${BASH_MOD_DIR}/source_control/git-completion"

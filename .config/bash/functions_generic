@@ -6,7 +6,6 @@ function ?()
     echo "$@" | bc -l
 }
 
-# shellcheck disable=SC2211
 function d?()
 {
     printf "%.2f\n" "$(echo "$@" | bc -l)"
@@ -47,10 +46,7 @@ function passgen()
 {
     len=${1:-30}
     domain="${2:-[[:print:]]}"
-    # can't do `strings /dev/urandom` because apparently strings on mac os X sucks
-    # shellcheck disable=SC2002
-    cat /dev/urandom \
-        | strings \
+    strings < /dev/urandom \
         | grep -o "${domain}" \
         | head -n"${len}" \
         | tr -d '\n'
@@ -60,7 +56,6 @@ function passgen()
 # Stolen from ~meyering
 function date()
 {
-    # shellcheck disable=SC2015
     {
         test $# = 0 \
             && command date +"%a %Y-%m-%d %T %z"
@@ -198,8 +193,7 @@ function down()
         pdirs="${1:-1}"
         shift
         if [ -z "${OLDPWD}" ]; then
-            # shellcheck disable=SC2016
-            printf 'Cannot go down on $OLDPWD: not set!\n' >&2
+            printf "Cannot go down on \$OLDPWD: not set!\n" >&2
             return
         fi
         current_pwd="$(pwd)"
@@ -256,7 +250,6 @@ function setup-ssh-key-login()
         ssh-keygen -t ed25519 -f "${keyfile}"
         ssh-copy-id -i "${keyfile}" "${desthost}"
     else
-        # shellcheck disable=SC2016
-        printf 'Undefined:\n$desthost=%s\n$keyfile=%s\n' "${desthost}" "${keyfile}"
+        printf "Undefined:\n$desthost=%s\n\$keyfile=%s\n" "${desthost}" "${keyfile}"
     fi
 }

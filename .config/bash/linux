@@ -12,7 +12,6 @@ alias utop='top -u $USER'
 
 # the extensions for 'which' apparently aren't standard... redhat-based has,
 # debian-based doesn't
-# shellcheck disable=SC2230
 if which --version > /dev/null 2>&1; then
     alias which='(alias; declare -f) | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde --read-functions'
 fi
