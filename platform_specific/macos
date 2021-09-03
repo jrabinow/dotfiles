@@ -186,6 +186,9 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bo
 # Stop iTunes from responding to the keyboard media keys
 #launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
 
+# don't allow more than one smart-card per user
+defaults write /Library/Preferences/com.apple.security.smartcard oneCardPerUser -bool true
+
 ###############################################################################
 # Energy saving                                                               #
 ###############################################################################
