@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
-COLUMNS=$(tput cols)
-LINES=$(tput lines)
+if command -v tput > /dev/null; then
+    TPUT="tput"
+else
+    TPUT="echo"
+fi
+
+COLUMNS=$($TPUT cols)
+LINES=$($TPUT lines)
 
 shopt -s extglob
 
