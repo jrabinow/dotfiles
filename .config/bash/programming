@@ -35,6 +35,7 @@ function venv()
         up
     done
     retval=0
+    # shellcheck disable=SC1091
     test -f ./.venv/bin/activate && source ./.venv/bin/activate || retval=1
     cd "${save_pwd}" || return "${retval}"
     return "${retval}"

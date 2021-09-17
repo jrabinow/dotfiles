@@ -43,7 +43,8 @@ function bma()
         export "${1}"="$2"
         echo -e "export $1=\"$2\"	# Bookmark" >> "${BMARKS_FILE}"
     elif [ $# -eq 3 ] && [ "${1}" == "-f" ] && [ -d "$(pwd)/${3}" ]; then
-        export "${2}=$(pwd)/${3}"
+        # shellcheck disable=SC2140
+        export "${2}"="$(pwd)/${3}"
         echo -e "export $2=\"$(pwd)/$3\"	# Bookmark" >> "${BMARKS_FILE}"
     else
         echo "Usage: bma BMARKNAME [ PATH ]" >&2

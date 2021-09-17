@@ -41,10 +41,8 @@ if [ -f "$BASH_MOD_DIR/source_control/git-prompt" ]; then
     GIT_PS1_SHOWSTASHSTATE=1
     # shellcheck disable=SC2034
     GIT_PS1_SHOWUPSTREAM="auto"
-    # shellcheck disable=SC1091
     source "$BASH_MOD_DIR/source_control/git-prompt"
 elif [ -f "$BASH_MOD_DIR/source_control/scm-prompt" ]; then
-    # shellcheck disable=SC1091
     source "$BASH_MOD_DIR/source_control/scm-prompt"
 else
     printf "ERROR: file %s/source_control/*-prompt NOT FOUND\n" "${BASH_MOD_DIR}" >&2

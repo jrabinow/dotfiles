@@ -115,6 +115,7 @@ function intercom_lookup()
 
 function android_api()
 {
+    # shellcheck disable=SC2154
     vim "${jobox}/unicron/app/src/main/java/us/jobox/app/network/JoboxApi.kt"
 }
 

@@ -28,13 +28,12 @@ function scmmode()
         [ $# -eq 1 ] && [ "${1}" == 'on' ]
     }; then
         # shellcheck disable=SC1091
-        source "${BASH_MOD_DIR}/source_control/color_git_prompt"
+        source "$BASH_MOD_DIR/source_control/color_git_prompt"
     else
         printf "Usage: scmmode [on|off]\n" >&2
     fi
 }
 
 ensure_source_present
-scmmode on
-# shellcheck disable=SC1091
+scmmode
 test -r "${BASH_MOD_DIR}/source_control/git-completion" && source "${BASH_MOD_DIR}/source_control/git-completion"
