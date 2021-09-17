@@ -48,7 +48,7 @@ function install_vim_plugins()
     # Install extensions
     mkdir -p "${HOME}/.local/share/coc/"
     cd ~/.local/share/coc/extensions
-    if command -v npm; then
+    if command -v npm >/dev/null; then
         npm install --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
     else
         vim -c "CocDisable" -c quit -c quit
@@ -121,7 +121,9 @@ function setup_homedir()
     fi
 
     prepare_rootenv
-    install_vim_plugins
+    if "${VIM_SETUP}"; then
+        install_vim_plugins
+    fi
 
     if "${INITIAL_ACCOUNT_CONFIG}"; then
         case $(uname -a) in
@@ -144,6 +146,7 @@ function usage()
 Usage: ${0##*/} [OPTION]...
 Options: -h, --help: display this help message
      --init: run scripts to configure account (new hardware, OS reinstall, new account, etc)
+     --no-vim-setup: don't configure vim plugins
      -p: prepare new commit by copying all files from homedir to repo dir
 EOF
 }
@@ -197,6 +200,7 @@ function main()
     )
     local PREPARE_COMMIT=false
     local INITIAL_ACCOUNT_CONFIG=false
+    local VIM_SETUP=true
 
     while getopts "hp-:" opt; do
         case "${opt}" in
@@ -215,6 +219,9 @@ function main()
                         ;;
                     init)
                         INITIAL_ACCOUNT_CONFIG=true
+                        ;;
+                    no-vim-setup)
+                        VIM_SETUP=false
                         ;;
                     *)
                         printf 'Unknown option, exiting now\n' >&2
