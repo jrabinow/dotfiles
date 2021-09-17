@@ -114,8 +114,8 @@ function setup_homedir()
 
     if command -v tmux > /dev/null; then
         # if tmux version is less than 3.0
-        tmux_version="$(tmux -V | sed -En "s/^tmux ([0-9]+(\.[0-9]+)?).*/\1/p")"
-        if [[ "$(echo "${tmux_version} < 3.1" | bc)" == 1 ]] && [ ! -L ~/.tmux.conf ]; then
+        tmux_version="$(tmux -V | sed -En "s/^tmux ([0-9]+(\.[0-9]+)?).*/\1/;s/\.//p")"
+        if ((${tmux_version} < 31 )) && [ ! -L ~/.tmux.conf ]; then
             ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf
         fi
     fi
