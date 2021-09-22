@@ -46,14 +46,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# when the STOP character pressed (^s), allow resuming with any key combo instead of restricting to ^q
-stty ixany
-# disable modem control signals
-stty clocal
-# assume chars are UTF8
-stty iutf8
-# enable non-posix-compliant chars
-stty iexten
+# ixany: when the STOP character pressed (^s), allow resuming with any key combo instead of restricting to ^q
+# clocal: disable modem control signals
+# iutf8: assume chars are UTF8
+# iexten enable non-posix-compliant chars
+stty ixany clocal iutf8 iexten
 
 # The next line enables shell command completion for gcloud.
 if [ -f "${GCLOUD_SDK_BASEDIR}/completion.bash.inc" ]; then

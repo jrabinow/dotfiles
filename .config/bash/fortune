@@ -1,16 +1,5 @@
 #!/usr/bin/env bash
 
-if command -v tput > /dev/null; then
-    TPUT="tput"
-else
-    TPUT="echo"
-fi
-
-COLUMNS=$($TPUT cols)
-LINES=$($TPUT lines)
-
-shopt -s extglob
-
 if command -v fortune > /dev/null 2>&1; then
     if command -v cowsay > /dev/null 2>&1 \
         && [[ $COLUMNS -ge 80 ]] \
