@@ -51,12 +51,12 @@
   lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   # pretty logging 2
   lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  lg = !"git lg2"
   # show log of filechanges
   filelog = log --graph --all --decorate --stat --date=iso
   # list of commit hash+message in reverse order
   recap = "!git log --all --oneline --no-merges --author=$(git config user.email)"
   changelog = "!git log --oneline --no-merges $(git tag --sort=creatordate|tail -1)..HEAD"
-  lg = !"git lg2"
   # show remote url
   url = config --get remote.origin.url
   # commit everything yolo mode with accompanying commit message
@@ -71,7 +71,7 @@
   # which branch was updated most recently
   recent = "for-each-ref --count=10 --sort=-committerdate refs/heads/ --format=\"%(refname:short)\""
   # Show the commits and content in this branch
-  unpushed = log --pretty=oneline origin/master..
+  unpushed = "!git log --oneline \"origin/$(git rev-parse --abbrev-ref HEAD)\".."
   # hide a branch for later
   hide = "!f() { git update-ref refs/hidden/$1 $1 && git br -D $1; }; f"
   unhide = "!f() { git br $1 && git update-ref $1 refs/hidden/$1; }; f"
