@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+function usb ()
+{
+    action="$1"; shift
+    case "${action}" in
+        on)
+            echo '1-1'|sudo tee /sys/bus/usb/drivers/usb/bind >/dev/null
+            ;;
+        off)
+            echo '1-1'|sudo tee /sys/bus/usb/drivers/usb/unbind >/dev/null
+            ;;
+        *)
+            printf "Usage: usb [on|off]\n"
+            ;;
+    esac
+}
+
+function hdmi ()
+{
+    action="$1"; shift
+    case "${action}" in
+        on)
+            sudo /opt/vc/bin/tvservice -p
+            ;;
+        off)
+            sudo /opt/vc/bin/tvservice -o
+            ;;
+        *)
+            printf "Usage: hdmi [on|off]\n"
+            ;;
+    esac
+}

@@ -34,9 +34,15 @@ MODULE_NAMES=(
 
 case $(uname) in
     Linux)
-        if command -v hostname >/dev/null && [ "$(hostname)" == "dom0" ]; then
-            MODULE_NAMES=(qubes "${MODULE_NAMES[@]}")
-        fi
+        hostname="$(command -v hostname >/dev/null && hostname )"
+        case "${hostname}" in
+            dom0)
+                MODULE_NAMES=(qubes "${MODULE_NAMES[@]}")
+                ;;
+            raspberrypi)
+                MODULE_NAMES=(raspi "${MODULE_NAMES[@]}")
+                ;;
+        esac
         MODULE_NAMES=(linux "${MODULE_NAMES[@]}")
         ;;
     Darwin)
