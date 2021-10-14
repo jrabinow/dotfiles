@@ -9,6 +9,7 @@ let g:netrw_liststyle=3
 " coc config
 let g:coc_data_home = '~/.local/share/coc/'
 let g:node_client_debug = 0
+autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 hi link CocUnderline ErrorMsg
 hi CocCurColumn ctermfg=15 ctermbg=7
@@ -38,7 +39,7 @@ let g:lightline = {
     \ 'active': {
     \     'left': [
     \         [ 'mode', 'paste' ],
-    \         [ 'gitbranch', 'readonly', 'relativepath', 'modified', 'charvaluehex' ]
+    \         [ 'gitbranch', 'readonly', 'relativepath', 'modified', 'charvaluehex', 'cocstatus']
     \     ],
     \     'right': [
     \         [ 'lineinfo' ],
@@ -47,7 +48,8 @@ let g:lightline = {
     \     ]
     \ },
     \ 'component_function': {
-    \     'gitbranch': 'FugitiveHead'
+    \     'gitbranch': 'FugitiveHead',
+    \     'cocstatus': 'coc#status'
     \ },
     \ 'component': {
     \     'charvaluehex': '0x%B'

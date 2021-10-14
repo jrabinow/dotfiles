@@ -27,24 +27,24 @@ define assemble
  if ($argc)
   # argument specified, assemble instructions into memory
   # at address specified.
-  shell nasm -f bin -o /dev/stdout /dev/stdin \
+  shell yasm -f bin -o /dev/stdout /dev/stdin \
     <<< "$( echo "BITS 32"; while read -ep '>' r && test "$r" != end; \
                 do echo -E "$r"; done )" | hexdump -ve \
         '1/1 "set *((unsigned char *) $arg0 + %#2_ax) = %#02x\n"' \
             > ~/.gdbassemble
   # load the file containing set instructions
-  source ~/.gdbassemble
+  source ~/.cache/gdbassemble
   # all done.
-  shell rm -f ~/.gdbassemble
+  shell rm -f ~/.cache/gdbassemble
  else
   # no argument, assemble instructions to stdout
-  shell nasm -f bin -o /dev/stdout /dev/stdin \
+  shell yasm -f bin -o /dev/stdout /dev/stdin \
     <<< "$( echo "BITS 32"; while read -ep '>' r && test "$r" != end; \
                 do echo -E "$r"; done )" | ndisasm -i -b32 /dev/stdin
  end
 end
 document assemble
-Assemble instructions using nasm.
+Assemble instructions using yasm.
 Type a line containing "end" to indicate the end.
 If an address is specified, insert instructions at that address.
 If no address is specified, assembled instructions are printed to stdout.
