@@ -28,6 +28,9 @@ fi
 if [ -x /usr/bin/prename ]; then
     alias rename=prename
 fi
+if [ -x /usr/bin/perl-rename ]; then
+    alias rename=perl-rename
+fi
 
 if command -v cowsay > /dev/null; then
     # shellcheck disable=SC2154
