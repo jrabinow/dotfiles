@@ -8,6 +8,7 @@ runtime modules/plugin_config.vim
 runtime modules/autocmds.vim
 
 call plug#begin('~/.vim/plugged')
+if hostname() != 'DD-WRT'
     Plug 'albfan/ag.vim'
     Plug 'fatih/vim-go'
     Plug 'itchyny/lightline.vim'
@@ -30,4 +31,5 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-erlang/vim-erlang-runtime'
     Plug 'vim-erlang/vim-erlang-tags'
     Plug 'vim-syntastic/syntastic'
+endif
 call plug#end()
