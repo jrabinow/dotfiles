@@ -164,6 +164,7 @@ function main()
         .config/bash
         .config/bleachbit
         .config/coc
+        .config/ctags
         .config/fontconfig
         .config/gdb
         .config/git
@@ -173,7 +174,6 @@ function main()
         .config/wireshark/preferences
         .config/wireshark/dfilters
         .config/xfce4/terminal/terminalrc
-        .ctags
         .gnupg/gpg.conf
         .gnupg/gpg-agent.conf
         .inputrc
