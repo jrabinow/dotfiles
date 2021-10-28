@@ -7,7 +7,7 @@ PATH_DIRS_PREPEND="
     /opt/local/bin
     /opt/local/sbin
     /opt/local/libexec/gnubin
-    /opt/local/libexec/llvm-10/bin
+    /opt/local/libexec/llvm/bin
     /opt/local/lib/postgresql/bin
 "
 
@@ -35,23 +35,23 @@ fi
 # must use intermediate variable as otherwise the contents of $PATH_DIRS_PREPEND
 # are reversed. Alternative solution:
 # http://stackoverflow.com/questions/1527049/join-elements-of-an-array
-PREPEND=""
-#SERIALIZED_PATH_PREPEND="$(/opt/local/libexec/gnubin/sed -E ':a;N;s/\s+/|/g;ta' <<< $PATH_DIRS_PREPEND | sed -E 's/^\||\|$//g')"
-#echo $SERIALIZED_PATH_PREPEND
 # we want to avoid duplicates. We also want to force prepending -> # we remove
 # the component from the PATH and add it back. This deals with the case where
 # the component is already added to middle of PATH
-#PATH=$(sed -E "s#(^|:)$i(:*|$)#:#g" <<< "${PATH}")
 for i in ${PATH_DIRS_PREPEND}; do
     # we want to avoid duplicates
     # we remove the component from the PATH and add it back, because we want to
     # force prepending (deals with the case where the component is already added
     # to middle of PATH)
-    PATH=$(sed -E "s#(^|:)$i(:*|$)#:#g" <<< "${PATH}")
-    test -d "${i}" && PREPEND="$PREPEND:$i"
+    if [ -d "${i}" ]; then
+        PATH=${PATH//":$i:"/:}         #delete all instances in the middle
+        PATH=${PATH/%":$i"/}           #delete any instance at the end
+        PATH=${PATH/#"$i:"/}           #delete any instance at the beginning
+        PREPEND="${PREPEND:+"$PREPEND:"}$i"  #prepend $i or if $PATH is empty set to $i
+    fi
 done
 
-[ -n "${PREPEND}" ] && PATH=${PREPEND#:}:${PATH#:}
+[ -n "${PREPEND}" ] && PATH=${PREPEND}:${PATH}
 unset PREPEND
 for i in ${PATH_DIRS_APPEND}; do
     # we do NOT force append entries to end of PATH; we only add if
