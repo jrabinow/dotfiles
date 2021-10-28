@@ -7,6 +7,7 @@ set print array off
 set print array-indexes on
 set python print-stack full
 set startup-with-shell off
+set history filename ~/.local/share/gdb/gdb_history
 
 set disassembly-flavor intel
 

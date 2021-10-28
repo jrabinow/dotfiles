@@ -25,6 +25,8 @@ sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMultica
 printf "[default]\nport445=no_netbios\n" | sudo tee /etc/nsmb.conf > /dev/null
 sudo launchctl disable system/netbiosd
 sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.netbiosd.plist
+test -L ~/Library/Preferences/gdb/gdbinit || \
+    (mkdir -p ~/Library/Preferences/gdb && ln -s ~/.config/gdb/gdbinit ~/Library/Preferences/gdb/gdbinit)
 
 ###############################################################################
 # General UI/UX                                                               #

@@ -14,7 +14,6 @@ function prepare_rootenv()
         .gdbinit
         .inputrc
         .vim
-        .config/tmux
         .config/bash
         .config/tmux
         bin/clean_env
@@ -114,9 +113,16 @@ function setup_homedir()
 
     if command -v tmux > /dev/null; then
         # if tmux version is less than 3.0
-        tmux_version="$(tmux -V | sed -En "s/^tmux ([0-9]+(\.[0-9]+)?).*/\1/;s/\.//p")"
+        tmux_version="$(tmux -V | sed -En "s/^tmux ([0-9]+)\.([0-9]+)?.*/\1\2/p")"
         if ((${tmux_version} < 31 )) && [ ! -L ~/.tmux.conf ]; then
             ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf
+        fi
+    fi
+    if command -v gdb > /dev/null; then
+        # if gdb version less than 11.0
+        gdb_version="$(gdb --version|head -1|sed -En 's/^GNU\s+gdb\s+\(GDB\)\s+([0-9]+)\.([0-9]+)?/\1\2/p')"
+        if ((${gdb_version} < 110 )) && [ ! -L ~/.gdbinit ]; then
+            ln -s ~/.config/gdb/gdbinit ~/.gdbinit
         fi
     fi
 
@@ -168,7 +174,6 @@ function main()
         .config/wireshark/dfilters
         .config/xfce4/terminal/terminalrc
         .ctags
-        .gdbinit
         .gnupg/gpg.conf
         .gnupg/gpg-agent.conf
         .inputrc
@@ -184,6 +189,7 @@ function main()
     readonly CREATEDIRS=(
         .local/share/bash
         .local/share/discord
+        .local/share/gdb
         ".local/share/YouTube Music"
         .local/share/psql_history
         .local/share/vim
