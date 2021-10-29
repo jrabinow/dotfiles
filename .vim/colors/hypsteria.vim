@@ -13,7 +13,7 @@ let g:colors_name='hypsteria'
 
 set background=dark
 
-hi Normal           ctermbg=000  ctermfg=229   cterm=NONE      guibg=#21231F guifg=#FFE6B3   gui=NONE
+hi Normal           ctermbg=NONE  ctermfg=229   cterm=NONE      guibg=#21231F guifg=#FFE6B3   gui=NONE
 
 hi Comment          ctermbg=NONE ctermfg=243   cterm=NONE      guibg=NONE    guifg=#616c72   gui=NONE
 hi Special          ctermbg=NONE ctermfg=144   cterm=bold      guibg=NONE    guifg=#92bfce   gui=bold

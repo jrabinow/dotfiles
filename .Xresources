@@ -43,7 +43,7 @@ lock*analog      : false
 
  ! ===== xterm
  ! zenburn theme - http://kippura.org/zenburnpage
- XTerm*background     : #3f3f3f
+ XTerm*background     : #000000
  XTerm*foreground     : #dcdccc
  XTerm*cursorColor    : #aaaaaa
  XTerm*colorUL        : #366060
