@@ -50,7 +50,10 @@ fi
 # clocal: disable modem control signals
 # iutf8: assume chars are UTF8
 # iexten enable non-posix-compliant chars
-stty ixany clocal iutf8 iexten
+stty ixany clocal iexten
+if [ $(uname) != OpenBSD ]; then
+    stty iutf8
+fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f "${GCLOUD_SDK_BASEDIR}/completion.bash.inc" ]; then

@@ -113,14 +113,14 @@ function setup_homedir()
 
     if command -v tmux > /dev/null; then
         # if tmux version is less than 3.0
-        tmux_version="$(tmux -V | sed -En "s/^tmux ([0-9]+)\.([0-9]+)?.*/\1\2/p")"
+        tmux_version="$(tmux -V | sed -En "s/^tmux (openbsd-)?([0-9]+)\.([0-9]+)?.*/\2\3/p")"
         if ((${tmux_version} < 31 )) && [ ! -L ~/.tmux.conf ]; then
             ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf
         fi
     fi
     if command -v gdb > /dev/null; then
         # if gdb version less than 11.0
-        gdb_version="$(gdb --version|head -1|sed -En 's/^GNU\s+gdb\s+\(GDB\)\s+([0-9]+)\.([0-9]+)?/\1\2/p')"
+        gdb_version="$(gdb --version|head -1|sed -En 's/^GNU gdb (\(GDB\) )?([0-9]+)\.([0-9]+)?/\2\3/p')"
         if ((${gdb_version} < 110 )) && [ ! -L ~/.gdbinit ]; then
             ln -s ~/.config/gdb/gdbinit ~/.gdbinit
         fi
