@@ -1,6 +1,6 @@
 xrdb -merge $HOME/.Xresources
 xsetroot -solid dimgray
 xidle &
-xterm &
+st &
 setxkbmap -option ctrl:nocaps
 exec dwm
