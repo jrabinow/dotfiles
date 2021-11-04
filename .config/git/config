@@ -44,9 +44,9 @@
   diff = "diff -w --word-diff --color-moved"
   show = "show -w --word-diff"
   # push to non-existent upstream branch
-  fpush = "!branch=$(git rev-parse --abbrev-ref HEAD); remote=$(git remote); git branch -u \"${remote}\" \"${branch}\"; git push -u \"${remote}\" \"${branch}\""
+  fpush = "!branch=$(git rev-parse --abbrev-ref HEAD); remote=origin; git branch -u \"${remote}\" \"${branch}\"; git push -u \"${remote}\" \"${branch}\""
   # delete branch at remote
-  delbr = "!git push $(git remote) -d "
+  delbr = "!git push origin -d "
   # pretty logging 1
   lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   # pretty logging 2
