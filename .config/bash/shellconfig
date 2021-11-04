@@ -51,7 +51,7 @@ fi
 # iutf8: assume chars are UTF8
 # iexten enable non-posix-compliant chars
 stty ixany clocal iexten
-if [ $(uname) != OpenBSD ]; then
+if [ "$(uname)" != OpenBSD ]; then
     stty iutf8
 fi
 
