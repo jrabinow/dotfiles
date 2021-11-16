@@ -4,7 +4,7 @@ if [ "$(type -t ls)" != "alias" ]; then
     alias ls="ls -G"
 fi
 alias utop='top -U $USER'
-alias updatedb="sudo bash -c 'cd / && /opt/local/bin/slocate -u'"
+alias updatedb="sudo bash -c 'cd / && /opt/local/bin/slocate -u -c /opt/local/etc/updatedb.conf'"
 alias locate=slocate
 
 export COCOAPODS_DISABLE_STATS='true'
@@ -19,7 +19,7 @@ function shutup_spotify()
     pkill Spotify
     sudo "$(which sat)"
     open -ga Spotify
-    sleep 7
+    sleep 10
     osascript -e 'tell application "spotify" to play'
     sudo "$(which sat)"
 }

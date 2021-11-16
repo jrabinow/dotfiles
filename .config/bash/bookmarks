@@ -68,7 +68,7 @@ function bml()
         | cut -d' ' -f2- \
         | sed -e 's/=/	->	/' \
         | sort \
-        | column -t
+        | column -ts $'\t'
 }
 
 # shellcheck disable=SC1090
