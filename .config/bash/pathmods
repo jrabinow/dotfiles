@@ -10,6 +10,7 @@ PATH_DIRS_PREPEND="
     /opt/local/libexec/llvm/bin
     /opt/local/lib/postgresql/bin
     /usr/local/bin
+    /data/data/com.termux/files/usr/local/bin
 "
 
 PATH_DIRS_APPEND="

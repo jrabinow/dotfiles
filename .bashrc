@@ -32,8 +32,11 @@ MODULE_NAMES=(
     shellconfig
 )
 
-case $(uname) in
-    Linux)
+case $(uname -o) in
+    Android)
+        MODULE_NAMES=("${MODULE_NAMES[@]}" android)
+        ;;
+    Linux*)
         hostname="$(command -v hostname >/dev/null && hostname )"
         case "${hostname}" in
             dom0)

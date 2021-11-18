@@ -38,7 +38,7 @@ function prepare_rootenv()
 
 function ensure_submodules_exist()
 {
-    git submodule update --init --recursive
+    git submodule update --init
 }
 
 function install_vim_plugins()
