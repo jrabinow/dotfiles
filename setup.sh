@@ -120,7 +120,7 @@ function setup_homedir()
     fi
     if command -v gdb > /dev/null; then
         # if gdb version less than 11.0
-        gdb_version="$(gdb --version|head -1|sed -En 's/^GNU gdb (\(GDB\) )?([0-9]+)\.([0-9]+)?/\2\3/p')"
+        gdb_version="$(gdb --version|head -1|sed -En 's/^GNU gdb (.* )?([0-9]+)\.([0-9]+)?(\.[0-9]+)*$/\2\3/p')"
         if ((${gdb_version} < 110 )) && [ ! -L ~/.gdbinit ]; then
             ln -s ~/.config/gdb/gdbinit ~/.gdbinit
         fi
