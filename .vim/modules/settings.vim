@@ -37,6 +37,8 @@ set title                               " change the terminal's title
 set list
 set listchars=tab:>.,trail:.,extends:#,nbsp:. " show trailing tabs and spaces
 set secure                              " autocmd commands not allowed in vimrc/exrc in current directory
+" https://old.reddit.com/r/vim/comments/cn20tv/tip_histogrambased_diffs_using_modern_vim/
+set diffopt+=filler,internal,algorithm:histogram,indent-heuristic   " better diff
 
 if $TMUX == ''
   set clipboard+=unnamed

@@ -44,12 +44,13 @@ let g:lightline = {
     \     'right': [
     \         [ 'lineinfo' ],
     \         [ 'column', 'line', 'percent' ],
-    \         [ 'fileformat', 'fileencoding', 'filetype' ]
+    \         [ 'gutentags', 'fileformat', 'fileencoding', 'filetype' ]
     \     ]
     \ },
     \ 'component_function': {
     \     'gitbranch': 'FugitiveHead',
-    \     'cocstatus': 'coc#status'
+    \     'cocstatus': 'coc#status',
+    \     'gutentags': 'gutentags#statusline'
     \ },
     \ 'component': {
     \     'charvaluehex': '0x%B'
