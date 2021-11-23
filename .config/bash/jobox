@@ -4,6 +4,9 @@
 alias deploy_server='cp -v ${jobox}/Kili/build/libs/Kili.war /opt/tomcat9/webapps/'
 DBDIR="$HOME/Documents/work/jobox/infra_data/db"
 
+CREDS_FILE="${XDG_DATA_DIR:-$HOME/.local/share}/bash/creds"
+test -f "${CREDS_FILE}" && source "${CREDS_FILE}"
+
 function start_tomcat()
 {
     tomcat_pid=$(pgrep -f tomcat)

@@ -66,9 +66,6 @@ function prepare_commit()
             cp -r "$HOME/$f" "./${dir}/"
         fi
     done
-    for f in "${PRESERVE_UNTRACKED_FILES[@]}"; do
-        rm -rf ./"${f}"
-    done
     rm -rf ./.vim/plugged
 }
 
@@ -78,16 +75,6 @@ function setup_homedir()
         mkdir -p "$HOME/${dir}"
     done
 
-    # backup preserve files
-    preserve_files_dir=$(mktemp -d)
-    for f in "${PRESERVE_UNTRACKED_FILES[@]}"; do
-        if [ -e "$HOME/${f}" ]; then
-            dir="$(dirname "${f}")"
-            file="${f##*/}"
-            mkdir -p "${preserve_files_dir}/${dir}"
-            mv "${HOME}/${f}" "${preserve_files_dir}/${dir}/"
-        fi
-    done
     for f in "${FILES[@]}"; do
         dir="$(dirname "${f}")"
         file="${f##*/}"
@@ -95,16 +82,6 @@ function setup_homedir()
         rm -rf "${HOME:?}/${dir}/${file}"
         cp -r "$f" "${HOME}/${dir}/"
     done
-    # restore preserve files
-    for f in "${PRESERVE_UNTRACKED_FILES[@]}"; do
-        if [ -e "${preserve_files_dir}/${f}" ]; then
-            dir="$(dirname "${f}")"
-            file="${f##*/}"
-            mkdir -p "${HOME}/${dir}"
-            mv "${preserve_files_dir}/${f}" "${HOME}/${dir}/"
-        fi
-    done
-    rm -r "${preserve_files_dir}"
     for src in "${!LINKS[@]}"; do
         dst="${LINKS[${src}]}"
         mkdir -p ~/"$(dirname "${dst}")" ~/"$(dirname "${src}")"
@@ -194,11 +171,6 @@ function main()
         .local/share/psql_history
         .local/share/vim
         .ssh/config.d
-    )
-    # useful for files that you don't want to delete but that you don't want to
-    # put in version control, typically files with credentials
-    readonly PRESERVE_UNTRACKED_FILES=(
-        .config/bash/creds
     )
     declare -A LINKS=(
         [".vim/init.vim"]=".vim/vimrc"

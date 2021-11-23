@@ -23,7 +23,6 @@ MODULE_NAMES=(
     pathmods # pathmods comes first because we want the PATH setup right for everything that comes next
     aliases
     bookmarks
-    creds
     functions_generic
     jobox
     programming

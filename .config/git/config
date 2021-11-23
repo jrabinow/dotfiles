@@ -16,7 +16,7 @@
 [diff]
     tool = vimdiff
 [credential]
-    helper = store --file ~/.config/git/credstore
+    helper = store --file ~/.local/share/git/credstore
     helper = cache --timeout=7200
 [color]
   ui = auto
