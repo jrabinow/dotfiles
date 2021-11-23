@@ -91,7 +91,7 @@ function setup_homedir()
     if command -v tmux > /dev/null; then
         # if tmux version is less than 3.0
         tmux_version="$(tmux -V | sed -En "s/^tmux (openbsd-)?([0-9]+)\.([0-9]+)?.*/\2\3/p")"
-        if ((${tmux_version} < 31 )) && [ ! -L ~/.tmux.conf ]; then
+        if (( ${tmux_version} < 31 )) && [ ! -L ~/.tmux.conf ]; then
             ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf
         fi
     fi
