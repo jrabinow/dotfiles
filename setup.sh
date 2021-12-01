@@ -41,6 +41,21 @@ function ensure_submodules_exist()
     git submodule update --init
 }
 
+function firefox_userjs()
+{
+    case $(uname -o) in
+        Darwin)
+            MOZILLA_PROFILE="$(ls -d ~/Library/Application\ Support/Firefox/Profiles/*.default)"
+            ;;
+        Linux)
+            MOZILLA_PROFILE="$(ls -d ~/.mozilla/firefox/Profiles/*.default)"
+            ;;
+        *)
+            ;;
+    esac
+    test -d "${MOZILLA_PROFILE}" && vimdiff ./user.js "${MOZILLA_PROFILE}/user.js"
+}
+
 function install_vim_plugins()
 {
     vim -c "PlugInstall" -c quit -c quit
