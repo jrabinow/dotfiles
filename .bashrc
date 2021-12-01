@@ -31,11 +31,12 @@ MODULE_NAMES=(
     shellconfig
 )
 
-case $(uname -o) in
-    Android)
+# https://stackoverflow.com/a/18434831
+case "${OSTYPE}" in
+    linux-android)
         MODULE_NAMES=("${MODULE_NAMES[@]}" android)
         ;;
-    Linux*)
+    linux-gnu)
         hostname="$(command -v hostname >/dev/null && hostname )"
         case "${hostname}" in
             dom0)
@@ -47,10 +48,10 @@ case $(uname -o) in
         esac
         MODULE_NAMES=(linux "${MODULE_NAMES[@]}")
         ;;
-    Darwin)
+    darwin*)
         MODULE_NAMES=(mac_os "${MODULE_NAMES[@]}")
         ;;
-    OpenBSD)
+    bsd*)
         MODULE_NAMES=(bsd "${MODULE_NAMES[@]}")
         ;;
 esac
