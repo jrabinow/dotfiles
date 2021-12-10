@@ -2,3 +2,6 @@
 
 ln -s ~/.local/share/discord ~/.config/discord
 ln -s ~/.local/share/YouTube\ Music ~/.config/YouTube\ Music
+ln -s ~/.local/share/rua ~/.config/rua
+ln -s ~/.local/share/Electron ~/.config/Electron
+rm -r ~/.config/pulse; ln -s ~/.local/share/pulse ~/.config/pulse

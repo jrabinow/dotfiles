@@ -190,10 +190,7 @@ function main()
     declare -A LINKS=(
         [".vim/init.vim"]=".vim/vimrc"
         [".local/share/coc/extensions/package.json"]=".config/coc/package.json"
-        [".config/rua"]=".local/share/rua"
         [".config/YouTube Music"]=".local/share/YouTube Music"
-        [".config/Electron"]=".local/share/Electron"
-        [".config/pulse"]=".local/share/pulse"
     )
     local PREPARE_COMMIT=false
     local INITIAL_ACCOUNT_CONFIG=false
