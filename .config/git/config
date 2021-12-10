@@ -77,3 +77,5 @@
   unhide = "!f() { git br $1 && git update-ref $1 refs/hidden/$1; }; f"
   hidden = "!f() { git show-ref | grep hidden; }; f"
   root = "rev-parse --show-toplevel"
+  rebcont = "rebase --continue"
+  rebbort = "rebase --abort"

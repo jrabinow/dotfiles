@@ -20,7 +20,8 @@ function shutup_spotify()
     sudo "$(which sat)"
     sleep 2
     open -ga Spotify
-    sleep 2
+    sleep 3
     osascript -e 'tell application "spotify" to play'
+    sleep 2
     sudo "$(which sat)"
 }
