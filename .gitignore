@@ -2,4 +2,4 @@
 .vim/init.vim
 .*.swp
 .config/bash/jobox
-.config/git/credstore
+__pycache__

@@ -1,0 +1,38 @@
+[general]
+accounts = NYU, Fastmail
+pythonfile = ~/.config/offlineimap/get_pass.py
+ui = blinkenlights
+metadata = ~/.local/share/offlineimap
+
+[Account Fastmail]
+localrepository = LocalFM
+remoterepository = RemoteFM
+
+[Repository LocalFM]
+type = Maildir
+localfolders = ~/Mail/Fastmail
+
+[Repository RemoteFM]
+type = IMAP
+remotehost = imap.fastmail.com
+remoteusereval = get_email("fastmail")
+remotepasseval = get_pass("fastmail")
+ssl = yes
+sslcacertfile = /opt/local/share/curl/curl-ca-bundle.crt
+
+[Account NYU]
+localrepository = LocalNYU
+remoterepository = RemoteNYU
+
+[Repository LocalNYU]
+type = Maildir
+localfolders = ~/Mail/NYU
+folderfilter = lambda folder: folder not in ['[Gmail].All Mail', 'Jobs and startups.Opportunities', '[Gmail].Important']
+
+[Repository RemoteNYU]
+type = IMAP
+remotehost = imap.gmail.com
+remoteusereval = get_email("nyu")
+remotepasseval = get_pass("nyu")
+ssl = yes
+sslcacertfile = /opt/local/share/curl/curl-ca-bundle.crt

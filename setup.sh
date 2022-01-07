@@ -161,6 +161,7 @@ function main()
         .config/gdb
         .config/git
         .config/hg
+        .config/offlineimap
         .config/task
         .config/tmux
         .config/wireshark/preferences
