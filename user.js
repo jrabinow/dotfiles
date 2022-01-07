@@ -130,14 +130,15 @@ user_pref("network.allow-experiments", false);
 // disable connection tests
 user_pref("network.captive-portal-service.enabled", false);
 
-user_pref("network.cookie.cookieBehavior", 1);
+// https://developer.mozilla.org/en-US/docs/Web/Privacy/State_Partitioning#disable_dynamic_state_partitioning
+user_pref("network.cookie.cookieBehavior", 5);
 user_pref("network.dns.disablePrefetch", true);
 user_pref("network.dns.disablePrefetchFromHTTPS", true);
 user_pref("network.http.referer.XOriginPolicy", 2);
 
 // don't send http referrer header
 // https://wiki.archlinux.org/title/Firefox/Privacy#Disable_HTTP_referer
-user_pref("network.http.sendRefererHeader", 0);
+user_pref("network.http.sendRefererHeader", 1);
 
 user_pref("network.http.speculative-parallel-limit", 0);
 user_pref("network.predictor.enable-prefetch", false);
@@ -201,6 +202,4 @@ user_pref("toolkit.telemetry.unifiedIsOptIn", false);
 user_pref("toolkit.telemetry.updatePing.enabled", false);
 
 // disable webGL
-user_pref("webgl.disabled", true);
-user_pref("webgl.renderer-string-override", " ");
-user_pref("webgl.vendor-string-override", " ");
+//user_pref("webgl.disabled", true);
