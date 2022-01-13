@@ -161,6 +161,7 @@ function main()
         .config/gdb
         .config/git
         .config/hg
+        .config/ipython/profile_default/ipython_config.py
         .config/offlineimap
         .config/task
         .config/tmux
@@ -170,7 +171,6 @@ function main()
         .gnupg/gpg.conf
         .gnupg/gpg-agent.conf
         .inputrc
-        .ipython/profile_default/ipython_config.py
         '.local/share/fonts/Roboto Mono for Powerline.ttf'
         .profile
         .psqlrc
