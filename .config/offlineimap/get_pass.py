@@ -42,6 +42,10 @@ def print_pass(account: str):
     print(get_account(account).password)
 
 
+def print_email(account: str):
+    print(get_account(account).email)
+
+
 def add_account(account: str):
     try:
         creds = read_file()

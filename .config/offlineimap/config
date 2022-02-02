@@ -11,6 +11,8 @@ remoterepository = RemoteFM
 [Repository LocalFM]
 type = Maildir
 localfolders = ~/Mail/Fastmail
+# https://github.com/OfflineIMAP/offlineimap/blob/e70d3992a0e9bb0fcdf3c94e1edf25a4124dfcd2/offlineimap.conf#L525
+sep = /
 
 [Repository RemoteFM]
 type = IMAP
@@ -19,6 +21,8 @@ remoteusereval = get_email("fastmail")
 remotepasseval = get_pass("fastmail")
 ssl = yes
 sslcacertfile = /opt/local/share/curl/curl-ca-bundle.crt
+readonly = True
+createfolders = False
 
 [Account NYU]
 localrepository = LocalNYU
@@ -27,7 +31,8 @@ remoterepository = RemoteNYU
 [Repository LocalNYU]
 type = Maildir
 localfolders = ~/Mail/NYU
-folderfilter = lambda folder: folder not in ['[Gmail].All Mail', 'Jobs and startups.Opportunities', '[Gmail].Important']
+sep = /
+folderfilter = lambda folder: folder not in ['[Gmail]/All Mail', 'Jobs and startups/Opportunities', '[Gmail]/Important']
 
 [Repository RemoteNYU]
 type = IMAP
@@ -36,3 +41,14 @@ remoteusereval = get_email("nyu")
 remotepasseval = get_pass("nyu")
 ssl = yes
 sslcacertfile = /opt/local/share/curl/curl-ca-bundle.crt
+readonly = True
+createfolders = False
+
+# https://wiki.archlinux.org/title/OfflineIMAP#Automatic_mailbox_generation_for_mutt
+[mbnames]
+enabled = yes
+filename = ~/.local/share/mutt/mailboxes
+header = "mailboxes "
+peritem = "+%(accountname)s/%(foldername)s"
+sep = "/"
+footer = "\n"
