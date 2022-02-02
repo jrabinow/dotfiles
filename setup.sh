@@ -11,10 +11,10 @@ function prepare_rootenv()
         .bashrc
         .inputrc
         .profile
-        .gdbinit
         .inputrc
         .vim
         .config/bash
+        .config/gdb
         .config/tmux
         bin/clean_env
         bin/cleanup

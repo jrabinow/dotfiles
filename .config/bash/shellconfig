@@ -27,7 +27,7 @@ bind Space:magic-space
 
 if [ "${BASH_VERSINFO[0]}" -ge 4 ]; then
     # perform shell expansion when completing with tab
-    shopt -s direxpand
+    #shopt -s direxpand
     # ** pattern represents all files in current directory and subdirectories
     shopt -s globstar
 fi

@@ -131,14 +131,23 @@ user_pref("network.allow-experiments", false);
 user_pref("network.captive-portal-service.enabled", false);
 
 // https://developer.mozilla.org/en-US/docs/Web/Privacy/State_Partitioning#disable_dynamic_state_partitioning
-user_pref("network.cookie.cookieBehavior", 5);
+user_pref("network.cookie.cookieBehavior", 1);
+user_pref("network.cookie.lifetimePolicy", 2);
 user_pref("network.dns.disablePrefetch", true);
 user_pref("network.dns.disablePrefetchFromHTTPS", true);
-user_pref("network.http.referer.XOriginPolicy", 2);
 
-// don't send http referrer header
+// https://wiki.mozilla.org/Security/Referrer
 // https://wiki.archlinux.org/title/Firefox/Privacy#Disable_HTTP_referer
+// send the header only when clicking on links and similar elements
 user_pref("network.http.sendRefererHeader", 1);
+// send a referrer only on same-origin
+user_pref("network.http.referer.XOriginPolicy", 2);
+// Send only the scheme, host, and port in the Referer header.
+user_pref("network.http.referer.trimmingPolicy", 2);
+// When sending across origin, send only the scheme, host, and port in the Referer header.
+user_pref("network.http.referer.XOriginTrimmingPolicy", 2);
+// network.IDN_show_punycode
+user_pref("network.IDN_show_punycode", true);
 
 user_pref("network.http.speculative-parallel-limit", 0);
 user_pref("network.predictor.enable-prefetch", false);
@@ -203,3 +212,15 @@ user_pref("toolkit.telemetry.updatePing.enabled", false);
 
 // disable webGL
 //user_pref("webgl.disabled", true);
+
+
+user_pref("browser.contextual-services.contextId", "");
+user_pref("browser.newtabpage.activity-stream.impressionId", "");
+user_pref("browser.sessionstore.upgradeBackup.latestBuildID", "");
+user_pref("dom.push.userAgentID", "");
+user_pref("extensions.lastAppBuildId", "");
+user_pref("security.sandbox.content.tempDirSuffix", "");
+user_pref("toolkit.startup.last_success", 0);
+user_pref("browser.startup.lastColdStartupCheck", 0);
+user_pref("privacy.sanitize.pending", "[{\"id\":\"shutdown\",\"itemsToClear\":[\"cache\",\"cookies\",\"offlineApps\",\"formdata\",\"sessions\"],\"options\":{}},{\"id\":\"newtab-container\",\"itemsToClear\":[],\"options\":{}}]");
+user_pref("services.settings.last_etag", "");

@@ -22,6 +22,7 @@ undo =
 #remotenames = /usr/lib/python2.7/site-packages/remotenames.py
 #lz4revlog = /tmp/lz4revlog/lz4revlog.py
 remotefilelog =
+evolve =
 
 [revsetalias]
 cur = reverse(only(last(.::), present(master)+present(@)))
