@@ -213,50 +213,13 @@ function mkcd()
     mkdir -p "${1}" && cd "${1}" || return
 }
 
-# Shorthand clone from github
-function hclone()
+function hgrep ()
 {
-    local url
-    if [[ $1 == "-p" ]]; then
-        url="git@github.com:${2}.git"
-        shift
-    else
-        url="git://github.com/${1}.git"
-    fi
-    git clone "$url"
+    history|grep "${@}"
 }
 
 function cheatsheet()
 {
     topic="${*}"
     curl "cheat.sh/${topic}"
-}
-
-function weather()
-{
-    location="${*}"
-    curl "v2.wttr.in/${location}"
-}
-
-function unquote()
-{
-    url="${*}"
-    shift
-    python3 -c "from urllib.parse import unquote; print(unquote('${url}'))"
-}
-
-function setup-ssh-key-login()
-{
-    local desthost="${1}"
-    shift
-    local keyfile="${1:-${HOME}/.ssh/keys/${desthost}.id_ed25519}"
-    shift
-
-    if [ -n "${desthost}" ] && [ -n "${keyfile}" ]; then
-        ssh-keygen -t ed25519 -f "${keyfile}"
-        ssh-copy-id -i "${keyfile}" "${desthost}"
-    else
-        # shellcheck disable=SC2016
-        printf 'Undefined:\n$desthost=%s\n$keyfile=%s\n' "${desthost}" "${keyfile}"
-    fi
 }

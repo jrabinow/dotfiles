@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-umask 022
+umask 077
 
 # Unlike earlier versions, Bash4 sources your bashrc on non-interactive shells.
 # The line below prevents anything in this file from creating output that will
@@ -23,6 +23,7 @@ MODULE_NAMES=(
     pathmods # pathmods comes first because we want the PATH setup right for everything that comes next
     aliases
     bookmarks
+    clutter_drawer_func
     functions_generic
     jobox
     programming
@@ -108,7 +109,7 @@ unset load_modules
 # this goes here because putting it in another file means bash ignores it for
 # some reason :-(
 HISTSIZE=100000
-HISTFILESIZE=100000
+HISTFILESIZE=1000000
 # don't put duplicate lines in the history
 HISTCONTROL="erasedups:ignoreboth"
 # Use standard ISO 8601 timestamp: %F=%Y-%m-%d;%T=%H:%M:%S (24-hours format)
