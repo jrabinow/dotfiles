@@ -2,39 +2,52 @@
     email = randprefix.github@fastmail.com
     name = Julien Rabinow
     signingkey = 0BEF65B5CE49D21E72CAAA8FECA72D7635A93214
+
 [core]
     longpaths = true
     pager = less -isXF
+
 [init]
 	defaultBranch = main
+
 [push]
     default = current
+
 [pull]
 	rebase = false
+
 [merge]
     tool = vimdiff
+
 [diff]
     tool = vimdiff
+
 [credential]
     helper = store --file ~/.local/share/git/credstore
     helper = cache --timeout=7200
+
 [color]
   ui = auto
   diff = auto
   status = auto
   branch = auto
   interactive = auto
+
 [color "diff"]
   whitespace = red reverse
+
 [rerere]
   enabled = true
+
 [sendemail]
   chainreplyto = no
+
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+
 [alias]
   st = status
   co = checkout
@@ -79,3 +92,8 @@
   root = "rev-parse --show-toplevel"
   rebcont = "rebase --continue"
   rebbort = "rebase --abort"
+  cpbort = "cherry-pick --abort"
+
+# make sure to leave trailing slash at end or this doesn't work
+[includeIf "gitdir:/Users/"]
+    path = ~/.config/git/deltapager
