@@ -18,6 +18,8 @@
 
 [merge]
     tool = vimdiff
+    conflictstyle = zdiff3
+
 
 [diff]
     tool = vimdiff
@@ -93,6 +95,7 @@
   rebcont = "rebase --continue"
   rebbort = "rebase --abort"
   cpbort = "cherry-pick --abort"
+  merbort = "merge --abort"
 
 # make sure to leave trailing slash at end or this doesn't work
 [includeIf "gitdir:/Users/"]

@@ -23,6 +23,9 @@ ssl = yes
 sslcacertfile = /opt/local/share/curl/curl-ca-bundle.crt
 readonly = True
 createfolders = False
+maxconnections = 5
+singlethreadperfolder = yes
+postsynchook = notmuch new
 
 [Account NYU]
 localrepository = LocalNYU
@@ -32,7 +35,7 @@ remoterepository = RemoteNYU
 type = Maildir
 localfolders = ~/Mail/NYU
 sep = /
-folderfilter = lambda folder: folder not in ['[Gmail]/All Mail', 'Jobs and startups/Opportunities', '[Gmail]/Important']
+folderfilter = lambda folder: folder not in ['[Gmail]/All Mail', 'Education/EduJob/NYU Opportunities Mailing List', '[Gmail]/Important']
 
 [Repository RemoteNYU]
 type = IMAP
@@ -43,6 +46,9 @@ ssl = yes
 sslcacertfile = /opt/local/share/curl/curl-ca-bundle.crt
 readonly = True
 createfolders = False
+maxconnections = 5
+singlethreadperfolder = yes
+postsynchook = notmuch new
 
 # https://wiki.archlinux.org/title/OfflineIMAP#Automatic_mailbox_generation_for_mutt
 [mbnames]

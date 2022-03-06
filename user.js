@@ -131,7 +131,7 @@ user_pref("network.allow-experiments", false);
 user_pref("network.captive-portal-service.enabled", false);
 
 // https://developer.mozilla.org/en-US/docs/Web/Privacy/State_Partitioning#disable_dynamic_state_partitioning
-user_pref("network.cookie.cookieBehavior", 1);
+user_pref("network.cookie.cookieBehavior", 5);
 user_pref("network.cookie.lifetimePolicy", 2);
 user_pref("network.dns.disablePrefetch", true);
 user_pref("network.dns.disablePrefetchFromHTTPS", true);

@@ -25,11 +25,13 @@ if command -v dircolors > /dev/null; then
 fi
 
 # rename from util-linux sucks, use perl rename utility for PCRE
+# shellcheck disable=SC2144
 if [ -x /usr/bin/prename ]; then
     alias rename=prename
-fi
-if [ -x /usr/bin/perl-rename ]; then
+elif [ -x /usr/bin/perl-rename ]; then
     alias rename=perl-rename
+elif [ -x /opt/local/bin/rename-5.* ]; then
+    alias rename=/opt/local/bin/rename-5.*
 fi
 
 if command -v cowsay > /dev/null; then

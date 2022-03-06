@@ -238,9 +238,11 @@ function main()
 
     if ${PREPARE_COMMIT}; then
         prepare_commit
+        firefox_userjs
     else
         ensure_submodules_exist
         setup_homedir
+        firefox_userjs
     fi
 }
 

@@ -19,6 +19,9 @@ hi CocErrorSign ctermfg=12 ctermbg=7
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor = "latex"
 
+" vimwiki setup
+let g:vimwiki_list = [{'path': '~/Documents/notes/vimwiki'}]
+
 " vim-vmath keybindings
 vmap <expr>  ++  VMATH_YankAndAnalyse()
 nmap         ++  vip++

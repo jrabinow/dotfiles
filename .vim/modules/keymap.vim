@@ -21,13 +21,14 @@ highlight CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred gu
 highlight CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 " \c will toggle highlighting on and off (to make it easy to locate the cursor in a large file)
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+nnoremap <Leader>tf :tabnew<CR>:FZF<CR>
+nnoremap <Leader>ta :tabnew<CR>:Ag 
 
 noremap <leader>bash :r ~/.vim/snippets/bash-snippet<CR>kdd
 noremap <leader>py :r ~/.vim/snippets/python-snippet<CR>kdd
 noremap <leader>clang :r ~/.vim/snippets/c-snippet<CR>kdd
 noremap <leader>java :r ~/.vim/snippets/java-snippet<CR>kdd
 
-nmap <F4> :TagbarToggle<CR>
 nnoremap <leader>udt :UndotreeToggle<CR>
 
 nnoremap <leader>no :set nonumber<CR>:set norelativenumber<CR>

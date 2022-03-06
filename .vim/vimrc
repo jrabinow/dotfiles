@@ -31,5 +31,6 @@ if hostname() != 'DD-WRT' && $USER != "root"
     Plug 'vim-erlang/vim-erlang-runtime'
     Plug 'vim-erlang/vim-erlang-tags'
     Plug 'vim-syntastic/syntastic'
+    Plug 'vimwiki/vimwiki'
 endif
 call plug#end()

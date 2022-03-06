@@ -3,7 +3,7 @@
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export EDITOR=vim
-export GOPATH=~/Documents/code/thirdparty/golang-libs
+#export GOPATH=~/Documents/code/thirdparty/golang-libs
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
