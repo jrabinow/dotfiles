@@ -35,3 +35,7 @@ function setup-ssh-key-login()
     fi
 }
 
+function archive_dl_music ()
+{
+    mv -iv ~/Downloads/*.mp3 ~/Music/Songs/
+}

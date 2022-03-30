@@ -99,4 +99,4 @@
 
 # make sure to leave trailing slash at end or this doesn't work
 [includeIf "gitdir:/Users/"]
-    path = ~/.config/git/deltapager
+    path = ~/.config/git/pimpmydiff

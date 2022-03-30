@@ -12,7 +12,7 @@ alias tmux_alert='tmux select-pane -P "bg=colour1"'
 alias treset='tmux select-pane -P "bg=colour0"'
 alias uhtop='htop -u $USER'
 alias watch="watch --differences"
-alias sat='sudo $(which sat)'
+alias macports_update='sudo $(which macports_update)'
 alias psql="env PGCONNECT_TIMEOUT=2 psql"
 alias less="less -R"
 

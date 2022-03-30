@@ -79,6 +79,8 @@ user_pref("device.sensors.proximity.enabled", false);
 user_pref("devtools.screenshot.clipboard.enabled", true);
 user_pref("dom.battery.enabled", false);
 user_pref("dom.event.clipboardevents.enabled", false);
+// don't let websites fuck up the context menu
+user_pref("dom.event.contextmenu.enabled", false);
 user_pref("dom.storage.enabled", false);
 user_pref("dom.webaudio.enabled", false);
 user_pref("experiments.activeExperiment", false);

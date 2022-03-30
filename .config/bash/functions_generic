@@ -201,7 +201,12 @@ function mkcd()
 
 function hgrep ()
 {
-    history|grep "${@}"
+    if [ $# -gt 1 ]; then
+        lastcmd="${1}"; shift
+        history "${lastcmd}"|grep "${@}"
+    else
+        history|grep "${@}"
+    fi
 }
 
 function cheatsheet()
