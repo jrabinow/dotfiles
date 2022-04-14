@@ -18,7 +18,9 @@ if hostname() != 'DD-WRT' && $USER != "root"
     Plug 'mariappan/dragvisuals.vim'
     Plug 'maxmellon/vim-jsx-pretty'
     Plug 'mbbill/undotree'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    if executable('node') && (has('patch-8.1.1719') || has('neovim-0.4.0'))
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    endif
     Plug 'nixon/vim-vmath'
     Plug 'pangloss/vim-javascript'
     Plug 'rhysd/git-messenger.vim'

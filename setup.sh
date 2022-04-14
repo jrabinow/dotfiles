@@ -43,17 +43,22 @@ function ensure_submodules_exist()
 
 function firefox_userjs()
 {
-    case $(uname -o) in
-        Darwin)
+    case "${OSTYPE}" in
+        darwin*)
             MOZILLA_PROFILE="$(ls -d ~/Library/Application\ Support/Firefox/Profiles/*.default)"
             ;;
-        Linux)
-            MOZILLA_PROFILE="$(ls -d ~/.mozilla/firefox/Profiles/*.default)"
+        linux-gnu)
+            MOZILLA_BASEDIR=~/.mozilla/firefox/
+            MOZILLA_PROFILE="$(test -d "${MOZILLA_BASEDIR}/Profiles" && \
+                ls -d ${MOZILLA_BASEDIR}/Profiles/*.default || \
+                ls -d ${MOZILLA_BASEDIR}/*.default)"
             ;;
         *)
             ;;
     esac
-    test -d "${MOZILLA_PROFILE}" && vimdiff ./user.js "${MOZILLA_PROFILE}/user.js"
+    test -d "${MOZILLA_PROFILE}" && \
+        cmp ./user.js "${MOZILLA_PROFILE}/user.js" || \
+        vimdiff ./user.js "${MOZILLA_PROFILE}/user.js"
 }
 
 function install_vim_plugins()
