@@ -39,3 +39,8 @@ function archive_dl_music ()
 {
     mv -iv ~/Downloads/*.mp3 ~/Music/Songs/
 }
+
+function isblocked ()
+{
+    grep "${1}" /etc/hosts
+}

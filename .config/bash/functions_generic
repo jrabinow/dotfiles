@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 # calculator integrated in command-line
-function ?()
+function @ ()
 {
     echo "$@" | bc -l
 }
 
 # shellcheck disable=SC2211
-function d?()
+function d@ ()
 {
     printf "%.2f\n" "$(echo "$@" | bc -l)"
 }
@@ -202,10 +202,10 @@ function mkcd()
 function hgrep ()
 {
     if [ $# -gt 1 ]; then
-        lastcmd="${1}"; shift
-        history "${lastcmd}"|grep "${@}"
+        tail_count="${1}"; shift
+        history "${tail_count}"|grep -- "${@}"
     else
-        history|grep "${@}"
+        history|grep -- "${@}"
     fi
 }
 
