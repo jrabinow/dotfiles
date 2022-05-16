@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC2154
 alias deploy_server='cp -v ${jobox}/Kili/build/libs/Kili.war /opt/tomcat9/webapps/'
-DBDIR="$HOME/Documents/work/jobox/infra_data/db"
+DBDIR="$HOME/data/kilidb"
 
 CREDS_FILE="${XDG_DATA_DIR:-$HOME/.local/share}/bash/creds"
 test -f "${CREDS_FILE}" && source "${CREDS_FILE}"
@@ -52,10 +52,10 @@ function start_db()
 
 function replicate_db()
 {
-    set -e -u
-    set -o pipefail
+    service="${1}"; shift
     oldpwd=$(pwd)
-    pg_dump service=integration > ~/dbexport.pgsql
+    pg_dump service="${service}" >| ~/dbexport.pgsql
+    mkdir -p "${DBDIR}/postgres"
     stop_db
     cd
     rm -r "${DBDIR}/postgres"
@@ -68,46 +68,27 @@ function replicate_db()
     createdb jobox_staging
     psql service=local < ~/dbexport.pgsql
     cd "${oldpwd}"
+}
+
+function replicate_int_db()
+{
+    replicate_db integration
 }
 
 function replicate_stag_db()
 {
-    set -e -u
-    set -o pipefail
-    oldpwd=$(pwd)
-    pg_dump service=staging > ~/dbexport.pgsql
-    stop_db
-    cd
-    rm -r "${DBDIR}/postgres"
-    mkdir -p "${DBDIR}/postgres"
-    cd "${DBDIR}"
-    pg_ctl -D ./postgres initdb
-    start_db
-    sleep 2
-    createuser jobox_staging
-    createdb jobox_staging
-    psql service=local < ~/dbexport.pgsql
-    cd "${oldpwd}"
+    replicate_db staging
 }
 
+# need to find a solution here:
+# - replicating from read-replica will abort partway through due to replication
+#   interfering with db dump
+# - actual read-write prod db is protected by AWS security groups that prevent
+#   all connections except from specific IP addresses (kili, redshift, that kind
+#   of stuff)
 function replicate_prod_db()
 {
-    set -e -u
-    set -o pipefail
-    oldpwd=$(pwd)
-    pg_dump service=prod-rw > ~/dbexport.pgsql
-    stop_db
-    cd
-    rm -r "${DBDIR}/postgres"
-    mkdir -p "${DBDIR}/postgres"
-    cd "${DBDIR}"
-    pg_ctl -D ./postgres initdb
-    start_db
-    sleep 2
-    createuser jobox_staging
-    createdb jobox_staging
-    psql service=local < ~/dbexport.pgsql
-    cd "${oldpwd}"
+    replicate_db prod-rw
 }
 
 function intercom_lookup()
@@ -180,9 +161,21 @@ function decruft_joblogs()
     jq -c '.[]|{sender: .sender_id, receiver: .receiver_id, status: .status}'
 }
 
+function joblogs_noupdate()
+{
+    jq -c 'select(.status != "UPDATE")'
+}
+
+function get_jobid()
+{
+    echo $((36#$1))
+}
+
 alias reset_db='stop_db && rm -r "${DBDIR}" && cp -R "${DBDIR}.bak" "${DBDIR}" && start_db'
 alias backup_localdb='stop_db && rm -rf "${DBDIR}.bak" && cp -R "${DBDIR}" "${DBDIR}.bak" && start_db'
 alias mipemode="cd mipe && venv && cd -"
 alias testnpush="gradle clean build && git push"
 alias jobox-format-check="java-format-check -t 30"
 alias jobox-format="java-format-check -a format -t 30"
+
+complete -C '/opt/local/bin/aws_completer' aws
