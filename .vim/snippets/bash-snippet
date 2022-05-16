@@ -1,9 +1,15 @@
 #!/usr/bin/env -S bash
 
+# write some cool doc here
+
+if [ -n "${DEBUG}" ]; then
+    exec 5> /tmp/bash_debug_output.txt
+    BASH_XTRACEFD="5"
+    PS4='$LINENO: '
+    set -x -T
+fi
 set -e -u
 set -o pipefail
-
-# write some cool doc here
 
 function usage()
 {
