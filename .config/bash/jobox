@@ -6,6 +6,7 @@ DBDIR="$HOME/data/kilidb"
 
 CREDS_FILE="${XDG_DATA_DIR:-$HOME/.local/share}/bash/creds"
 test -f "${CREDS_FILE}" && source "${CREDS_FILE}"
+export VAULT_ADDR=https://vault.cloud.jobox.ai
 
 function start_tomcat()
 {
@@ -54,20 +55,21 @@ function replicate_db()
 {
     service="${1}"; shift
     oldpwd=$(pwd)
-    pg_dump service="${service}" >| ~/dbexport.pgsql
+    export_file_name="$(date "dbexport_${service}_%Y_%m_%d.pgsql")"
+    pg_dump service="${service}" >| ~/"${export_file_name}"
     mkdir -p "${DBDIR}/postgres"
     stop_db
-    cd
+    cd || return
     rm -r "${DBDIR}/postgres"
     mkdir -p "${DBDIR}/postgres"
-    cd "${DBDIR}"
+    cd "${DBDIR}" || return
     pg_ctl -D ./postgres initdb
     start_db
     sleep 2
     createuser jobox_staging
     createdb jobox_staging
-    psql service=local < ~/dbexport.pgsql
-    cd "${oldpwd}"
+    psql service=local < ~/${export_file_name}
+    cd "${oldpwd}" || return
 }
 
 function replicate_int_db()

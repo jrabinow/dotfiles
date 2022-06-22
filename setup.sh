@@ -68,7 +68,7 @@ function install_vim_plugins()
     mkdir -p "${HOME}/.local/share/coc/"
     cd ~/.local/share/coc/extensions
     if command -v npm >/dev/null && [ "$(whoami)" != root ]; then
-        npm install --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
+        npm install --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod --omit=dev
     else
         vim -c "CocDisable" -c quit -c quit
     fi

@@ -13,7 +13,7 @@ alias treset='tmux select-pane -P "bg=colour0"'
 alias uhtop='htop -u $USER'
 alias watch="watch --differences"
 alias macports_update='sudo $(which macports_update)'
-alias psql="env PGCONNECT_TIMEOUT=2 psql"
+alias psql="env PGCONNECT_TIMEOUT=5 psql"
 alias less="less -R"
 
 # enable color support of ls and also add handy aliases
