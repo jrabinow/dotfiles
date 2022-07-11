@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+
+# debug mac react native UI
+# https://www.youtube.com/watch?v=R2KkJ_Zawnk
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+defaults write -g WebKitDeveloperExtras -bool YES
+
 # ~/.macos — https://mths.be/macos
 
 # Close any open System Preferences panes, to prevent them from overriding
@@ -45,25 +51,25 @@ defaults write com.apple.alf stealthenabled -bool true
 defaults write com.apple.alf allowsignedenabled -bool false
 
 # Captive portal for connecting to new networks is disabled to prevent MITM attacks
-defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
 
 # Hidden files are displayed in Finder
-defaults write /Library/Preferences/SystemConfiguration/com.apple.finder AppleShowAllFiles -bool true && killall Dock
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.finder AppleShowAllFiles -bool true && killall Dock
 
 # Automatic check for software updates is enabled
 softwareupdate --schedule on
 
 # The infrared receiver is disabled
-defaults write /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled -bool false
+sudo defaults write /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled -bool false
 
 # Internet Sharing is disabled on all network interfaces
 defaults write /Library/Preferences/SystemConfiguration/com.apple.nat NAT -dict-add Enabled -bool false
 
 # Wake on Network Access feature is disabled
-systemsetup -setwakeonnetworkaccess off
+sudo systemsetup -setwakeonnetworkaccess off
 
 # Automatic setting of time and date is disabled
-systemsetup setusingnetworktime off
+sudo systemsetup setusingnetworktime off
 
 # IPv6 is disabled on all network interfaces
 #networksetup -listallnetworkservices | while read i; do SUPPORT=$(networksetup -getinfo "$i" | grep "IPv6: Automatic") && if [ -n "$SUPPORT" ]; then networksetup -setv6off "$i"; fi; done;
@@ -181,6 +187,9 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 #rm -rf ~/Library/Application Support/Dock/desktoppicture.db
 #sudo rm -rf /System/Library/CoreServices/DefaultDesktop.jpg
 #sudo ln -s /path/to/your/image /System/Library/CoreServices/DefaultDesktop.jpg
+
+# disable dialog when app crashes https://apple.stackexchange.com/q/105846
+defaults write com.apple.CrashReporter DialogType none
 
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
