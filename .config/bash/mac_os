@@ -25,3 +25,30 @@ function allow_macports()
     done
     /bin/chmod -R +a "macports allow read,execute" "${macports}"
 }
+
+# configd starts using 100% CPU for no discernable reason. Might be blocked by
+# LuLu but not sure. In any case it's crap so it just retries whatever it's
+# doing in an infinite loop and sticks around, making the whole laptop unsuable.
+# I don't want that kinda software running on my computer.
+# The problem comes from configd being auto-restarted by launchd if the process
+# dies. I've tried to find out why and to deactivate the restarts. So far no
+# luck. One day i'll go and properly investigate with dtruss/dtrace.
+# This thing here will ensure that configd goes down and stays down. Screw that
+# thing.
+function configd_killer()
+{
+    lastkill_iter=10
+    while [ "${lastkill_iter}" -gt 0 ]; do
+        configd_tgt_pid="$(ps aux|awk '/configd/ {if ($3 >= 20.0) print $2}')"
+        if [ "${configd_tgt_pid}" != "" ]; then
+            sudo kill -9 "${configd_tgt_pid}"
+            lastkill_iter=10
+            sleep 1
+        else
+            lastkill_iter=$((lastkill_iter - 1))
+            sleep 5
+        fi
+        echo "${lastkill_iter}"
+    done
+    echo "configd has understood who's boss"
+}
