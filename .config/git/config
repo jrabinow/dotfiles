@@ -56,6 +56,7 @@
   ci = commit
   br = branch
   cob = checkout -b
+  cp = cherry-pick
   diff = "diff -w --word-diff --color-moved"
   show = "show -w --word-diff"
   # push to non-existent upstream branch
@@ -93,6 +94,8 @@
   hidden = "!f() { git show-ref | grep hidden; }; f"
   root = "rev-parse --show-toplevel"
   rebcont = "rebase --continue"
+  cpcont = "cherry-pick --continue"
+  mercont = "merge --continue"
   rebbort = "rebase --abort"
   cpbort = "cherry-pick --abort"
   merbort = "merge --abort"
