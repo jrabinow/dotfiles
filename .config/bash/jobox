@@ -1,6 +1,7 @@
 #!/usr/bin/env -S bash
 
-DB_DIR="$HOME/data/kilidb"
+DATA_DIR="$HOME/data"
+DB_DIR="${DATA_DIR}/postgres/kilidb"
 TOMCAT_DIR=/opt/tomcat
 JOBOX_CREDS_FILE="${XDG_DATA_DIR:-$HOME/.local/share}/bash/joboxcreds"
 JOBOX_SHELL="${jobox}/MissionPeak/joboxshell/bash"

@@ -52,3 +52,5 @@ function configd_killer()
     done
     echo "configd has understood who's boss"
 }
+
+test -r /opt/local/share/nvm/nvm.sh && source /opt/local/share/nvm/nvm.sh
