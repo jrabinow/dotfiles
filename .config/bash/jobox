@@ -6,3 +6,4 @@ TOMCAT_DIR=/opt/tomcat
 JOBOX_CREDS_FILE="${XDG_DATA_DIR:-$HOME/.local/share}/bash/joboxcreds"
 JOBOX_SHELL="${jobox}/MissionPeak/joboxshell/bash"
 test -r "${JOBOX_SHELL}" && source "${JOBOX_SHELL}"
+source /opt/local/share/nvm/nvm.sh
