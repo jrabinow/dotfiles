@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+
+if [ -n "${DEBUG}" ]; then
+    exec 5> /tmp/bash_debug_output.txt
+    BASH_XTRACEFD="5"
+    PS4='$LINENO: '
+    set -x -T
+fi
 set -e -u
 set -o pipefail
 
@@ -49,16 +56,19 @@ function firefox_userjs()
             ;;
         linux-gnu)
             MOZILLA_BASEDIR=~/.mozilla/firefox/
-            MOZILLA_PROFILE="$(test -d "${MOZILLA_BASEDIR}/Profiles" && \
-                ls -d ${MOZILLA_BASEDIR}/Profiles/*.default || \
-                ls -d ${MOZILLA_BASEDIR}/*.default)"
+            if [ -d "${MOZILLA_BASEDIR}" ]; then
+                MOZILLA_PROFILE="$(test -d "${MOZILLA_BASEDIR}/Profiles" && \
+                    ls -d ${MOZILLA_BASEDIR}/Profiles/*.default || \
+                    ls -d ${MOZILLA_BASEDIR}/*.default)"
+            fi
             ;;
         *)
             ;;
     esac
-    test -d "${MOZILLA_PROFILE}" && \
-        cmp ./user.js "${MOZILLA_PROFILE}/user.js" || \
-        vimdiff ./user.js "${MOZILLA_PROFILE}/user.js"
+    test -d "${MOZILLA_PROFILE-x}" && \
+        (cmp ./user.js "${MOZILLA_PROFILE}/user.js" || \
+        vimdiff ./user.js "${MOZILLA_PROFILE}/user.js") || \
+        true
 }
 
 function install_vim_plugins()
