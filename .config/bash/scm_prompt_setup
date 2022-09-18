@@ -12,9 +12,15 @@ function ensure_source_present()
 
     # shellcheck disable=SC1091
     local GIT_PROMPT="${BASH_MOD_DIR}/source_control/git-prompt"
-    local REMOTE_GIT_URL=https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+    local REMOTE_GITPROMPT_URL=https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
     test -f "${GIT_PROMPT}" \
-        || curl "${REMOTE_GIT_URL}" | sed -e 's/^__git_ps1 ()$/_dotfiles_scm_info ()/g' > "${GIT_PROMPT}"
+        || curl "${REMOTE_GITPROMPT_URL}" | sed -e 's/^__git_ps1 ()$/_dotfiles_scm_info ()/g' > "${GIT_PROMPT}"
+
+    # shellcheck disable=SC1091
+    local GIT_COMPLETION="${BASH_MOD_DIR}/source_control/git-completion"
+    local REMOTE_GITCOMPLETION_URL=https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+    test -f "${GIT_COMPLETION}" \
+        || curl "${REMOTE_GITCOMPLETION_URL}" > "${GIT_COMPLETION}"
 }
 
 function scmmode()
