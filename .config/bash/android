@@ -4,3 +4,8 @@ function which ()
 {
     command which "$@" 2>/dev/null
 }
+
+function gimmedir()
+{
+    sudo chown -R $USER:$USER ${1:-.}
+}
