@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 # seriously, fuck those aliases
 unalias ln cp mv 2> /dev/null
@@ -31,6 +31,7 @@ if [ -x /usr/bin/prename ]; then
 elif [ -x /usr/bin/perl-rename ]; then
     alias rename=perl-rename
 elif [ -x /opt/local/bin/rename-5.* ]; then
+    # shellcheck disable=SC2139
     alias rename=/opt/local/bin/rename-5.*
 fi
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 function which ()
 {
@@ -7,5 +7,5 @@ function which ()
 
 function gimmedir()
 {
-    sudo chown -R $USER:$USER ${1:-.}
+    sudo chown -R "${USER}:${USER}" "${1:-.}"
 }

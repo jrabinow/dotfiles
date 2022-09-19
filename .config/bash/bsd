@@ -1,3 +1,3 @@
-#!/usr/bi/env bash
+#!/usr/bin/env -S bash
 
 alias dircolors=gdircolors

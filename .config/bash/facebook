@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 # Source Facebook definitions
 if [ -f /usr/facebook/ops/rc/master.bashrc ]; then

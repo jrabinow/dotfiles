@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S bash
 
 # Shorthand clone from github
 function hclone()
@@ -43,4 +43,21 @@ function archive_dl_music ()
 function isblocked ()
 {
     grep "${1}" /etc/hosts
+}
+
+
+function twlookup()
+{
+    phone_number="$1"
+    shift
+    curl -sX GET "https://lookups.twilio.com/v1/PhoneNumbers/${phone_number}?CountryCode=US&Type=carrier&Type=caller-name" \
+        -u "${TWILIO_TOKEN}" | jq
+}
+
+function twlookup_whitepages()
+{
+    phone_number="$1"
+    shift
+    curl -sX GET "https://lookups.twilio.com/v1/PhoneNumbers/${phone_number}?AddOns=whitepages_pro_caller_id" \
+        -u "${TWILIO_TOKEN}" | jq
 }
