@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-umask 077
+[ $(id -u) != 0 ] && umask 077 || umask 022
 
 # Unlike earlier versions, Bash4 sources your bashrc on non-interactive shells.
 # The line below prevents anything in this file from creating output that will
