@@ -96,6 +96,7 @@ function prepare_commit()
             cp -r "$HOME/$f" "./${dir}/"
         fi
     done
+    sed -i -E 's/conflictstyle = diff3/conflictstyle = zdiff3/' ./.config/git/config
     rm -rf ./.vim/plugged
 }
 
@@ -130,6 +131,12 @@ function setup_homedir()
         gdb_version="$(gdb --version|head -1|sed -En 's/^GNU gdb(.*)?\s+([0-9]+)(\.[0-9]+(-git)?)*$/\2/p')"
         if (( ${gdb_version} < 11 )) && [ ! -L ~/.gdbinit ]; then
             ln -s ~/.config/gdb/gdbinit ~/.gdbinit
+        fi
+    fi
+    if command -v git > /dev/null; then
+        git_minor_version="$(git --version| awk -F. '{print $2}')"
+        if [ "${git_minor_version}" -le 34 ]; then
+            sed -i -E 's/conflictstyle = zdiff3/conflictstyle = diff3/' ~/.config/git/config
         fi
     fi
 
