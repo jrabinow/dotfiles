@@ -9,18 +9,19 @@ runtime modules/autocmds.vim
 
 call plug#begin('~/.vim/plugged')
 if hostname() != 'DD-WRT' && $USER != "root"
+    if executable('node') && (has('patch-8.1.1719') || has('neovim-0.4.0'))
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    endif
     Plug 'albfan/ag.vim'
     Plug 'fatih/vim-go'
     "Plug 'ludovicchabant/vim-gutentags'
     Plug 'itchyny/lightline.vim'
     Plug 'junegunn/fzf'
+    Plug 'junegunn/fzf.vim'
     Plug 'keith/swift.vim'
     Plug 'mariappan/dragvisuals.vim'
     Plug 'maxmellon/vim-jsx-pretty'
     Plug 'mbbill/undotree'
-    if executable('node') && (has('patch-8.1.1719') || has('neovim-0.4.0'))
-        Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    endif
     Plug 'nixon/vim-vmath'
     Plug 'pangloss/vim-javascript'
     Plug 'rhysd/git-messenger.vim'

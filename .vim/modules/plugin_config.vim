@@ -33,6 +33,11 @@ vmap  <expr>  <DOWN>   DVB_Drag('down')
 vmap  <expr>  <UP>     DVB_Drag('up')
 vmap  <expr>  D        DVB_Duplicate()
 
+" FZF
+let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+
 " lightline
 " https://github.com/itchyny/lightline.vim/blob/master/README.md#advanced-configuration
 let g:lightline = {
