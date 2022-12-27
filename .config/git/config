@@ -15,6 +15,7 @@
 
 [pull]
 	rebase = false
+	ff = only
 
 [merge]
     tool = vimdiff
@@ -62,8 +63,7 @@
   cp = cherry-pick
   diff = "diff -w --word-diff --color-moved"
   show = "show -w --word-diff"
-  # push to non-existent upstream branch
-  fpush = "!branch=$(git rev-parse --abbrev-ref HEAD); remote=origin; git branch -u \"${remote}\" \"${branch}\"; git push -u \"${remote}\" \"${branch}\""
+  upstream = "!branch=$(git rev-parse --abbrev-ref HEAD); git branch \"--set-upstream-to=origin/${branch}\" \"${branch}\""
   # delete branch at remote
   delbr = "!git push origin -d "
   # pretty logging 1

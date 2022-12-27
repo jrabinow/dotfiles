@@ -27,6 +27,8 @@
             ]
         }
     },
+    "java.home": "/Library/Java/JavaVirtualMachines/openjdk17/Contents/Home/",
+    "java.import.gradle.java.home": "/Library/Java/JavaVirtualMachines/openjdk8-bootstrap/Contents/Home/",
     // diagnostics config
     "diagnostic-languageserver.filetypes": {
         // lint `sh` (includes `bash`) files
