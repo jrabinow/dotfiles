@@ -4,13 +4,12 @@
 PATH_DIRS_PREPEND="
     ${TESTBINARYDIR}
     $HOME/bin
+    /usr/local/bin
     /opt/local/bin
     /opt/local/sbin
     /opt/local/libexec/gnubin
     /opt/local/libexec/llvm/bin
     /opt/local/lib/postgresql/bin
-    /opt/local/lib/mariadb/bin
-    /usr/local/bin
     /data/data/com.termux/files/usr/local/bin
 "
 

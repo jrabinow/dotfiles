@@ -16,7 +16,7 @@ function hclone()
 function weather()
 {
     location="${*}"
-    curl "v2.wttr.in/${location}"
+    curl "v2.wttr.in/${location}?m"
 }
 
 function setup-ssh-key-login()
