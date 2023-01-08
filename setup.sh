@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-
+#!/usr/bin/env -S bash
 
 if [ -n "${DEBUG}" ]; then
     exec 5> /tmp/bash_debug_output.txt
@@ -57,18 +56,19 @@ function firefox_userjs()
         linux-gnu)
             MOZILLA_BASEDIR=~/.mozilla/firefox/
             if [ -d "${MOZILLA_BASEDIR}" ]; then
-                MOZILLA_PROFILE="$(test -d "${MOZILLA_BASEDIR}/Profiles" && \
-                    ls -d ${MOZILLA_BASEDIR}/Profiles/*.default || \
-                    ls -d ${MOZILLA_BASEDIR}/*.default)"
+                # shellcheck disable=2015
+                MOZILLA_PROFILE="$(test -d "${MOZILLA_BASEDIR}/Profiles" \
+                    && ls -d ${MOZILLA_BASEDIR}/Profiles/*.default \
+                    || ls -d ${MOZILLA_BASEDIR}/*.default)"
             fi
             ;;
-        *)
-            ;;
+        *) ;;
     esac
-    test -d "${MOZILLA_PROFILE-x}" && \
-        (cmp ./user.js "${MOZILLA_PROFILE}/user.js" || \
-        vimdiff ./user.js "${MOZILLA_PROFILE}/user.js") || \
-        true
+    # shellcheck disable=2015
+    test -d "${MOZILLA_PROFILE-x}" \
+        && (cmp ./user.js "${MOZILLA_PROFILE}/user.js" \
+            || vimdiff ./user.js "${MOZILLA_PROFILE}/user.js") \
+        || true
 }
 
 function install_vim_plugins()
@@ -77,7 +77,7 @@ function install_vim_plugins()
     # Install extensions
     mkdir -p "${HOME}/.local/share/coc/"
     cd ~/.local/share/coc/extensions
-    if command -v npm >/dev/null && [ "$(whoami)" != root ]; then
+    if command -v npm > /dev/null && [ "$(whoami)" != root ]; then
         npm install --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod --omit=dev
     else
         vim -c "CocDisable" -c quit -c quit
@@ -122,19 +122,19 @@ function setup_homedir()
     if command -v tmux > /dev/null; then
         # if tmux version is less than 3.0
         tmux_version="$(tmux -V | sed -En "s/^tmux (openbsd-)?([0-9]+)\.([0-9]+)?.*/\2\3/p")"
-        if (( ${tmux_version} < 31 )) && [ ! -L ~/.tmux.conf ]; then
+        if ((tmux_version < 31)) && [ ! -L ~/.tmux.conf ]; then
             ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf
         fi
     fi
     if command -v gdb > /dev/null; then
         # if gdb version less than 11.0
-        gdb_version="$(gdb --version|head -1|sed -En 's/^GNU gdb(.*)?\s+([0-9]+)(\.[0-9]+(-git)?)*$/\2/p')"
-        if (( ${gdb_version} < 11 )) && [ ! -L ~/.gdbinit ]; then
+        gdb_version="$(gdb --version | head -1 | sed -En 's/^GNU gdb(.*)?\s+([0-9]+)(\.[0-9]+(-git)?)*$/\2/p')"
+        if ((gdb_version < 11)) && [ ! -L ~/.gdbinit ]; then
             ln -s ~/.config/gdb/gdbinit ~/.gdbinit
         fi
     fi
     if command -v git > /dev/null; then
-        git_minor_version="$(git --version| awk -F. '{print $2}')"
+        git_minor_version="$(git --version | awk -F. '{print $2}')"
         if [ "${git_minor_version}" -le 34 ]; then
             sed -i -E 's/conflictstyle = zdiff3/conflictstyle = diff3/' ~/.config/git/config
         fi
