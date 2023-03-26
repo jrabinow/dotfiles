@@ -38,3 +38,21 @@ C-G: re-read-init-file
 "\C-p": previous-history
 "\C-n": next-history
 "\C-w": backward-delete-word
+
+# Set the mode string and cursor to indicate the vim mode
+# # for the number after `\e[`:
+# #  0: blinking block
+# #  1: blinking block (default)
+# #  2: steady block
+# #  3: blinking underline
+# #  4: steady underline
+# #  5: blinking bar (xterm)
+# #  6: steady bar (xterm)
+# Also see https://stackoverflow.com/questions/44534678/how-to-change-cursor-shape-depending-on-vi-mode-in-bash
+# and https://stackoverflow.com/questions/1039713/different-bash-prompt-for-different-vi-editing-mode
+#
+# Stolen from https://github.com/davxy/dotfiles/blob/f6f3eb3f920e9aaeb57f9652e005d0cb71bb3abb/bash/inputrc#L1
+# Show the Vim mode in prompt (command or insert)
+set show-mode-in-prompt on
+set vi-cmd-mode-string "\1\e[1 q\2"
+set vi-ins-mode-string "\1\e[5 q\2"
