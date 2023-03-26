@@ -203,3 +203,27 @@ function cheatsheet()
     topic="${*}"
     curl "cheat.sh/${topic}"
 }
+
+function ssh_targets()
+{
+    tgt="${1:""}"
+    shift
+    awk '/^Host/,/^$/ {
+        if ($1 == "Host") {
+            host=$2
+        } else if ($1 == "Hostname") {
+            hostname=$2
+        } else if ($1 == "IdentityFile") {
+            identityfile=$2
+        } else if ($1 == "User") {
+            user=$2
+        }
+        if (host != "" && hostname != "" && identityfile != "" && user != "") {
+            print host " -> ssh -i " identityfile " " user "@" hostname
+            host=""
+            identityfile=""
+            user=""
+            hostname=""
+        }
+    }' ~/.ssh/config.d/* | sort | grep "${tgt}"
+}

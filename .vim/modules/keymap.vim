@@ -11,6 +11,9 @@ nnoremap Y y$
 " Who uses ';' anyways?
 nnoremap ; :
 
+" open help command on current word under cursor
+nnoremap <F1> :exec("help ".expand("<cword>"))<CR>
+
 " Ctrl+\ : open ctag definition in new tab
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 " Alt+] : open ctag definition in vertical split

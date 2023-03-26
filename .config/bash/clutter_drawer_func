@@ -60,3 +60,10 @@ function twlookup_whitepages()
     curl -sX GET "https://lookups.twilio.com/v1/PhoneNumbers/${phone_number}?AddOns=whitepages_pro_caller_id" \
         -u "${TWILIO_TOKEN}" | jq
 }
+
+function pgkill()
+{
+    pattern="$1"
+    shift
+    pgrep -alfi "${pattern}" | fzf | awk '{print $1}' | xargs -r kill
+}
