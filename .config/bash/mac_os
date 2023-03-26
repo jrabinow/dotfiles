@@ -16,6 +16,7 @@ function free()
     vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("%-16s % 16.2f Mi\n", "$1:", $2 * $size / 1048576);'
 }
 
+# shellcheck disable=SC2142
 alias batt_pct="pmset -g batt | awk '/InternalBattery/ {sub(\"%;\", \"\", \$3); print \$3}'"
 
 function allow_macports()
@@ -42,7 +43,7 @@ function configd_killer()
 {
     lastkill_iter=10
     while [ "${lastkill_iter}" -gt 0 ]; do
-        configd_tgt_pid="$(ps aux|awk '/configd/ {if ($3 >= 20.0) print $2}')"
+        configd_tgt_pid="$(ps aux | awk '/configd/ {if ($3 >= 20.0) print $2}')"
         if [ "${configd_tgt_pid}" != "" ]; then
             sudo kill -9 "${configd_tgt_pid}"
             lastkill_iter=10

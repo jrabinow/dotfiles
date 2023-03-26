@@ -1,14 +1,15 @@
 #!/usr/bin/env -S bash
 
-function usb ()
+function usb()
 {
-    action="$1"; shift
+    action="$1"
+    shift
     case "${action}" in
         on)
-            echo '1-1'|sudo tee /sys/bus/usb/drivers/usb/bind >/dev/null
+            echo '1-1' | sudo tee /sys/bus/usb/drivers/usb/bind > /dev/null
             ;;
         off)
-            echo '1-1'|sudo tee /sys/bus/usb/drivers/usb/unbind >/dev/null
+            echo '1-1' | sudo tee /sys/bus/usb/drivers/usb/unbind > /dev/null
             ;;
         *)
             printf "Usage: usb [on|off]\n"
@@ -16,9 +17,10 @@ function usb ()
     esac
 }
 
-function hdmi ()
+function hdmi()
 {
-    action="$1"; shift
+    action="$1"
+    shift
     case "${action}" in
         on)
             sudo /opt/vc/bin/tvservice -p

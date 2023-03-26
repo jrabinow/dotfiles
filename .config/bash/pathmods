@@ -46,10 +46,10 @@ for i in ${PATH_DIRS_PREPEND}; do
     # force prepending (deals with the case where the component is already added
     # to middle of PATH)
     if [ -d "${i}" ]; then
-        PATH=${PATH//":$i:"/:}         #delete all instances in the middle
-        PATH=${PATH/%":$i"/}           #delete any instance at the end
-        PATH=${PATH/#"$i:"/}           #delete any instance at the beginning
-        PREPEND="${PREPEND:+"$PREPEND:"}$i"  #prepend $i or if $PATH is empty set to $i
+        PATH=${PATH//":$i:"/:}              # delete all instances in the middle
+        PATH=${PATH/%":$i"/}                # delete any instance at the end
+        PATH=${PATH/#"$i:"/}                # delete any instance at the beginning
+        PREPEND="${PREPEND:+"$PREPEND:"}$i" # prepend $i or if $PATH is empty set to $i
     fi
 done
 

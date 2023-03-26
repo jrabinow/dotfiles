@@ -1,13 +1,13 @@
 #!/usr/bin/env -S bash
 
 # calculator integrated in command-line
-function @ ()
+function @()
 {
     echo "$@" | bc -l
 }
 
 # shellcheck disable=SC2211
-function d@ ()
+function d@()
 {
     printf "%.2f\n" "$(echo "$@" | bc -l)"
 }
@@ -25,7 +25,7 @@ function repeat()
     local count="$1"
     shift
     for _ in $(seq 1 "$count"); do
-        eval "$@"
+        "$@"
     done
 }
 
@@ -93,7 +93,7 @@ function num_proc()
             n=1
             ;;
     esac
-    echo $n
+    echo "${n}"
 }
 
 # shellcheck disable=SC2034
@@ -187,13 +187,14 @@ function mkcd()
     mkdir -p "${1}" && cd "${1}" || return
 }
 
-function hgrep ()
+function hgrep()
 {
     if [ $# -gt 1 ]; then
-        tail_count="${1}"; shift
-        history "${tail_count}"|grep -- "${@}"
+        tail_count="${1}"
+        shift
+        history "${tail_count}" | grep -- "${@}"
     else
-        history|grep -- "${@}"
+        history | grep -- "${@}"
     fi
 }
 

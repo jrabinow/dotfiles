@@ -1,8 +1,8 @@
 #!/usr/bin/env -S bash
 
-function which ()
+function which()
 {
-    command which "$@" 2>/dev/null
+    command which "$@" 2> /dev/null
 }
 
 function gimmedir()

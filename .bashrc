@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-[ $(id -u) != 0 ] && umask 077 || umask 022
+if [ "$(id -u)" != 0 ]; then
+    umask 077
+else
+    umask 022
+fi
 
 # Unlike earlier versions, Bash4 sources your bashrc on non-interactive shells.
 # The line below prevents anything in this file from creating output that will
@@ -38,7 +42,7 @@ case "${OSTYPE}" in
         MODULE_NAMES=("${MODULE_NAMES[@]}" android)
         ;;
     linux-gnu)
-        hostname="$(command -v hostname >/dev/null && hostname )"
+        hostname="$(command -v hostname > /dev/null && hostname)"
         case "${hostname}" in
             dom0)
                 MODULE_NAMES=(qubes "${MODULE_NAMES[@]}")
@@ -61,6 +65,7 @@ MODULE_NAMES=("${MODULE_NAMES[@]}" fortune) # load this guy last
 
 BASH_MOD_DIR="${XDG_CONFIG_HOME:-${HOME}/.config/}/bash"
 
+# shellcheck disable=SC2317
 function missing_module()
 {
     local module="$1"
