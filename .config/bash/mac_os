@@ -27,7 +27,7 @@ function allow_macports()
         /bin/chmod +a "macports allow read,execute" "${grantdir}"
         grantdir="${grantdir}/.."
     done
-    /bin/chmod -R +a "macports allow read,execute" "${macports}"
+    sudo /bin/chmod -R +a "macports allow read,execute" "${macports}"
 }
 
 # configd starts using 100% CPU for no discernable reason. Might be blocked by

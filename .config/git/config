@@ -78,8 +78,10 @@
   changelog = "!git log --oneline --no-merges $(git tag --sort=creatordate|tail -1)..HEAD"
   # show remote url
   url = config --get remote.origin.url
+  # commit staged changes yolo mode with accompanying commit message
+  yolo = !git commit -m \"$(curl -s https://whatthecommit.com/index.txt)\"
   # commit everything yolo mode with accompanying commit message
-  yolo = !git commit -am \"$(curl -s http://whatthecommit.com/index.txt)\"
+  yolo-all = !git commit -am \"$(curl -s https://whatthecommit.com/index.txt)\"
   # keeping the below around till i find a good use for it
   stag = "!id=`git rev-parse --verify HEAD`; git tag tag_for_${id:0:8} -m \"Tag for commit $id\""
   vtag = !git tag -v `git describe`
