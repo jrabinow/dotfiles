@@ -7,9 +7,10 @@ alias utop='top -U $USER'
 alias updatedb="sudo bash -c 'cd / && /opt/local/bin/slocate -u -c /opt/local/etc/updatedb.conf'"
 alias locate=slocate
 alias codesign_debugger="sudo codesign --force --deep --preserve-metadata=identifier,entitlements,requirements,flags,team-identifier --sign manual-codesign"
+alias manup="sudo makewhatis /opt/local/share/man; sudo chmod a+r /opt/local/share/man/mandoc.db"
 
 export COCOAPODS_DISABLE_STATS='true'
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk17/Contents/Home
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk17/Contents/Home
 #alias simulator="/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/MacOS/Simulator -CurrentDeviceUDID AE350978-A3A3-44E5-A77F-45028962E4E7"
 function free()
 {
@@ -30,10 +31,10 @@ function allow_macports()
     sudo /bin/chmod -R +a "macports allow read,execute" "${macports}"
 }
 
-# configd starts using 100% CPU for no discernable reason. Might be blocked by
-# LuLu but not sure. In any case it's crap so it just retries whatever it's
-# doing in an infinite loop and sticks around, making the whole laptop unsuable.
-# I don't want that kinda software running on my computer.
+# configd starts using 100% CPU for no discernable reason. It's crap so it just
+# retries whatever it's doing in an infinite loop and sticks around, making the
+# whole laptop unsuable. I don't want that kinda software running on my computer.
+#
 # The problem comes from configd being auto-restarted by launchd if the process
 # dies. I've tried to find out why and to deactivate the restarts. So far no
 # luck. One day i'll go and properly investigate with dtruss/dtrace.

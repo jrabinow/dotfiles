@@ -15,6 +15,7 @@ alias watch="watch --differences"
 alias macports_update='sudo $(which macports_update)'
 alias psql="env PGCONNECT_TIMEOUT=5 psql"
 alias less="less -R"
+alias DID_I_FUCKING_STUTTER='sudo $(history -p !!)'
 
 # enable color support of ls and also add handy aliases
 if command -v dircolors > /dev/null; then

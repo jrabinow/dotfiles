@@ -67,3 +67,8 @@ function pgkill()
     shift
     pgrep -alfi "${pattern}" | fzf | awk '{print $1}' | xargs -r kill
 }
+
+function wikisole()
+{
+    host -t txt "$*.wp.dg.cx"
+}

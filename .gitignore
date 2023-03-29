@@ -1,5 +1,6 @@
 .vim/.netrwhist
 .vim/init.vim
 .*.swp
+*~
 .config/bash/jobox
 __pycache__

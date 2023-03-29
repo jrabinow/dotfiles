@@ -14,18 +14,11 @@ nnoremap ; :
 " open help command on current word under cursor
 nnoremap <F1> :exec("help ".expand("<cword>"))<CR>
 
-" Ctrl+\ : open ctag definition in new tab
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-" Alt+] : open ctag definition in vertical split
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-
 " highlight cursorline and cursorcolumn
 highlight CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 highlight CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 " \c will toggle highlighting on and off (to make it easy to locate the cursor in a large file)
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
-nnoremap <Leader>tf :tabnew<CR>:FZF<CR>
-nnoremap <Leader>ta :tabnew<CR>:Ag 
 
 noremap <leader>bash :r ~/.vim/snippets/bash-snippet<CR>kdd
 noremap <leader>py :r ~/.vim/snippets/python-snippet<CR>kdd
