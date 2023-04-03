@@ -100,3 +100,5 @@ XTerm*VT100*Translations     : #override \
  ~Shift Ctrl <KeyPress> c: copy-selection(CLIPBOARD)\n
 ! broken: shift + left click to open selection in web browser
 !XTerm*VT100*Translations     : #override Shift : exec-formatted("midori '%t'", PRIMARY)
+! mouse support in xterm
+XTerm*allowMouseOps          : true

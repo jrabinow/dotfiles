@@ -1,3 +1,5 @@
 #!/usr/bin/env -S bash
 
 alias dircolors=gdircolors
+alias batt_stats="apm -blm | tr '\n' ' '|awk '{printf \"pct: %d%%, time remaining: %dh%dmin\n\", \$2, int(\$3 / 60), \$3 % 60}'"
+

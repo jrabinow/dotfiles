@@ -18,7 +18,7 @@ function free()
 }
 
 # shellcheck disable=SC2142
-alias batt_pct="pmset -g batt | awk '/InternalBattery/ {sub(\"%;\", \"\", \$3); print \$3}'"
+alias batt_stats="pmset -g batt | awk '/InternalBattery/ {sub(\"%;\", \"\", \$3); print \$3}'"
 
 function allow_macports()
 {

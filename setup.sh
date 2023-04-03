@@ -1,4 +1,4 @@
-#!/usr/bin/env -S bash
+#!/usr/bin/env bash
 
 if [ -n "${DEBUG}" ]; then
     exec 5> /tmp/bash_debug_output.txt
