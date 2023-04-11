@@ -51,7 +51,15 @@ function firefox_userjs()
 {
     case "${OSTYPE}" in
         darwin*)
-            MOZILLA_PROFILE="$(ls -d ~/Library/Application\ Support/Firefox/Profiles/*.default)"
+            MOZILLA_PROFILE="$(
+                find \
+                    "$HOME/Library/Application Support/Firefox/Profiles/" \
+                    -maxdepth 1 -mindepth 1 -type d \
+                    -exec stat -c "%X %n" '{}' \; \
+                    | sort -rn \
+                    | head -1 \
+                    | cut -d' ' -f2-
+            )"
             ;;
         linux-gnu)
             MOZILLA_BASEDIR=~/.mozilla/firefox/
