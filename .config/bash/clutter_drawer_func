@@ -15,7 +15,7 @@ function hclone()
 
 function weather()
 {
-    location="${*}"
+    location="$(sed 's/ /%20/g' <<< ${*})"
     curl "v2.wttr.in/${location}?m"
 }
 
@@ -49,7 +49,7 @@ function twlookup()
 {
     phone_number="$1"
     shift
-    curl -sX GET "https://lookups.twilio.com/v1/PhoneNumbers/${phone_number}?CountryCode=US&Type=carrier&Type=caller-name" \
+    curl -sX GET "https://lookups.twilio.com/v1/PhoneNumbers/${phone_number}?CountryCode=US&Type=carrier&Type=caller-name&Fields=line_type_intelligence" \
         -u "${TWILIO_TOKEN}" | jq
 }
 

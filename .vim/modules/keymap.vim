@@ -19,6 +19,8 @@ highlight CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred gu
 highlight CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 " \c will toggle highlighting on and off (to make it easy to locate the cursor in a large file)
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+nnoremap <Leader>tf :tabnew<CR>:FZF<CR>
+nnoremap <Leader>ta :tabnew<CR>:Ag 
 
 noremap <leader>bash :r ~/.vim/snippets/bash-snippet<CR>kdd
 noremap <leader>py :r ~/.vim/snippets/python-snippet<CR>kdd

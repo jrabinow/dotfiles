@@ -25,6 +25,7 @@ if hostname() != 'DD-WRT' && $USER != "root"
     Plug 'nixon/vim-vmath'
     Plug 'pangloss/vim-javascript'
     Plug 'rhysd/git-messenger.vim'
+    Plug 'SirVer/ultisnips'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-surround'
