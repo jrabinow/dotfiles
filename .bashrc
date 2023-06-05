@@ -56,7 +56,7 @@ case "${OSTYPE}" in
     darwin*)
         MODULE_NAMES=(mac_os "${MODULE_NAMES[@]}")
         ;;
-    openbsd*|bsd*)
+    openbsd* | bsd*)
         MODULE_NAMES=(bsd "${MODULE_NAMES[@]}")
         ;;
 esac

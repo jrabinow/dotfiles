@@ -1,5 +1,7 @@
 #!/usr/bin/env -S bash
 
+export GOPATH=$src/go
+
 function init_cscope()
 {
     if [ $# != 1 ]; then

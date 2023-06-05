@@ -35,11 +35,7 @@ function passgen()
 {
     len=${1:-30}
     domain="${2:-[[:print:]]}"
-    # can't do `strings /dev/urandom` because apparently strings on mac os X sucks
-    # shellcheck disable=SC2002
-    cat /dev/urandom \
-        | strings \
-        | grep -o "${domain}" \
+    grep -o "${domain}" /dev/urandom \
         | head -n"${len}" \
         | tr -d '\n'
     echo
