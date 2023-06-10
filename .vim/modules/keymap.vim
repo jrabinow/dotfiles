@@ -99,10 +99,6 @@ nnoremap <leader>udt :UndotreeToggle<CR>
 " command! -nargs=0 OR   :call     CocAction('runCommand',
 " 'editor.action.organizeImport')
 "
-" " Add status line support, for integration with other plugin, checkout `:h
-" coc-status`
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
 " navigation
 " syntax: <leader>n WHAT HOW
 " All key combos start with <leader>, usually \ (backslash)

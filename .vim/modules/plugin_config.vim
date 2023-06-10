@@ -64,3 +64,8 @@ let g:lightline = {
     \     'charvaluehex': '0x%B'
     \ }
 \ }
+
+" " Add status line support, for integration with other plugin, checkout `:h coc-status`
+if exists('g:did_coc_loaded') && g:did_coc_loaded == 1
+    set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+endif
