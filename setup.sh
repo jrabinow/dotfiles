@@ -202,6 +202,7 @@ function main()
         .config/hg
         .config/ipython/profile_default/ipython_config.py
         .config/offlineimap
+        .config/redshift.conf
         .config/task
         .config/tmux
         .config/wireshark/preferences
