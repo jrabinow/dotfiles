@@ -30,6 +30,7 @@ MODULE_NAMES=(
     clutter_drawer_func
     functions_generic
     jobox
+    therme
     programming
     ps1
     scm_prompt_setup

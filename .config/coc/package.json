@@ -14,7 +14,8 @@
     "coc-sql": ">=0.6.0",
     "coc-tsserver": ">=1.8.3",
     "coc-vimlsp": ">=0.12.3",
-    "coc-diagnostic": ">=0.23.7"
+    "coc-diagnostic": ">=0.23.7",
+    "coc-sourcekit": ">=0.0.3"
   },
   "disabled": [],
   "locked": []

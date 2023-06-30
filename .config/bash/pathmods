@@ -3,6 +3,7 @@
 # List of dirs to be added to PATH if they exist
 PATH_DIRS_PREPEND="
     ${TESTBINARYDIR}
+    ${GOPATH}/bin
     $HOME/bin
     /usr/local/bin
     /opt/local/bin
