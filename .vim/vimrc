@@ -9,7 +9,7 @@ runtime modules/autocmds.vim
 
 call plug#begin('~/.vim/plugged')
 if hostname() != 'DD-WRT' && $USER != "root"
-    if executable('node') && (has('patch-8.1.1719') || has('nvim-0.4.0'))
+    if executable('node') && (has('patch-8.1.1719') || has('neovim-0.4.0'))
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
     endif
     Plug 'albfan/ag.vim'

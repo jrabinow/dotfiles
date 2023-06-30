@@ -1,6 +1,6 @@
 #!/usr/bin/env -S bash
 
-DATA_DIR="$HOME/data"
+DATA_DIR="$HOME/data/jobox"
 
 # shellcheck disable=SC2034
 DB_DIR="${DATA_DIR}/postgres/kilidb"

@@ -19,6 +19,8 @@
 \set HISTFILE ~/.local/share/psql_history/psql_history- :DBNAME
 -- don't record duplicates in histfile
 \set HISTCONTROL ignoredups
+-- save 5000 items in history
+\set HISTSIZE 5000
 
 -- print [null] instead of empty string when a value is null
 \pset null [null]

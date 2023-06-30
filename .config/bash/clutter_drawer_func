@@ -72,3 +72,11 @@ function wikisole()
 {
     host -t txt "$*.wp.dg.cx"
 }
+
+function trackinfo()
+{
+    artist="$(osascript -e 'tell application "spotify" to artist of current track')"
+    album="$(osascript -e 'tell application "spotify" to album of current track')"
+    title="$(osascript -e 'tell application "spotify" to name of current track')"
+    printf "%s -> %s:%s\n" "${artist}" "${album}" "${title}"
+}

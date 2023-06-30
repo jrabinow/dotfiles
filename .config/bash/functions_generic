@@ -35,7 +35,7 @@ function passgen()
 {
     len=${1:-30}
     domain="${2:-[[:print:]]}"
-    grep -o "${domain}" /dev/urandom \
+    grep -ao "${domain}" /dev/urandom \
         | head -n"${len}" \
         | tr -d '\n'
     echo
