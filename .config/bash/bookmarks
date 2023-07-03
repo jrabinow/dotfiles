@@ -63,12 +63,16 @@ function bmd()
 
 function bml()
 {
+    pattern="${1}"
+    shift
+
     grep '# Bookmark$' "${BMARKS_FILE}" \
         | cut -f1 \
         | cut -d' ' -f2- \
         | sed -e 's/=/	->	/' \
         | sort \
-        | column -ts $'\t'
+        | column -ts $'\t' \
+        | grep -iE "${pattern}"
 }
 
 # shellcheck disable=SC1090
