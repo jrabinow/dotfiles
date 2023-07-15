@@ -7,7 +7,7 @@ if has("autocmd")
     autocmd filetype html,xml,go set listchars+=tab:\\x20\\x20
 
     " kill any trailing whitespace on save
-    autocmd FileType c,cabal,cpp,haskell,javascript,php,python,readme,text
+    autocmd FileType c,cabal,cpp,go,haskell,javascript,php,python,readme,text
         \ autocmd BufWritePre <buffer>
         \ :call StripTrailingWhitespaces()
 
