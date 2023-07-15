@@ -1,12 +1,13 @@
 #!/usr/bin/env -S bash
 
-DATA_DIR="$HOME/data/jobox"
+# shellcheck disable=SC2034
+JOBOX_DATA_DIR="$HOME/data/jobox"
 
 # shellcheck disable=SC2034
-DB_DIR="${DATA_DIR}/postgres/kilidb"
+JOBOX_DB_DIR="${JOBOX_DATA_DIR}/postgres"
 
 # shellcheck disable=SC2034
-TOMCAT_DIR=/opt/tomcat
+JOBOX_TOMCAT_DIR=/opt/tomcat
 
 # shellcheck disable=SC2034
 JOBOX_CREDS_FILE="${XDG_DATA_DIR:-$HOME/.local/share}/bash/joboxcreds"

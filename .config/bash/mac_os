@@ -6,7 +6,7 @@ fi
 alias utop='top -U $USER'
 alias updatedb="sudo bash -c 'cd / && /opt/local/bin/slocate -u -c /opt/local/etc/updatedb.conf'"
 alias locate=slocate
-alias codesign_debugger="sudo codesign --force --deep --preserve-metadata=identifier,entitlements,requirements,flags,team-identifier --sign manual-codesign"
+alias codesign_debugger="sudo codesign --force --deep --preserve-metadata=identifier,entitlements,requirements,flags,team-identifier --sign gdb_codesign"
 alias manup="sudo makewhatis /opt/local/share/man; sudo chmod a+r /opt/local/share/man/mandoc.db"
 
 export COCOAPODS_DISABLE_STATS='true'
@@ -22,6 +22,8 @@ alias batt_stats="pmset -g batt | awk '/InternalBattery/ {sub(\"%;\", \"\", \$3)
 
 function allow_macports()
 {
+    # shellcheck disable=SC2154
+    find "${macports}" -type l -name work -delete
     # shellcheck disable=SC2154
     grantdir="${macports}/.."
     while [ "$(realpath "${grantdir}")" != "${HOME}" ]; do
@@ -58,4 +60,7 @@ function configd_killer()
     echo "configd has understood who's boss"
 }
 
-test -r /opt/local/share/nvm/nvm.sh && source /opt/local/share/nvm/nvm.sh
+# shellcheck disable=SC1091
+if ! command -v nvm > /dev/null; then
+    test -r /opt/local/share/nvm/nvm.sh && source /opt/local/share/nvm/nvm.sh
+fi
