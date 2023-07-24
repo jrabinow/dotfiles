@@ -1,4 +1,4 @@
-#!/usr/bin/env -S bash
+#!/usr/bin/env bash
 
 # seriously, fuck those aliases
 unalias ln cp mv 2> /dev/null

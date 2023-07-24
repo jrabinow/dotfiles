@@ -1,4 +1,4 @@
-#!/usr/bin/env -S bash
+#!/usr/bin/env bash
 
 # stolen from Gary Bernhardt https://github.com/garybernhardt/dotfiles/blob/master/.bashrc
 # Git prompt components

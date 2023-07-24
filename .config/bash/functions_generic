@@ -1,4 +1,4 @@
-#!/usr/bin/env -S bash
+#!/usr/bin/env bash
 
 # calculator integrated in command-line
 function @()

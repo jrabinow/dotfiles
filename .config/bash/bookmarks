@@ -1,4 +1,4 @@
-#!/usr/bin/env -S bash
+#!/usr/bin/env bash
 
 # add bookmark for current dir:
 # $ bma bookmark

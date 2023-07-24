@@ -1,4 +1,4 @@
-#!/usr/bin/env -S bash
+#!/usr/bin/env bash
 
 alias qvm-running='qvm-ls --running'
 # shellcheck disable=SC2142
