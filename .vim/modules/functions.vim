@@ -35,10 +35,4 @@ function! MoveWindowSwap()
     exe 'hide buf' markedBuf
 endfunction
 
-noremap <leader>sw :call SelectWindowSwap()<CR>
-noremap <leader>mw :call MoveWindowSwap()<CR>
-
-" no root? no problem! save with 'w!!'
-cmap w!! w !sudo tee % >/dev/null
-
 command! -nargs=0 Reload source ~/.vim/vimrc

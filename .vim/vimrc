@@ -1,12 +1,6 @@
 " ensures compatibility with ViM-related packages in Debian
 runtime! debian.vim
 
-runtime modules/settings.vim
-runtime modules/keymap.vim
-runtime modules/functions.vim
-runtime modules/plugin_config.vim
-runtime modules/autocmds.vim
-
 call plug#begin('~/.vim/plugged')
 if hostname() != 'DD-WRT' && $USER != "root"
     if executable('node') && (has('patch-8.1.1719') || has('neovim-0.4.0'))
@@ -39,3 +33,10 @@ if hostname() != 'DD-WRT' && $USER != "root"
     Plug 'vimwiki/vimwiki'
 endif
 call plug#end()
+
+runtime modules/settings.vim
+runtime modules/keymap.vim
+runtime modules/functions.vim
+runtime modules/plugin_config.vim
+runtime modules/autocmds.vim
+

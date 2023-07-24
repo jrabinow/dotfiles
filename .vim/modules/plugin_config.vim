@@ -36,17 +36,6 @@ let g:tex_flavor = "latex"
 " vimwiki setup
 let g:vimwiki_list = [{'path': '~/Documents/notes/vimwiki'}]
 
-" vim-vmath keybindings
-vmap <expr>  ++  VMATH_YankAndAnalyse()
-nmap         ++  vip++
-
-" dragvisuals plugin key bindings
-vmap  <expr>  <LEFT>   DVB_Drag('left')
-vmap  <expr>  <RIGHT>  DVB_Drag('right')
-vmap  <expr>  <DOWN>   DVB_Drag('down')
-vmap  <expr>  <UP>     DVB_Drag('up')
-vmap  <expr>  D        DVB_Duplicate()
-
 " FZF
 let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']
 command! -bang -nargs=? -complete=dir Files
