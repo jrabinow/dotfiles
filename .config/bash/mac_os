@@ -60,7 +60,17 @@ function configd_killer()
     echo "configd has understood who's boss"
 }
 
-# shellcheck disable=SC1091
-if ! command -v nvm > /dev/null; then
-    test -r /opt/local/share/nvm/nvm.sh && source /opt/local/share/nvm/nvm.sh
-fi
+# Load NVM from MacPorts.
+# NVM initialization is too slow to want it on every shell startup, so stick it
+# inside a function that can be called manually when we want NVM.
+# This function only loads from the MacPorts location, but I'll expand it if I start using
+# NVM from other installation methods, so use the generic name "nvmload".
+function nvmload()
+{
+    # shellcheck disable=SC1091
+    if ! command -v nvm > /dev/null; then
+        test -r /opt/local/share/nvm/nvm.sh && source /opt/local/share/nvm/nvm.sh
+    else
+        echo 'nvm not found!' >&2
+    fi
+}

@@ -19,10 +19,12 @@
 # list bookmarks:
 # $ bml
 
+# list filtered bookmarks (can be regex):
+# $ bml filter
+
 # delete bookmark:
 # $ bmd bookmark
 
-# BASH_MOD_DIR defined in ~/.bashrc
 BMARKS_FILE="${XDG_DATA_DIR:-$HOME/.local/share}/bash/bookmarks"
 
 # setup
@@ -31,6 +33,7 @@ BMARKS_DIR="$(dirname "${BMARKS_FILE}")"
     && test -f "${BMARKS_FILE}" \
     || touch "${BMARKS_FILE}" \
     || (echo "ERROR SETTING UP BOOKMARKS MODULE" >&2 && return)
+unset BMARKS_DIR
 
 shopt -s cdable_vars
 
@@ -66,13 +69,10 @@ function bml()
     pattern="${1}"
     shift
 
-    grep '# Bookmark$' "${BMARKS_FILE}" \
-        | cut -f1 \
-        | cut -d' ' -f2- \
-        | sed -e 's/=/	->	/' \
+    perl -ne '/export (\w+)=("[^"]*")\s+# Bookmark$/ && print "$1\t->\t$2\n"' "${BMARKS_FILE}" \
+        | grep --color=always -iE "${pattern}" \
         | sort \
-        | column -ts $'\t' \
-        | grep -iE "${pattern}"
+        | column -ts $'\t'
 }
 
 # shellcheck disable=SC1090

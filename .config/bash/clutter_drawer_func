@@ -1,5 +1,7 @@
 #!/usr/bin/env -S bash
 
+alias dadjoke="curl https://icanhazdadjoke.com --silent; echo"
+
 # Shorthand clone from github
 function hclone()
 {
@@ -15,8 +17,9 @@ function hclone()
 
 function weather()
 {
-    location="$(sed 's/ /%20/g' <<< ${*})"
-    curl "v2.wttr.in/${location}?m"
+    # shellcheck disable=SC2001
+    location="$(sed 's/ /%20/g' <<< "${@}")"
+    echo "v2.wttr.in/${location}?m"
 }
 
 function setup-ssh-key-login()

@@ -63,3 +63,7 @@ function targets()
         perl -lne 'm!\s*name\s*=\s*['\''"](\w+)['\''"],$! and print q('"$dir:"').$1' "${t}"
     done | sort
 }
+
+if command -v rlwrap > /dev/null; then
+    alias yaegi="rlwrap yaegi"
+fi
