@@ -83,8 +83,7 @@ function install_vim_plugins()
 {
     vim -c "PlugInstall" -c quit -c quit
     # Install extensions
-    mkdir -p "${HOME}/.local/share/coc/"
-    cd ~/.local/share/coc/extensions
+    cd ~/.local/share/vim/plugin-data/coc/
     if command -v npm > /dev/null && [ "$(whoami)" != root ]; then
         npm_major_version="$(npm --version | awk -F. '{print $1}')"
         if [ "${npm_major_version}" -ge 9 ]; then
@@ -221,12 +220,13 @@ function main()
         .local/share/gdb
         ".local/share/YouTube Music"
         .local/share/psql_history
-        .local/share/vim
+        .local/share/vim/plugin-data/coc        # also check out `install_vim_plugins` function
         .ssh/config.d
     )
     declare -A LINKS=(
         [".vim/init.vim"]=".vim/vimrc"
-        [".local/share/coc/extensions/package.json"]=".config/coc/package.json"
+        # also check out `install_vim_plugins` function
+        [".local/share/vim/plugin-data/coc/extensions/package.json"]=".config/coc/package.json"
         [".config/YouTube Music"]=".local/share/YouTube Music"
     )
     local PREPARE_COMMIT=false

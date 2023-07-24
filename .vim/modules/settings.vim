@@ -55,8 +55,8 @@ if ! has('nvim')
 endif
 
 if has("persistent_undo")
-    set undodir=~/.local/share/vim      " set persistent undo dir
-    set undofile                        " activate persistent undo
+    set undodir=~/.local/share/vim/undos    " set persistent undo dir
+    set undofile                            " activate persistent undo
 endif
 
 if has('cmdline_info')
