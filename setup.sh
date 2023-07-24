@@ -74,7 +74,7 @@ function firefox_userjs()
     esac
     # shellcheck disable=2015
     test -d "${MOZILLA_PROFILE-x}" \
-        && (cmp ./user.js "${MOZILLA_PROFILE}/user.js" \
+        && (cmp ./user.js "${MOZILLA_PROFILE}/user.js" 2> /dev/null \
             || vimdiff ./user.js "${MOZILLA_PROFILE}/user.js") \
         || true
 }
@@ -94,6 +94,10 @@ function install_vim_plugins()
         npm install "${opt}" --ignore-scripts --no-bin-links --no-package-lock --omit=dev
     else
         vim -c "CocDisable" -c quit -c quit
+    fi
+    if [ -d "$HOME/.vim/plugged/vimspector" ]; then
+        mkdir -p "$HOME/.local/share/vim/plugin-data/vimspector"
+        ln -s "$HOME/.vim/plugged/vimspector/gadgets/macos/download" "$HOME/.local/share/vim/plugin-data/vimspector"
     fi
     cd - > /dev/null
 }
@@ -221,6 +225,7 @@ function main()
         ".local/share/YouTube Music"
         .local/share/psql_history
         .local/share/vim/plugin-data/coc        # also check out `install_vim_plugins` function
+        .local/share/vim/plugin-data/vimspector # also check out `install_vim_plugins` function
         .ssh/config.d
     )
     declare -A LINKS=(

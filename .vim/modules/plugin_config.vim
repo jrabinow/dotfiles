@@ -17,6 +17,18 @@ hi CocErrorSign ctermfg=12 ctermbg=7
 
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
+" vimspector
+let g:vimspector_base_dir=expand( '$HOME/.local/share/vim/plugin-data/vimspector' )
+
+function! g:Vimspector_toggle_active()
+    if exists('g:vimspector_session_windows')
+                \ && exists('g:vimspector_session_windows["mode"]')    " if vimspector is on
+        call vimspector#Reset()
+    else
+        call vimspector#Launch()
+    endif
+endfunction
+
 " compatibility with vim-latexsuite
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor = "latex"
