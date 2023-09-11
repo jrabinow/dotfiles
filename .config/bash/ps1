@@ -14,7 +14,6 @@ remove_bold="\001\033[0m\002"
 angle_se='\342\224\214'
 angle_ne='\342\224\224'
 line_h='\342\224\200'
-error_symbol='\342\234\227'
 preamble_line1="${sq_color}${angle_se}${line_h}"
 info_line1="[${reset_color}\t${sq_color}]${line_h}[${reset_color}$OSTYPE${sq_color}]${line_h}[${reset_color}\u@\H${sq_color}]"
 preamble_line2="${angle_ne}${line_h}${line_h}> ${reset_color}"
@@ -58,8 +57,6 @@ unset remove_bold
 unset angle_se
 unset angle_ne
 unset line_h
-unset error_symbol
-unset success_symbol
 unset preamble_line1
 unset info_line1
 unset preamble_line2
