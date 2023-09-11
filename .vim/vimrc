@@ -6,6 +6,9 @@ if hostname() != 'DD-WRT' && $USER != "root"
     if executable('node') && (has('patch-8.1.1719') || has('neovim-0.4.0'))
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
     endif
+    if has('python')
+        Plug 'puremourning/vimspector'
+    endif
     Plug 'albfan/ag.vim'
     Plug 'fatih/vim-go'
     "Plug 'ludovicchabant/vim-gutentags'
@@ -18,7 +21,6 @@ if hostname() != 'DD-WRT' && $USER != "root"
     Plug 'mbbill/undotree'
     Plug 'nixon/vim-vmath'
     Plug 'pangloss/vim-javascript'
-    Plug 'puremourning/vimspector'
     Plug 'rhysd/git-messenger.vim'
     Plug 'SirVer/ultisnips'
     Plug 'tpope/vim-commentary'
