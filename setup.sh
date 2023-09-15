@@ -83,7 +83,7 @@ function install_vim_plugins()
 {
     vim -c "PlugInstall" -c quit -c quit
     # Install extensions
-    cd ~/.local/share/vim/plugin-data/coc/
+    cd ~/.local/share/vim/plugin-data/coc/extensions/
     if command -v npm > /dev/null && [ "$(whoami)" != root ]; then
         npm_major_version="$(npm --version | awk -F. '{print $1}')"
         if [ "${npm_major_version}" -ge 9 ]; then
