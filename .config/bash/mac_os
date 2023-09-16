@@ -22,6 +22,7 @@ alias batt_stats="pmset -g batt | awk '/InternalBattery/ {sub(\"%;\", \"\", \$3)
 
 function allow_macports()
 {
+    portfile="${1:-}"
     # shellcheck disable=SC2154
     find "${macports}" -type l -name work -delete
     # shellcheck disable=SC2154
@@ -30,7 +31,7 @@ function allow_macports()
         /bin/chmod +a "macports allow read,execute" "${grantdir}"
         grantdir="${grantdir}/.."
     done
-    sudo /bin/chmod -R +a "macports allow read,execute" "${macports}"
+    sudo /bin/chmod -R +a "macports allow read,execute" "${macports}/${portfile}"
 }
 
 # configd starts using 100% CPU for no discernable reason. It's crap so it just
