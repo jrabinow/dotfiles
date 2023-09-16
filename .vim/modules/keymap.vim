@@ -122,11 +122,10 @@ endif
 " ================================= DEBUGGING ==================================
 " ==============================================================================
 nnoremap <Leader>dd :<C-u>call Vimspector_toggle_active()<CR>
-nnoremap <Leader>de :call vimspector#Reset()<CR>
-nnoremap <Leader>dr :call vimspector#Continue()<CR>
+nnoremap <Leader>dc :call vimspector#Continue()<CR>
 
 nnoremap <Leader>db :call vimspector#ToggleBreakpoint()<CR>
-nnoremap <Leader>dcl :call vimspector#ClearBreakpoints()<CR>
+nnoremap <Leader>dC :call vimspector#ClearBreakpoints()<CR>
 
 nmap <Leader>dr <Plug>VimspectorRestart
 nmap <Leader>dso <Plug>VimspectorStepOut
@@ -215,7 +214,7 @@ nnoremap <expr> <Leader>ysr ":sp<CR>:Rg<CR>".expand("<cword>")
 " nmap <silent> [g <Plug>(coc-diagnostic-prev)
 " nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" " Remap keys for gotos
+" Remap keys for gotos
 nmap <silent> ged <Plug>(coc-definition)
 nmap <silent> gtd :call CocAction('jumpDefinition', 'tabe')<CR>
 nmap <silent> gvd :call CocAction('jumpDefinition', 'vsp')<CR>
