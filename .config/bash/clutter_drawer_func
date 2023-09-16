@@ -19,7 +19,7 @@ function weather()
 {
     # shellcheck disable=SC2001
     location="$(sed 's/ /%20/g' <<< "${@}")"
-    echo "v2.wttr.in/${location}?m"
+    curl "v2.wttr.in/${location}?m"
 }
 
 function setup-ssh-key-login()
@@ -73,7 +73,12 @@ function pgkill()
 
 function wikisole()
 {
-    host -t txt "$*.wp.dg.cx"
+    dig +short txt "$*.wp.dg.cx"
+}
+
+function worddef()
+{
+    curl -s "https://api.dictionaryapi.dev/api/v2/entries/en/$*" | jq
 }
 
 function trackinfo()
