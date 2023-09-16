@@ -3,7 +3,7 @@ runtime! debian.vim
 
 call plug#begin('~/.vim/plugged')
 if hostname() != 'DD-WRT' && $USER != "root"
-    if executable('node') && (has('patch-8.1.1719') || has('neovim-0.4.0'))
+    if (has('patch-8.1.1719') || has('neovim-0.4.0')) && executable('node')
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
     endif
     if has('python')
@@ -37,8 +37,8 @@ endif
 call plug#end()
 
 runtime modules/settings.vim
-runtime modules/keymap.vim
 runtime modules/functions.vim
 runtime modules/plugin_config.vim
 runtime modules/autocmds.vim
+runtime modules/keymap.vim
 
