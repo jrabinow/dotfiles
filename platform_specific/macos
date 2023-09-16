@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if [ -n "${DEBUG}" ]; then
+    exec 5> /tmp/bash_debug_output.txt
+    BASH_XTRACEFD="5"
+    PS4='$LINENO: '
+    set -x -T
+fi
 
 # debug mac react native UI
 # https://www.youtube.com/watch?v=R2KkJ_Zawnk
@@ -23,8 +29,8 @@ while true; do
 done 2> /dev/null &
 
 # do the GDB
-test -L ~/Library/Preferences/gdb/gdbinit || \
-    (mkdir -p ~/Library/Preferences/gdb && ln -s ~/.config/gdb/gdbinit ~/Library/Preferences/gdb/gdbinit)
+test -L ~/Library/Preferences/gdb/gdbinit \
+    || (mkdir -p ~/Library/Preferences/gdb && ln -s ~/.config/gdb/gdbinit ~/Library/Preferences/gdb/gdbinit)
 
 ############
 # Security #
@@ -34,7 +40,7 @@ test -L ~/Library/Preferences/gdb/gdbinit || \
 sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool YES
 printf "[default]\nport445=no_netbios\n" | sudo tee /etc/nsmb.conf > /dev/null
 sudo launchctl disable system/netbiosd
-sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.netbiosd.plist
+#sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.netbiosd.plist
 
 # The OSX application firewall is enabled
 defaults write com.apple.alf globalstate -bool true
@@ -75,13 +81,17 @@ sudo systemsetup setusingnetworktime off
 #networksetup -listallnetworkservices | while read i; do SUPPORT=$(networksetup -getinfo "$i" | grep "IPv6: Automatic") && if [ -n "$SUPPORT" ]; then networksetup -setv6off "$i"; fi; done;
 
 # An administrator password is required to change system-wide preferences
-security authorizationdb read system.preferences > /tmp/system.preferences.plist &&/usr/libexec/PlistBuddy -c "Set :shared false" /tmp/system.preferences.plist && security authorizationdb write system.preferences < /tmp/system.preferences.plist
+security authorizationdb read system.preferences > /tmp/system.preferences.plist && /usr/libexec/PlistBuddy -c "Set :shared false" /tmp/system.preferences.plist && security authorizationdb write system.preferences < /tmp/system.preferences.plist
 
 # The File Vault key is protected when going to standby mode
 sudo bash -c 'pmset -a destroyfvkeyonstandby 1 ; pmset -a hibernatemode 25 ; pmset -a powernap 0 ; pmset -a standby 0 ; pmset -a standbydelay 15; pmset -a autopoweroff 0; pmset -a darkwakes 0'
 
 # The idle timer for screen saver activation is set to 15 minutes or less
-UUID=`ioreg -rd1 -c IOPlatformExpertDevice | grep "IOPlatformUUID" | sed -e 's/^.*"\(.*\)"$/\1/'`; for i in $(find /Users -maxdepth 1 -type d); do PREF=$i/Library/Preferences/ByHost/com.apple.screensaver.$UUID; if [ -e $PREF.plist ]; then defaults -currentHost write $PREF.plist idleTime -int 900; fi; done
+UUID=$(ioreg -rd1 -c IOPlatformExpertDevice | grep "IOPlatformUUID" | sed -e 's/^.*"\(.*\)"$/\1/')
+for i in $(find /Users -maxdepth 1 -type d); do
+    PREF=$i/Library/Preferences/ByHost/com.apple.screensaver.$UUID
+    if [ -e $PREF.plist ]; then defaults -currentHost write $PREF.plist idleTime -int 900; fi
+done
 
 ###############################################################################
 # General UI/UX                                                               #
@@ -217,10 +227,10 @@ defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
 # Use scroll gesture with the Ctrl (^) modifier key to zoom
-defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
-defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
+sudo defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
+sudo defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
 # Follow the keyboard focus while zoomed in
-defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
+sudo defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 
 # Disable press-and-hold for keys in favor of key repeat
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
@@ -247,7 +257,7 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bo
 #launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
 
 # don't allow more than one smart-card per user
-defaults write /Library/Preferences/com.apple.security.smartcard oneCardPerUser -bool true
+sudo defaults write /Library/Preferences/com.apple.security.smartcard oneCardPerUser -bool true
 
 ###############################################################################
 # Energy saving                                                               #
@@ -526,7 +536,7 @@ defaults write com.apple.dock wvous-tl-modifier -int 0
 # Top right screen corner → Desktop
 defaults write com.apple.dock wvous-tr-corner -int 4
 defaults write com.apple.dock wvous-tr-modifier -int 0
-# Bottom left screen corner → Start screen saver
+# Bottom left screen corner -> Start screen saver
 defaults write com.apple.dock wvous-bl-corner -int 2
 defaults write com.apple.dock wvous-bl-modifier -int 0
 # Bottom right screen corner → Application windows
@@ -641,7 +651,10 @@ defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebK
 defaults write com.apple.Safari PlugInFirstVisitPolicy PlugInPolicyBlock
 
 # The Java plug-in for Safari web browser is blocked unless a site is explicitly added to a list of allowed sites
-/usr/libexec/PlistBuddy -c "Add :ManagedPlugInPolicies dict" ~/Library/Preferences/com.apple.Safari.plist ; /usr/libexec/PlistBuddy -c "Add :ManagedPlugInPolicies:com.oracle.java.JavaAppletPlugin dict" ~/Library/Preferences/com.apple.Safari.plist ; /usr/libexec/PlistBuddy -c "Add :ManagedPlugInPolicies:com.oracle.java.JavaAppletPlugin:PlugInFirstVisitPolicy string PlugInPolicyBlock" ~/Library/Preferences/com.apple.Safari.plist; /usr/libexec/PlistBuddy -c "Set :ManagedPlugInPolicies:com.oracle.java.JavaAppletPlugin:PlugInFirstVisitPolicy PlugInPolicyBlock" ~/Library/Preferences/com.apple.Safari.plist
+/usr/libexec/PlistBuddy -c "Add :ManagedPlugInPolicies dict" ~/Library/Preferences/com.apple.Safari.plist
+/usr/libexec/PlistBuddy -c "Add :ManagedPlugInPolicies:com.oracle.java.JavaAppletPlugin dict" ~/Library/Preferences/com.apple.Safari.plist
+/usr/libexec/PlistBuddy -c "Add :ManagedPlugInPolicies:com.oracle.java.JavaAppletPlugin:PlugInFirstVisitPolicy string PlugInPolicyBlock" ~/Library/Preferences/com.apple.Safari.plist
+/usr/libexec/PlistBuddy -c "Set :ManagedPlugInPolicies:com.oracle.java.JavaAppletPlugin:PlugInFirstVisitPolicy PlugInPolicyBlock" ~/Library/Preferences/com.apple.Safari.plist
 
 # The Safari web browser is configured to treat SHA-1 certificates as insecure
 defaults write com.apple.Safari TreatSHA1CertificatesAsInsecure -bool true
@@ -678,9 +691,10 @@ defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
 defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnabled"
 
 # Apple Mail does not automatically load remote content in e-mails
-defaults write com.apple.mail-shared DisableURLLoading -bool true
+sudo defaults write com.apple.mail-shared DisableURLLoading -bool true
 
 # Mail identified by Apple Mail as junk is sent to the Junk mailbox
+# iTerm MUST have full disk access for this to work
 defaults -currentHost write ~/Library/Containers/com.apple.mail/Data/Library/Preferences/com.apple.mail JunkMailBehavior -int 2
 
 # New e-mails composed in Apple Mail are encrypted by GPGMail if the receiver's PGP is present in the keychain
