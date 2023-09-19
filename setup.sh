@@ -203,6 +203,7 @@ function main()
         .config/git
         .config/hg
         .config/ipython/profile_default/ipython_config.py
+        .config/lxterminal
         .config/offlineimap
         .config/redshift.conf
         .config/task
