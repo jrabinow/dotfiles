@@ -16,6 +16,9 @@ nnoremap Y y$
 nnoremap ; :
 nnoremap : ;
 
+" Shortcut to reference current file's path in command line mode
+cnoremap <expr> %% expand('%:h').'/'
+
 
 " ==============================================================================
 " ================================= VIM EDITOR =================================
@@ -34,6 +37,9 @@ noremap <leader>vmw :call MoveWindowSwap()<CR>
 nnoremap <leader>vno :set nonumber<CR>:set norelativenumber<CR>
 nnoremap <leader>vnb :set number<CR>:set norelativenumber<CR>
 nnoremap <leader>vnr :set number<CR>:set relativenumber<CR>
+inoremap <expr> <tab> InsertTabWrapper()
+inoremap <s-tab> <c-n>
+nnoremap <leader>vrename :call RenameFile()<CR>
 
 " no root? no problem! save with 'w!!'
 cmap w!! w !sudo tee % >/dev/null

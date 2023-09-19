@@ -36,3 +36,27 @@ function! MoveWindowSwap()
 endfunction
 
 command! -nargs=0 Reload source ~/.vim/vimrc
+
+" Multipurpose tab key
+" Indent if we're at the beginning of a line. Else, do completion
+" https://github.com/katzien/dotfiles/blob/master/.vimrc#L102
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+
+" Rename current file
+" https://github.com/katzien/dotfiles/blob/master/.vimrc#L123
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
