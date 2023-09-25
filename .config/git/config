@@ -7,43 +7,99 @@
     longpaths = true
     pager = less -isXF
 
+    # Use custom `.gitignore` and `.gitattributes`.
+    excludesfile = ~/.config/git/gitignore
+    attributesfile = ~/.config/git/gitattributes
+
+    # Treat spaces before tabs and all kinds of trailing whitespace as an error.
+    # [default] trailing-space: looks for spaces at the end of a line
+    # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+    whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+    # Make `git rebase` safer on macOS.
+    # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+    trustctime = false
+
+    # Prevent showing files whose names contain non-ASCII symbols as unversioned.
+    # http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
+    precomposeunicode = false
+
+    # Speed up commands involving untracked files such as `git status`.
+    # https://git-scm.com/docs/git-update-index#_untracked_cache
+    untrackedCache = true
+
+
 [init]
-	defaultBranch = main
+    defaultBranch = main
+
+[commit]
+    # https://help.github.com/articles/signing-commits-using-gpg/
+    #gpgsign = true
+
+[apply]
+    # Detect whitespace errors when applying a patch.
+    whitespace = fix
+
+[branch]
+    # Show most recently changed branches first.
+    sort = -committerdate
 
 [push]
     default = current
+    # Make `git push` push relevant annotated tags when pushing branches out.
+    followTags = true
 
 [pull]
-	rebase = false
-	ff = only
+    rebase = false
+    ff = only
 
 [merge]
     tool = vimdiff
     conflictstyle = zdiff3
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
 
 
 [diff]
     tool = vimdiff
+
+    # Detect copies as well as renames.
+    renames = copies
+
+[diff "bin"]
+    # Use `hexdump` to diff binary files
+    textconf = hexdump -v -C
 
 [credential]
     helper = store --file ~/.local/share/git/credstore
     helper = cache --timeout=7200
 
 [color]
-  ui = auto
-  diff = auto
-  status = auto
-  branch = auto
-  interactive = auto
+    ui = auto
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+    changed = green
+    untracked = cyan
 
 [color "diff"]
-  whitespace = red reverse
+    whitespace = red reverse
+    meta = yellow bold
+    frag = magenta bold # line info
+    old = red # deletions
+    new = green # additions
 
 [rerere]
-  enabled = true
+    enabled = true
 
 [sendemail]
-  chainreplyto = no
+    chainreplyto = no
 
 [filter "lfs"]
     clean = git-lfs clean -- %f
@@ -55,55 +111,122 @@
     layout = "(LOCAL,BASE,REMOTE)/MERGED"
 
 [alias]
-  st = status
-  co = checkout
-  ci = commit
-  br = branch
-  cob = checkout -b
-  cp = cherry-pick
-  diff = "diff -w --word-diff --color-moved"
-  show = "show -w --word-diff"
-  upstream = "!branch=$(git rev-parse --abbrev-ref HEAD); git branch \"--set-upstream-to=origin/${branch}\" \"${branch}\""
-  # delete branch at remote
-  delbr = "!git push origin -d "
-  # pretty logging 1
-  lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-  # pretty logging 2
-  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-  lg = !"git lg2"
-  # show log of filechanges
-  filelog = log --graph --all --decorate --stat --date=iso
-  # list of commit hash+message in reverse order
-  recap = "!git log --all --oneline --no-merges --author=$(git config user.email)"
-  changelog = "!git log --oneline --no-merges $(git tag --sort=creatordate|tail -1)..HEAD"
-  # show remote url
-  url = config --get remote.origin.url
-  # commit staged changes yolo mode with accompanying commit message
-  yolo = !git commit -m \"$(curl -s https://whatthecommit.com/index.txt)\"
-  # commit everything yolo mode with accompanying commit message
-  yolo-all = !git commit -am \"$(curl -s https://whatthecommit.com/index.txt)\"
-  # keeping the below around till i find a good use for it
-  stag = "!id=`git rev-parse --verify HEAD`; git tag tag_for_${id:0:8} -m \"Tag for commit $id\""
-  vtag = !git tag -v `git describe`
-  # print last commit message
-  commitmsg = "log -n1 --pretty=format:%B"
-  # who committed the most to this repo
-  leaderboard = "shortlog -sn --all --no-merges"
-  # which branch was updated most recently
-  recent = "for-each-ref --count=10 --sort=-committerdate refs/heads/ --format=\"%(refname:short)\""
-  # Show the commits and content in this branch
-  unpushed = "!git log --oneline \"origin/$(git rev-parse --abbrev-ref HEAD)\".."
-  # hide a branch for later
-  hide = "!f() { git update-ref refs/hidden/$1 $1 && git br -D $1; }; f"
-  unhide = "!f() { git br $1 && git update-ref $1 refs/hidden/$1; }; f"
-  hidden = "!f() { git show-ref | grep hidden; }; f"
-  root = "rev-parse --show-toplevel"
-  rebcont = "rebase --continue"
-  cpcont = "cherry-pick --continue"
-  mercont = "merge --continue"
-  rebbort = "rebase --abort"
-  cpbort = "cherry-pick --abort"
-  merbort = "merge --abort"
+    # List aliases.
+    aliases = config --get-regexp alias
+
+    st = status
+    co = checkout
+    ci = commit
+    br = branch
+    cob = checkout -b
+    cp = cherry-pick
+
+    # Show verbose output about tags or remotes
+    tags = tag -l
+    remotes = remote --verbose
+
+    # Remove the old tag with this name and tag the latest commit with it.
+    retag = "!r() { git tag -d $1 && git push origin :refs/tags/$1 && git tag $1; }; r"
+
+    # Amend the currently staged files to the latest commit.
+    amend = commit --amend --reuse-message=HEAD
+
+    # Credit an author on the latest commit.
+    credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+
+    root = "rev-parse --show-toplevel"
+    rebcont = "rebase --continue"
+    cpcont = "cherry-pick --continue"
+    mercont = "merge --continue"
+    rebbort = "rebase --abort"
+    cpbort = "cherry-pick --abort"
+    merbort = "merge --abort"
+
+    # Interactive rebase with the given number of latest commits
+    reb = "!r() { git rebase -i HEAD~$1; }; r"
+    #children = "!git rev-list --all --parents|awk \"\$0 ~ /^.{40}.*\\\"$1\\\".*/ {print $1}\""
+
+    diff = "diff -w --word-diff --color-moved"
+    show = "show -w --word-diff"
+
+    # Find branches containing commit
+    fb = "!f() { git branch -a --contains $1; }; f"
+    # Find tags containing commit
+    ft = "!f() { git describe --always --contains $1; }; f"
+    # Find commits by source code
+    fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+    # Find commits by commit message
+    fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+
+    # print last commit message
+    commitmsg = "log -n1 --pretty=format:%B"
+
+    # pretty logging 1
+    lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+    # pretty logging 2
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+    lg = !"git lg2"
+
+    # `git di $number` shows the diff between the state `$number` revisions ago and the current state.
+    di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
+    # show log of filechanges
+    filelog = log --graph --all --decorate --stat --date=iso
+
+    # list of commit hash+message in reverse order
+    recap = "!git log --all --oneline --no-merges --author=$(git config user.email)"
+    changelog = "!git log --oneline --no-merges $(git tag --sort=creatordate|tail -1)..HEAD"
+
+    # which branch was updated most recently
+    recent = "for-each-ref --count=10 --sort=-committerdate refs/heads/ --format=\"%(refname:short)\""
+
+    # who committed the most to this repo
+    leaderboard = "shortlog -sn --all --no-merges"
+
+    # show user email in current repo
+    whoami = config user.email
+
+    # show remote url
+    url = config --get remote.origin.url
+
+    # commit staged changes yolo mode with accompanying commit message
+    yolo = !git commit -m \"$(curl -s https://whatthecommit.com/index.txt)\"
+
+    # commit everything yolo mode with accompanying commit message
+    yolo-all = !git commit -am \"$(curl -s https://whatthecommit.com/index.txt)\"
+
+    # set remote branch from which to push/pull
+    upstream = "!branch=$(git rev-parse --abbrev-ref HEAD); git branch \"--set-upstream-to=origin/${branch}\" \"${branch}\""
+
+    # Show the commits and content in this branch
+    unpushed = "!git log --oneline \"origin/$(git rev-parse --abbrev-ref HEAD)\".."
+
+    # delete branch at remote
+    delbr = "!git push origin -d "
+
+    # hide a branch for later
+    hide = "!f() { git update-ref refs/hidden/$1 $1 && git br -D $1; }; f"
+    unhide = "!f() { git br $1 && git update-ref $1 refs/hidden/$1; }; f"
+    hidden = "!f() { git show-ref | grep hidden; }; f"
+
+
+# URL shorthands
+
+[url "git@github.com:"]
+    insteadOf = "gh:"
+    pushInsteadOf = "github:"
+    pushInsteadOf = "git://github.com/"
+
+[url "git://github.com/"]
+    insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+    insteadOf = "gst:"
+    pushInsteadOf = "gist:"
+    pushInsteadOf = "git://gist.github.com/"
+
+[url "git://gist.github.com/"]
+    insteadOf = "gist:"
 
 # make sure to leave trailing slash at end or this doesn't work
 [includeIf "gitdir:/Users/"]
