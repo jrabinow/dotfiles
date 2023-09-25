@@ -8,6 +8,9 @@ alias updatedb="sudo bash -c 'cd / && /opt/local/bin/slocate -u -c /opt/local/et
 alias locate=slocate
 alias codesign_debugger="sudo codesign --force --deep --preserve-metadata=identifier,entitlements,requirements,flags,team-identifier --sign gdb_codesign"
 alias manup="sudo makewhatis /opt/local/share/man; sudo chmod a+r /opt/local/share/man/mandoc.db"
+alias finder="open ."
+# Change working directory to the top-most Finder window location
+alias cdfinder="cd \"\$(osascript -e 'tell app \"Finder\" to POSIX path of (insertion location as alias)')\""
 
 export COCOAPODS_DISABLE_STATS='true'
 #export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk17/Contents/Home
@@ -75,3 +78,7 @@ function nvmload()
         echo 'nvm not found!' >&2
     fi
 }
+
+# Add tab completion for `defaults read|write NSGlobalDomain`
+# # You could just use `-g` instead, but I like being explicit
+complete -W "NSGlobalDomain" defaults

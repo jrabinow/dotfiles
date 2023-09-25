@@ -46,6 +46,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# Add tab completion for SSH hostnames based on ~/.ssh/config
+[ -e "$HOME/.ssh/config.d/" ] \
+    && complete -o "default" -o "nospace" -W \
+        "$(awk '/^Host /' ~/.ssh/config.d/* | awk '{print $2}')" scp sftp ssh
+
 # ixany: when the STOP character pressed (^s), allow resuming with any key combo instead of restricting to ^q
 # clocal: disable modem control signals
 # iutf8: assume chars are UTF8
