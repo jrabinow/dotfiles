@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # shellcheck disable=SC2034
-JOBOX_DATA_DIR="$HOME/data/jobox"
+JOBOX_DATA_DIR="$HOME/data/work/jobox"
 
 # shellcheck disable=SC2034
 JOBOX_DB_DIR="${JOBOX_DATA_DIR}/postgres"
