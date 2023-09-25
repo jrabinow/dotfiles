@@ -221,25 +221,25 @@ nnoremap <expr> <Leader>ysr ":sp<CR>:Rg<CR>".expand("<cword>")
 " nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <silent> ged <Plug>(coc-definition)
-nmap <silent> gtd :call CocAction('jumpDefinition', 'tabe')<CR>
-nmap <silent> gvd :call CocAction('jumpDefinition', 'vsp')<CR>
-nmap <silent> gsd :call CocAction('jumpDefinition', 'sp')<CR>
+nnoremap <silent>ged <Plug>(coc-definition)
+nnoremap <silent>gtd :call CocAction('jumpDefinition', 'tabe')<CR>
+nnoremap <silent>gvd :call CocAction('jumpDefinition', 'vsp')<CR>
+nnoremap <silent>gsd :call CocAction('jumpDefinition', 'sp')<CR>
 
-nmap <silent> gey <Plug>(coc-type-definition)
-nmap <silent> gty :call CocAction('jumpTypeDefinition', 'tabe')<CR>
-nmap <silent> gvy :call CocAction('jumpTypeDefinition', 'vsp')<CR>
-nmap <silent> gsy :call CocAction('jumpTypeDefinition', 'sp')<CR>
+nnoremap <silent>gey <Plug>(coc-type-definition)
+nnoremap <silent>gty :call CocAction('jumpTypeDefinition', 'tabe')<CR>
+nnoremap <silent>gvy :call CocAction('jumpTypeDefinition', 'vsp')<CR>
+nnoremap <silent>gsy :call CocAction('jumpTypeDefinition', 'sp')<CR>
 
-nmap <silent> gei <Plug>(coc-implementation)
-nmap <silent> gti :call CocAction('jumpImplementation', 'tabe')<CR>
-nmap <silent> gvi :call CocAction('jumpImplementation', 'vsp')<CR>
-nmap <silent> gsi :call CocAction('jumpImplementation', 'sp')<CR>
+nnoremap <silent>gei <Plug>(coc-implementation)
+nnoremap <silent>gti :call CocAction('jumpImplementation', 'tabe')<CR>
+nnoremap <silent>gvi :call CocAction('jumpImplementation', 'vsp')<CR>
+nnoremap <silent>gsi :call CocAction('jumpImplementation', 'sp')<CR>
 
-nmap <silent> ger <Plug>(coc-references)
-nmap <silent> gtr :call CocAction('jumpReferences', 'tabe')<CR>
-nmap <silent> gvr :call CocAction('jumpReferences', 'vsp')<CR>
-nmap <silent> gsr :call CocAction('jumpReferences', 'sp')<CR>
+nnoremap <silent>ger <Plug>(coc-references)
+nnoremap <silent>gtr :call CocAction('jumpReferences', 'tabe')<CR>
+nnoremap <silent>gvr :call CocAction('jumpReferences', 'vsp')<CR>
+nnoremap <silent>gsr :call CocAction('jumpReferences', 'sp')<CR>
 
 " Remap for rename current word
 nmap <F2> <Plug>(coc-rename)
