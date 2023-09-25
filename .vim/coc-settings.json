@@ -9,6 +9,7 @@
         "python",
         "sh",
         "sql",
+        "typescript",
         "yaml"
     ],
     // python config

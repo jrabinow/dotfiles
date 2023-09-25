@@ -27,7 +27,7 @@ set wildignore=*.pyc,*.o,*.obj,*.swp
 set pastetoggle=<F2>                    " disable paste-unfriendly features when pasting in insert mode
 set ttimeoutlen=60                      " Fast escape out of insert mode
 set path+=**                            " search down into subfolders, provides tab completion for all related tasks
-set encoding=utf-8                      " welcome to the 21st century
+set encoding=utf-8 nobomb               " welcome to the 21st century
 set lazyredraw                          " faster macros
 set nomodeline                          " disable modelines (security)
 set shortmess+=aI                       " avoid 'hit enter', no welcome message
@@ -37,6 +37,7 @@ set title                               " change the terminal's title
 set list
 set listchars=tab:>.,trail:.,extends:#,nbsp:. " show trailing tabs and spaces
 set secure                              " autocmd commands not allowed in vimrc/exrc in current directory
+set nostartofline                       " Don’t reset cursor to start of line when moving around.
 
 " https://old.reddit.com/r/vim/comments/cn20tv/tip_histogrambased_diffs_using_modern_vim/
 " https://github.com/agude/dotfiles/issues/2#issuecomment-843639956
