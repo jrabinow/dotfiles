@@ -29,7 +29,10 @@ ParsedArgs parse_args(int argc, char* argv[])
         {NULL, 0, NULL, 0}
     };
 
-    while((c = getopt_long(argc, argv, "hf=", longopts, &option_index)) != -1) {
+    /* optstring is a string containing the legitimate option characters. If
+     * such a character is followed by a colon, the option requires an argument,
+     * Two colons mean an option takes an optional arg */
+    while((c = getopt_long(argc, argv, "hf:", longopts, &option_index)) != -1) {
         switch(c) {
             case 'h':
                 usage(argv[0], stdout);
