@@ -91,7 +91,7 @@ function trackinfo()
 
 function firefox_addons()
 {
-    profile_name=${1:-default}
+    local profile_name=${1:-default}
     case "${OSTYPE}" in
         darwin*)
             FIREFOX_HOMEDIR="$HOME/Library/Application Support/Firefox"
@@ -103,25 +103,40 @@ function firefox_addons()
             echo Not Found
             ;;
     esac
+    local profile_reldir=$(test -d "${FIREFOX_HOMEDIR-x}" \
+        && awk "/^\[Profile[0-9]\]$/,/^$/ {
+            if (/Name=${profile_name}/) {
+                flag=1
+            } else if (/^$/) {
+                flag=0
+            } else if (/^Path=.*/) {
+                sub(\"^Path=\", \"\", \$0)
+                path=\$0
+            }
+            if (flag) {
+                foundpath=path
+            }
+        }
+        END {
+            printf foundpath \"\n\"
+        }" "${FIREFOX_HOMEDIR}/profiles.ini")
     # shellcheck disable=2015
-    profile_dir="${FIREFOX_HOMEDIR}/$(test -d "${FIREFOX_HOMEDIR-x}" \
-        && awk '/^\[Profile[0-9]\]$/,/^$/ {printf ("%s@", $0)} END {printf "\n"}' "${FIREFOX_HOMEDIR}/profiles.ini" \
-        | grep "Name=${profile_name}" \
-        | sed -E 's/.*Path=([^@]*)@.*/\1/')"
-    workspace_dir="$(mktemp -d)"
+    local profile_dir="${FIREFOX_HOMEDIR}/${profile_reldir}"
+    local workspace_dir="$(mktemp -d)"
 
     out=""
 
     for extpath in "${profile_dir}"/extensions/*; do
-        ext_filename="$(basename "${extpath}")"
+        local ext_filename="$(basename "${extpath}")"
         if [ "${ext_filename}" != staged ]; then
             cp "$profile_dir/extensions/${ext_filename}" "${workspace_dir}"
             unzip -d "${workspace_dir}" "${workspace_dir}/$ext_filename" manifest.json > /dev/null
-            ext_name="$(jq '{"name": .name, "app_id": .applications.gecko.id, "homepage_url": .homepage_url}' "${workspace_dir}/manifest.json")"
-            out="${out}{\"${ext_filename}\": ${ext_name}},"
+            local ext_name="$(jq '{"name": .name, "author": .author, "app_id": .applications.gecko.id, "homepage_url": .homepage_url}' "${workspace_dir}/manifest.json")"
+            local out="${out}{\"${ext_filename}\": ${ext_name}},"
             rm -r "${workspace_dir:?}"/*
         fi
     done
+    rmdir "${workspace_dir}"
     out="${out%%,}"
     echo "[${out}]"
 }
