@@ -114,7 +114,8 @@ function firefox_addons()
             echo Not Found
             ;;
     esac
-    local profile_reldir=$(test -d "${FIREFOX_HOMEDIR-x}" \
+    local profile_reldir
+    profile_reldir=$(test -d "${FIREFOX_HOMEDIR-x}" \
         && awk "/^\[Profile[0-9]\]$/,/^$/ {
             if (/Name=${profile_name}/) {
                 flag=1
@@ -133,16 +134,20 @@ function firefox_addons()
         }" "${FIREFOX_HOMEDIR}/profiles.ini")
     # shellcheck disable=2015
     local profile_dir="${FIREFOX_HOMEDIR}/${profile_reldir}"
-    local workspace_dir="$(mktemp -d)"
+    local workspace_dir
+    workspace_dir="$(mktemp -d)"
 
+    local out
+    local ext_filename
+    local ext_name
     out=""
 
     for extpath in "${profile_dir}"/extensions/*; do
-        local ext_filename="$(basename "${extpath}")"
+        ext_filename="$(basename "${extpath}")"
         if [ "${ext_filename}" != staged ]; then
             cp "$profile_dir/extensions/${ext_filename}" "${workspace_dir}"
             unzip -d "${workspace_dir}" "${workspace_dir}/$ext_filename" manifest.json > /dev/null
-            local ext_name="$(jq '{"name": .name, "author": .author, "app_id": .applications.gecko.id, "homepage_url": .homepage_url}' "${workspace_dir}/manifest.json")"
+            ext_name="$(jq '{"name": .name, "author": .author, "app_id": .applications.gecko.id, "homepage_url": .homepage_url}' "${workspace_dir}/manifest.json")"
             local out="${out}{\"${ext_filename}\": ${ext_name}},"
             rm -r "${workspace_dir:?}"/*
         fi
