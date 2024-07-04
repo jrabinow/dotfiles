@@ -14,6 +14,7 @@ alias uhtop='htop -u $USER'
 alias watch="watch --differences"
 alias psql="env PGCONNECT_TIMEOUT=5 psql"
 alias less="less -R"
+alias kpcli=keepassxc-cli
 alias DID_I_FUCKING_STUTTER='sudo $(history -p !!)'
 alias tor2dlp="yt-dlp --proxy 'socks5://localhost:9150'"
 
