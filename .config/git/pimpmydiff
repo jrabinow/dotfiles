@@ -29,7 +29,6 @@
 [diff]
     colorMoved = default
 # https://difftastic.wilfred.me.uk/git.html
-    tool = difftastic
 
 [difftool]
         prompt = false

@@ -73,6 +73,9 @@
     # Use `hexdump` to diff binary files
     textconf = hexdump -v -C
 
+[difftool]
+    prompt = false
+
 [credential]
     helper = store --file ~/.local/share/git/credstore
     helper = cache --timeout=7200
@@ -223,7 +226,7 @@
 [url "git://github.com/"]
     insteadOf = "github:"
 
-[url "git@gist.github.com:"]
+[url "git@github.com:"]
     insteadOf = "gst:"
     pushInsteadOf = "gist:"
     pushInsteadOf = "git://gist.github.com/"
