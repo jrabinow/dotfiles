@@ -150,3 +150,4 @@ hi link QuickFixLine Visual
 
 " coc highlighting
 hi CocWarningFloat ctermfg=208
+hi CocInlayHint ctermbg=DarkGray guibg=darkgray
