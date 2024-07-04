@@ -15,7 +15,9 @@ function usage()
 {
     cat << EOF
 Usage: ${0##*/}" [OPTION]...
-Options: --help, -h: show this help dialog
+
+Options:
+    -h, --help: show this help dialog
 EOF
 }
 
