@@ -95,4 +95,3 @@ let g:go_list_type = "quickfix"
 "" use `:OR` for organize import of current buffer
 "command! -nargs=0 OR   :call     CocAction('runCommand',
 " 'editor.action.organizeImport')
-
