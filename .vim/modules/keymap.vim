@@ -14,7 +14,6 @@ vnoremap < <gv
 nnoremap Y y$
 " commands are more useful than repeat last search
 nnoremap ; :
-nnoremap : ;
 
 " Shortcut to reference current file's path in command line mode
 cnoremap <expr> %% expand('%:h').'/'
@@ -217,29 +216,29 @@ nnoremap <expr> <Leader>ysr ":sp<CR>:Rg<CR>".expand("<cword>")
 " ==============================================================================
 
 " Use `[g` and `]g` to navigate diagnostics
-" nmap <silent> [g <Plug>(coc-diagnostic-prev)
-" nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" nmap <Leader> [g <Plug>(coc-diagnostic-prev)
+" nmap <Leader> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nnoremap <silent>ged <Plug>(coc-definition)
-nnoremap <silent>gtd :call CocAction('jumpDefinition', 'tabe')<CR>
-nnoremap <silent>gvd :call CocAction('jumpDefinition', 'vsp')<CR>
-nnoremap <silent>gsd :call CocAction('jumpDefinition', 'sp')<CR>
+nnoremap <Leader>ged <Plug>(coc-definition)
+nnoremap <Leader>gtd :call CocAction('jumpDefinition', 'tabe')<CR>
+nnoremap <Leader>gvd :call CocAction('jumpDefinition', 'vsp')<CR>
+nnoremap <Leader>gsd :call CocAction('jumpDefinition', 'sp')<CR>
 
-nnoremap <silent>gey <Plug>(coc-type-definition)
-nnoremap <silent>gty :call CocAction('jumpTypeDefinition', 'tabe')<CR>
-nnoremap <silent>gvy :call CocAction('jumpTypeDefinition', 'vsp')<CR>
-nnoremap <silent>gsy :call CocAction('jumpTypeDefinition', 'sp')<CR>
+nnoremap <Leader>gey <Plug>(coc-type-definition)
+nnoremap <Leader>gty :call CocAction('jumpTypeDefinition', 'tabe')<CR>
+nnoremap <Leader>gvy :call CocAction('jumpTypeDefinition', 'vsp')<CR>
+nnoremap <Leader>gsy :call CocAction('jumpTypeDefinition', 'sp')<CR>
 
-nnoremap <silent>gei <Plug>(coc-implementation)
-nnoremap <silent>gti :call CocAction('jumpImplementation', 'tabe')<CR>
-nnoremap <silent>gvi :call CocAction('jumpImplementation', 'vsp')<CR>
-nnoremap <silent>gsi :call CocAction('jumpImplementation', 'sp')<CR>
+nnoremap <Leader>gei <Plug>(coc-implementation)
+nnoremap <Leader>gti :call CocAction('jumpImplementation', 'tabe')<CR>
+nnoremap <Leader>gvi :call CocAction('jumpImplementation', 'vsp')<CR>
+nnoremap <Leader>gsi :call CocAction('jumpImplementation', 'sp')<CR>
 
-nnoremap <silent>ger <Plug>(coc-references)
-nnoremap <silent>gtr :call CocAction('jumpReferences', 'tabe')<CR>
-nnoremap <silent>gvr :call CocAction('jumpReferences', 'vsp')<CR>
-nnoremap <silent>gsr :call CocAction('jumpReferences', 'sp')<CR>
+nnoremap <Leader>ger <Plug>(coc-references)
+nnoremap <Leader>gtr :call CocAction('jumpReferences', 'tabe')<CR>
+nnoremap <Leader>gvr :call CocAction('jumpReferences', 'vsp')<CR>
+nnoremap <Leader>gsr :call CocAction('jumpReferences', 'sp')<CR>
 
 " Remap for rename current word
 nmap <F2> <Plug>(coc-rename)
