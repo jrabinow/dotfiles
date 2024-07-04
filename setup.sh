@@ -93,12 +93,6 @@ function install_vim_plugins()
     else
         vim -c "CocDisable" -c quit -c quit
     fi
-    local vimspector_plugindata_dir="$HOME/.local/share/vim/plugin-data/vimspector"
-    if [ -d "$HOME/.vim/plugged/vimspector" ]; then
-         test -L "$vimspector_plugindata_dir/download" \
-             || (mkdir -p "${vimspector_plugindata_dir}" \
-             && ln -s "$HOME/.vim/plugged/vimspector/gadgets/macos/download" "${vimspector_plugindata_dir}")
-    fi
     cd - > /dev/null
 }
 
@@ -233,7 +227,7 @@ function main()
     )
     declare -A LINKS=(
         [".vim/init.vim"]=".vim/vimrc"
-        # also check out `install_vim_plugins` function
+        [".local/share/vim/plugin-data/vimspector/download"]=".vim/plugged/vimspector/gadgets/macos/download"
         [".local/share/vim/plugin-data/coc/extensions/package.json"]=".config/coc/package.json"
         [".config/YouTube Music"]=".local/share/YouTube Music"
     )
