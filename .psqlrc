@@ -8,6 +8,7 @@
 \timing
 
 \set VERBOSITY verbose
+\set ECHO_HIDDEN on
 
 -- print columns on separate lines if columns are too wide - disabled because this is stupid, make your terminal wider
 -- \x auto
