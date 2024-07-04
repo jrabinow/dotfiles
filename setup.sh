@@ -26,9 +26,7 @@ function prepare_rootenv()
         bin/cleanup
         bin/dirdiff
         bin/flushcache
-        bin/group_by
         bin/pathsearch
-        bin/rlor
         bin/splitlines
         bin/trimspaces
         bin/zombiekiller
@@ -226,10 +224,11 @@ function main()
         .local/share/bash
         .local/share/discord
         .local/share/gdb
-        ".local/share/YouTube Music"
         .local/share/psql_history
+        .local/share/ssh-agent
         .local/share/vim/plugin-data/coc        # also check out `install_vim_plugins` function
         .local/share/vim/plugin-data/vimspector # also check out `install_vim_plugins` function
+        ".local/share/YouTube Music"
         .ssh/config.d
     )
     declare -A LINKS=(
