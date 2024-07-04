@@ -4,6 +4,7 @@ if [ "$(type -t ls)" != "alias" ]; then
     alias ls="ls -G"
 fi
 alias utop='top -U $USER'
+alias macports_update='sudo $(which macports_update)'
 alias updatedb="sudo bash -c 'cd / && /opt/local/bin/slocate -u -c /opt/local/etc/updatedb.conf'"
 alias locate=slocate
 alias codesign_debugger="sudo codesign --force --deep --preserve-metadata=identifier,entitlements,requirements,flags,team-identifier --sign gdb_codesign"
@@ -25,16 +26,21 @@ alias batt_stats="pmset -g batt | awk '/InternalBattery/ {sub(\"%;\", \"\", \$3)
 
 function allow_macports()
 {
-    portfile="${1:-}"
     # shellcheck disable=SC2154
     find "${macports}" -type l -name work -delete
+    if [ $# -eq 0 ]; then
+        /usr/bin/sudo /bin/chmod -R +a "macports allow read,execute" "${macports}/"
+    else
+        for portfile in "${@}"; do
+            /usr/bin/sudo /bin/chmod -R +a "macports allow read,execute" "${macports}/${portfile}"
+        done
+    fi
     # shellcheck disable=SC2154
     grantdir="${macports}/.."
     while [ "$(realpath "${grantdir}")" != "${HOME}" ]; do
         /bin/chmod +a "macports allow read,execute" "${grantdir}"
         grantdir="${grantdir}/.."
     done
-    sudo /bin/chmod -R +a "macports allow read,execute" "${macports}/${portfile}"
 }
 
 # configd starts using 100% CPU for no discernable reason. It's crap so it just
