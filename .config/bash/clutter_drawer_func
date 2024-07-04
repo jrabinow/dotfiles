@@ -80,6 +80,13 @@ function pgkill()
     pgrep -alfi "${pattern}" | fzf | awk '{print $1}' | xargs -r kill
 }
 
+function pgkillall()
+{
+    pattern="$1"
+    shift
+    pgrep -alfi "${pattern}" | awk '{print $1}' | xargs -r kill
+}
+
 function wikisole()
 {
     dig +short txt "$*.wp.dg.cx"
