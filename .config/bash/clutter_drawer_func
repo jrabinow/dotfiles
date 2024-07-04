@@ -17,9 +17,18 @@ function hclone()
 
 function weather()
 {
-    # shellcheck disable=SC2001
-    location="$(sed 's/ /%20/g' <<< "${@}")"
-    curl "v2.wttr.in/${location}?m"
+    location="${*}"
+    curl "v2.wttr.in/${location// /%20}?m"
+}
+
+function geoip()
+{
+    ipaddr="$1"
+    shift
+    curl -s "https://api.ipgeolocation.io/ipgeo?include=hostname&ip=${ipaddr}" \
+        -H 'Accept: application/json' \
+        -H 'Origin: https://ipgeolocation.io' \
+        | jq 'del(.continent_code, .country_code2, .country_code3, .country_name_official, .country_capital, .is_eu, .country_flag, .time_zone.dst_start, .time_zone.dst_end)'
 }
 
 function setup-ssh-key-login()
@@ -78,7 +87,9 @@ function wikisole()
 
 function worddef()
 {
-    curl -s "https://api.dictionaryapi.dev/api/v2/entries/en/$*" | jq
+    local word
+    word="${*}"
+    curl -s "https://api.dictionaryapi.dev/api/v2/entries/en/${word// /%20}" | jq
 }
 
 function trackinfo()

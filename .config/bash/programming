@@ -43,6 +43,12 @@ function venv()
     return "${retval}"
 }
 
+function httpcode()
+{
+    curl "https://httpstat.us/$1"
+    echo
+}
+
 # print list of buck targets under a dir in fbcode
 function targets()
 {
