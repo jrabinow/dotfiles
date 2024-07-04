@@ -1,7 +1,7 @@
 [user]
     email = randprefix.github@fastmail.com
     name = Julien Rabinow
-    signingkey = 0BEF65B5CE49D21E72CAAA8FECA72D7635A93214
+    signingkey = randprefix.github@fastmail.com
 
 [core]
     longpaths = true
@@ -34,7 +34,10 @@
 
 [commit]
     # https://help.github.com/articles/signing-commits-using-gpg/
-    #gpgsign = true
+    gpgsign = true
+
+[tag]
+    gpgsign = true
 
 [apply]
     # Detect whitespace errors when applying a patch.
@@ -231,3 +234,9 @@
 # make sure to leave trailing slash at end or this doesn't work
 [includeIf "gitdir:/Users/"]
     path = ~/.config/git/pimpmydiff
+
+# include only if a remote with the given URL exists
+# https://garrit.xyz/posts/2023-10-13-organizing-multiple-git-identities
+# https://news.ycombinator.com/item?id=37904125
+[includeIf "hasconfig:remote.*.url:git@github.com:jobox-team/\*"]
+    path = ~/.local/share/git/identities/jobox

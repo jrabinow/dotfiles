@@ -12,6 +12,7 @@ alias manup="sudo makewhatis /opt/local/share/man; sudo chmod a+r /opt/local/sha
 alias finder="open ."
 
 export COCOAPODS_DISABLE_STATS='true'
+export GPG_TTY=$(tty)
 
 #alias simulator="/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/MacOS/Simulator -CurrentDeviceUDID AE350978-A3A3-44E5-A77F-45028962E4E7"
 function free()
