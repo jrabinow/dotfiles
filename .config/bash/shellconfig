@@ -49,7 +49,7 @@ fi
 # Add tab completion for SSH hostnames based on ~/.ssh/config
 [ -n "$(ls -A ~/.ssh/config.d)" ] \
     && complete -o "default" -o nospace -W \
-        "$(awk '/^Host / {print $2}' ~/.ssh/config.d/*)" scp sftp ssh
+        "$(awk '/^Host / {print $2}' ~/.ssh/config.d/*)" scp sftp ssh et mosh
 
 # ixany: when the STOP character pressed (^s), allow resuming with any key combo instead of restricting to ^q
 # clocal: disable modem control signals
