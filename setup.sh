@@ -42,7 +42,7 @@ function prepare_rootenv()
 
 function ensure_submodules_exist()
 {
-    git submodule update --init
+    git submodule update --init --recursive
 }
 
 function firefox_userjs()
