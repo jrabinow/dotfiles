@@ -5,7 +5,7 @@ if [ "$(type -t ls)" != "alias" ]; then
 fi
 alias utop='top -U $USER'
 alias macports_update='sudo $(which macports_update)'
-alias updatedb="sudo bash -c 'cd / && /opt/local/bin/slocate -u -c /opt/local/etc/updatedb.conf'"
+alias updatedb="sudo bash -c 'cd / && /opt/local/bin/slocate -u -c /opt/local/etc/updatedb.conf' && sudo chmod go+r /opt/local/var/db/slocate/slocate.db"
 alias locate=slocate
 alias codesign_debugger="sudo codesign --force --deep --preserve-metadata=identifier,entitlements,requirements,flags,team-identifier --sign gdb_codesign"
 alias manup="sudo makewhatis /opt/local/share/man; sudo chmod a+r /opt/local/share/man/mandoc.db"
