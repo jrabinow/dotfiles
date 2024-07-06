@@ -1,7 +1,5 @@
-[user]
-    email = randprefix.github@fastmail.com
-    name = Julien Rabinow
-    signingkey = randprefix.github@fastmail.com
+[include]
+    path = ~/.local/share/git/identities/default
 
 [core]
     longpaths = true
@@ -127,6 +125,8 @@
     cob = checkout -b
     cp = cherry-pick
 
+    allstash = stash -u
+
     # Show verbose output about tags or remotes
     tags = tag -l
     remotes = remote --verbose
@@ -136,6 +136,9 @@
 
     # Amend the currently staged files to the latest commit.
     amend = commit --amend --reuse-message=HEAD
+
+    # add more details to the commit
+    blabber = commit --amend
 
     # Credit an author on the latest commit.
     credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
@@ -209,6 +212,9 @@
 
     # delete branch at remote
     delbr = "!git push origin -d "
+
+    # spr
+    spr = "!GITHUB_TOKEN=$GITHUB_TOKEN spr"
 
     # hide a branch for later
     hide = "!f() { git update-ref refs/hidden/$1 $1 && git br -D $1; }; f"
