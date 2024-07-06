@@ -2,7 +2,7 @@
 [ui]
 # name and email, e.g.
 # username = Jane Doe <jdoe@example.com>
-username = Julien Rabinow <jnr305@nyu.edu>
+username = Julien Rabinow <randprefix.github@fastmail.com>
 
 [extensions]
 # uncomment these lines to enable some popular extensions
