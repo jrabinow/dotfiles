@@ -118,7 +118,7 @@
     # List aliases.
     aliases = config --get-regexp alias
 
-    st = status
+    st = status -s
     co = checkout
     ci = commit
     br = branch
