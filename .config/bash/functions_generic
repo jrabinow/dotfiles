@@ -221,7 +221,7 @@ function ssh_targets()
             user=""
             hostname=""
         }
-    }' ~/.ssh/config.d/* | sort | grep "${tgt}"
+    }' ~/.ssh/config.d/* | sort | grep -E "${tgt}"
 }
 
 # Create a data URL from a file
