@@ -47,13 +47,14 @@ function ensure_submodules_exist()
 
 function firefox_userjs()
 {
+    # show time of last access for all firefox profiles (%X in stat) and get last accessed profile
     case "${OSTYPE}" in
         darwin*)
             MOZILLA_PROFILE="$(
                 find \
                     "$HOME/Library/Application Support/Firefox/Profiles/" \
                     -maxdepth 1 -mindepth 1 -type d \
-                    -exec stat -c "%X %n" '{}' \; \
+                    -exec /usr/bin/stat -f "%a %N" '{}' \; \
                     | sort -rn \
                     | head -1 \
                     | cut -d' ' -f2-
