@@ -28,11 +28,11 @@
 
 [diff]
     colorMoved = default
-# https://difftastic.wilfred.me.uk/git.html
 
 [difftool]
         prompt = false
 
+# https://difftastic.wilfred.me.uk/git.html
 [difftool "difftastic"]
         cmd = difft "$LOCAL" "$REMOTE"
 

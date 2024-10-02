@@ -112,6 +112,12 @@
     required = true
 
 [mergetool]
+    # LOCAL:  contents on current branch
+    # BASE:   divergence point
+    # REMOTE: branch being merged in
+    #
+    # MERGED: workspace
+    # For more details, see git help mergetool
     layout = "(LOCAL,BASE,REMOTE)/MERGED"
 
 [alias]
