@@ -41,10 +41,6 @@
     # Detect whitespace errors when applying a patch.
     whitespace = fix
 
-[branch]
-    # Show most recently changed branches first.
-    sort = -committerdate
-
 [push]
     default = current
     # Make `git push` push relevant annotated tags when pushing branches out.
@@ -120,6 +116,9 @@
     # For more details, see git help mergetool
     layout = "(LOCAL,BASE,REMOTE)/MERGED"
 
+[absorb]
+    oneFixupPerCommit = true
+
 [alias]
     # List aliases.
     aliases = config --get-regexp alias
@@ -150,7 +149,7 @@
     amend = commit --amend --reuse-message=HEAD
 
     # add more details to the commit
-    blabber = commit --amend
+    reword = commit --amend
 
     # Credit an author on the latest commit.
     credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
@@ -162,6 +161,9 @@
     rebbort = "rebase --abort"
     cpbort = "cherry-pick --abort"
     merbort = "merge --abort"
+
+    # show rebase status
+    rebstat = "rebase --show-current-patch"
 
     # Interactive rebase with the given number of latest commits
     reb = "!r() { git rebase -i HEAD~$1; }; r"
@@ -186,7 +188,7 @@
     lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     # pretty logging 2
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-    lg = !"git lg2"
+    lg = !"git lg1"
 
     # `git di $number` shows the diff between the state `$number` revisions ago and the current state.
     di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
