@@ -29,9 +29,13 @@
             ]
         }
     },
+
     // java config
     "java.home": "/Library/Java/JavaVirtualMachines/jdk-21-azul-zulu.jdk/Contents/Home/",
-    //"java.import.gradle.java.home": "/Library/Java/JavaVirtualMachines/openjdk8-bootstrap/Contents/Home/",
+    "java.import.gradle.java.home": "/Library/Java/JavaVirtualMachines/openjdk8-zulu/Contents/Home/",
+    //"java.jdt.ls.java.home": "/Library/Java/JavaVirtualMachines/jdk-21-azul-zulu.jdk/Contents/Home/",
+    "java.compile.nullAnalysis.mode": "disabled",
+
     // sql config
     "sql.formatOptions.keywordCase": "upper",
     // diagnostics config
