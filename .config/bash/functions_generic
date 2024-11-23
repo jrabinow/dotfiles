@@ -204,14 +204,14 @@ function ssh_targets()
 {
     tgt="${1:""}"
     shift
-    awk '/^Host/,/^$/ {
-        if ($1 == "Host") {
+    awk 'BEGIN {IGNORECASE=1} /^Host/,/^$/ {
+        if ($1 ~ /^Host$/) {
             host=$2
-        } else if ($1 == "Hostname") {
+        } else if ($1 ~ /^Hostname$/) {
             hostname=$2
-        } else if ($1 == "IdentityFile") {
+        } else if ($1 ~ /^IdentityFile$/) {
             identityfile=$2
-        } else if ($1 == "User") {
+        } else if ($1 ~ /^User$/) {
             user=$2
         }
         if (host != "" && hostname != "" && identityfile != "" && user != "") {
