@@ -8,8 +8,6 @@ if [ -n "${DEBUG}" ]; then
     PS4='$LINENO: '
     set -x -T
 fi
-set -e -u
-set -o pipefail
 
 function usage()
 {
@@ -56,5 +54,7 @@ function main()
 }
 
 if [ "${BASH_SOURCE[0]}" == "$0" ]; then
+    set -e -u
+    set -o pipefail
     main "$@"
 fi
