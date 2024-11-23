@@ -13,10 +13,11 @@
         "yaml"
     ],
     // python config
-    "pyright.enable": true,
+    "pyright.enable": false,
     "python.linting.enabled": true,
     "python.formatting.provider": "black",
-    "python.linting.pytypeEnabled": true,
+    "python.linting.pytypeEnabled": false,
+
     // golang config
     "languageserver": {
         "golang": {
@@ -58,5 +59,11 @@
     "diagnostic-languageserver.formatFiletypes": {
         // format `sh` (includes `bash`) files using formatter defined below
         "sh": "shfmt"
-    }
+    },
+    "java.imports.gradle.wrapper.checksums": [
+      {
+        "sha256": "cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8",
+        "allowed": false
+      }
+    ]
 }
