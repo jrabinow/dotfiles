@@ -21,6 +21,7 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 HISTFILE="${XDG_DATA_HOME:-${HOME}/.local/share}/bash/bash_history"
+PROFILES_DIR=${XDG_DATA_HOME:-~/.local/share}/bash/profiles
 
 MODULE_NAMES=(
     envvars
@@ -29,8 +30,6 @@ MODULE_NAMES=(
     bookmarks
     clutter_drawer_func
     functions_generic
-    jobox
-    therme
     programming
     ps1
     scm_prompt_setup
@@ -111,6 +110,9 @@ load_modules
 unset MODULE_NAMES
 unset missing_module
 unset load_modules
+
+# shellcheck disable=SC1090
+test -d "${PROFILES_DIR}" && [[ $(find "${PROFILES_DIR}"/* | wc -l) -ge 1 ]] && source "${PROFILES_DIR}"/*
 
 # this goes here because putting it in another file means bash ignores it for
 # some reason :-(
