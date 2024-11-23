@@ -194,7 +194,7 @@
     di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
 
     # show log of filechanges
-    filelog = log --graph --all --decorate --stat --date=iso
+    filelog = log --graph --decorate --stat --date=iso
 
     # list of commit hash+message in reverse order
     recap = "!git log --all --oneline --no-merges --author=$(git config user.email)"
