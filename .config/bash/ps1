@@ -2,9 +2,14 @@
 
 PROMPT_DIRTRIM=3
 
+# if root
 if [[ ${EUID} == 0 ]]; then
     # red
     sq_color="\001\033[0;31m\002"
+# if running in ssh
+elif [ -n "${SSH_CLIENT}" ]; then
+    # green
+    sq_color="\001\033[0;32m\002"
 else
     # light blue
     sq_color="\001\033[0;36m\002"
@@ -69,7 +74,6 @@ case "$TERM" in
         PS1="\[\e]0;${debian_chroot:+(${debian_chroot:-""})}\u@\h: \w\a\]$PS1"
         ;;
     *) ;;
-
 esac
 
 # for failed commands, show exit code and signal if killed by one
