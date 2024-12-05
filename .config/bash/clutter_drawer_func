@@ -31,6 +31,13 @@ function geoip()
         | jq 'del(.continent_code, .country_code2, .country_code3, .country_name_official, .country_capital, .is_eu, .country_flag, .time_zone.dst_start, .time_zone.dst_end)'
 }
 
+function ip2asn()
+{
+    ipaddr="${1}"
+    shift
+    curl -s "https://api.hackertarget.com/aslookup/?q=${ipaddr}&output=json" | jq
+}
+
 function setup-ssh-key-login()
 {
     local desthost="${1}"
