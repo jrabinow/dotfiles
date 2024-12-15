@@ -80,6 +80,11 @@ function firefox_userjs()
 
 function install_vim_plugins()
 {
+    # the link creation code creates the basedir for the link target. However,
+    # vim-plugged requires an empty directory to install the plugin -> to ensure
+    # that all plugin directories are empty/non-existent at plugin installation
+    # time, we delete the toplevel plugin directory
+    rm -r ~/.vim/plugged
     vim -c "PlugInstall" -c quit -c quit
     # Install extensions
     cd ~/.local/share/vim/plugin-data/coc/extensions/
