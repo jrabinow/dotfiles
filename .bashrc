@@ -47,7 +47,7 @@ case "${OSTYPE}" in
             dom0)
                 MODULE_NAMES=(qubes "${MODULE_NAMES[@]}")
                 ;;
-            raspberrypi)
+            raspi)
                 MODULE_NAMES=(raspi "${MODULE_NAMES[@]}")
                 ;;
         esac
