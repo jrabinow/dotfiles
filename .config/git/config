@@ -138,6 +138,9 @@
         grep -vE \"\\[$(git rev-parse --abbrev-ref HEAD)(\\^|(~[0-9]+)?)?\\]\" | \
         head -1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/;s/[\\^~].*//'; }; f"
 
+    # don't require a message for gpg-signed tag
+    stag = tag -m ''
+
     # Show verbose output about tags or remotes
     tags = tag -l
     remotes = remote --verbose
