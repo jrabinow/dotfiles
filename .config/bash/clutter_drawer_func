@@ -15,6 +15,16 @@ function hclone()
     git clone "$url"
 }
 
+# https://github.com/vrothberg/vgrep#fzf
+# https://github.com/vrothberg/vgrep/issues/177#issuecomment-1862560928
+function cgvg()
+{
+  query="$*"
+  # shellcheck disable=SC2086
+  vgrep --no-header ${query} \
+   | fzf --bind "enter:execute:vim {2} +{3}" --ansi --tac
+}
+
 function weather()
 {
     location="${*}"
