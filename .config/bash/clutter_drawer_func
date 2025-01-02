@@ -38,22 +38,6 @@ function ip2asn()
     curl -s "https://api.hackertarget.com/aslookup/?q=${ipaddr}&output=json" | jq
 }
 
-function setup-ssh-key-login()
-{
-    local desthost="${1}"
-    shift
-    local keyfile="${1:-${HOME}/.ssh/keys/${desthost}.id_ed25519}"
-    shift
-
-    if [ -n "${desthost}" ] && [ -n "${keyfile}" ]; then
-        ssh-keygen -t ed25519 -f "${keyfile}"
-        ssh-copy-id -i "${keyfile}" "${desthost}"
-    else
-        # shellcheck disable=SC2016
-        printf 'Undefined:\n$desthost=%s\n$keyfile=%s\n' "${desthost}" "${keyfile}"
-    fi
-}
-
 function archive_dl_music()
 {
     mv -iv ~/Downloads/*.mp3 ~/Music/Songs/
