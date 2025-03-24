@@ -48,7 +48,7 @@ function ip2asn()
 
 function archive_dl_music()
 {
-    mv -iv ~/Downloads/*.mp3 ~/Music/Songs/
+    mv -iv ~/Downloads/*.{mp3,opus} ~/Music/Songs/
 }
 
 function isblocked()
