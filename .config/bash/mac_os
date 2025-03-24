@@ -41,10 +41,10 @@ function allow_macports()
     # shellcheck disable=SC2154
     find "${macports}" -type l -name work -delete
     if [ $# -eq 0 ]; then
-        /usr/bin/sudo /bin/chmod -R +a "macports allow read,execute" "${macports}/"
+        sudo /bin/chmod -R +a "macports allow read,execute" "${macports}/"
     else
         for portfile in "${@}"; do
-            /usr/bin/sudo /bin/chmod -R +a "macports allow read,execute" "${macports}/${portfile}"
+            sudo /bin/chmod -R +a "macports allow read,execute" "${macports}/${portfile}"
         done
     fi
     # shellcheck disable=SC2154
