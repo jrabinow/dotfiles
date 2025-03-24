@@ -35,10 +35,8 @@ function geoip()
 {
     ipaddr="$1"
     shift
-    curl -s "https://api.ipgeolocation.io/ipgeo?include=hostname&ip=${ipaddr}" \
-        -H 'Accept: application/json' \
-        -H 'Origin: https://ipgeolocation.io' \
-        | jq 'del(.continent_code, .country_code2, .country_code3, .country_name_official, .country_capital, .is_eu, .country_flag, .time_zone.dst_start, .time_zone.dst_end)'
+    curl -s "http://ip-api.com/${ipaddr}"
+    curl -s "https://ipinfo.io/${ipaddr}"
 }
 
 function ip2asn()
