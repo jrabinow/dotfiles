@@ -213,13 +213,20 @@ function ssh_targets()
             identityfile=$2
         } else if ($1 ~ /^User$/) {
             user=$2
-        }
+    	} else if ($1 ~ /^Port$/) {
+	    port=$2
+	}
         if (host != "" && hostname != "" && identityfile != "" && user != "") {
-            print host " -> ssh -i " identityfile " " user "@" hostname
+            if (port != "") {
+                print host " -> ssh -i " identityfile " -p " port " " user "@" hostname
+            } else {
+                print host " -> ssh -i " identityfile " " user "@" hostname
+            }
             host=""
             identityfile=""
             user=""
             hostname=""
+            port=""
         }
     }' ~/.ssh/config.d/* | sort | grep -E "${tgt}"
 }
