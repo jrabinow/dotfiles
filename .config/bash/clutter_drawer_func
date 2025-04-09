@@ -162,3 +162,11 @@ function firefox_addons()
     out="${out%%,}"
     echo "[${out}]"
 }
+
+function adserver_ts_to_date()
+{
+    # https://learn.microsoft.com/en-us/windows/win32/adschema/a-lastlogontimestamp
+    ts_nanoseconds="${1}"
+    shift
+    bc -l <<< "${ts_nanoseconds}*0.0000001-11644473600" | xargs -I% date -u -d @%
+}
