@@ -73,3 +73,10 @@ function targets()
 if command -v rlwrap > /dev/null; then
     alias yaegi="rlwrap yaegi"
 fi
+
+function browsecommit()
+{
+    commit="$1"
+    shift
+    open "$(git config --get remote.origin.url | sed -E 's/\.git$//;s/gh:/https:\/\/github.com\//;s/^[a-zA-Z0-9_]+@/https:\/\//;s/:/\//2')/commit/${commit}"
+}
