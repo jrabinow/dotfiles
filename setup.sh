@@ -198,9 +198,11 @@ function main()
         .config/ctags
         .config/fontconfig
         .config/gdb
+        .config/ghostty
         .config/git
         .config/hg
         .config/ipython/profile_default/ipython_config.py
+        .config/jnv
         .config/lxterminal
         .config/offlineimap
         .config/redshift.conf
