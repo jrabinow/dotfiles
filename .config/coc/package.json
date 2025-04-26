@@ -14,8 +14,7 @@
     "coc-tsserver": ">=2.1.4",
     "coc-vimlsp": ">=0.12.3",
     "coc-diagnostic": ">=0.23.7",
-    "coc-sourcekit": ">=0.0.3",
-    "coc-python": ">=1.2.13"
+    "coc-sourcekit": ">=0.0.3"
   },
   "disabled": [],
   "locked": [],
