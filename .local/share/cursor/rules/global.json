@@ -1,0 +1,219 @@
+{
+  "version": "1.0",
+  "scope": "global",
+  "rules": {
+    "security": {
+      "enabled": true,
+      "permissions": {
+        "description": "Handle elevated permissions and sensitive data with care",
+        "rules": [
+          "Never use sudo without explicit confirmation",
+          "Use environment variables for secrets",
+          "Never commit credentials or sensitive data",
+          "Document security-related decisions"
+        ]
+      }
+    },
+    "package_management": {
+      "enabled": true,
+      "description": "Rules for package management across the system",
+      "macports": {
+        "description": "MacPorts is the primary package management system",
+        "location": "$HOME/src/thirdparty/macports-ports",
+        "rules": [
+          "Always use MacPorts as the primary package management system",
+          "Only use alternative package managers (pip, npm, etc.) within virtual environments",
+          "For Python development, use virtualenvs for project-specific dependencies",
+          "For other languages, use their equivalent of virtual environments for project-specific dependencies",
+          "System-wide packages must be installed through MacPorts",
+          "Document any exceptions to using MacPorts with clear justification",
+          "When working with Python:",
+          "  - Use MacPorts for system-wide Python packages",
+          "  - Use virtualenvs for project-specific dependencies",
+          "  - Never mix MacPorts Python packages with pip-installed packages outside of virtualenvs"
+        ],
+        "exceptions": {
+          "description": "Situations where alternative package managers may be used",
+          "rules": [
+            "Inside Python virtualenvs",
+            "Inside Node.js project directories with package.json",
+            "Inside Ruby project directories with Gemfile",
+            "Inside project-specific virtual environments",
+            "For language-specific package managers within their project contexts"
+          ]
+        }
+      }
+    },
+    "rules_management": {
+      "enabled": true,
+      "description": "Rules must be defined in the correct location and handled properly",
+      "severity": "error",
+      "locations": {
+        "global": "$HOME/.local/share/cursor/rules/global.json",
+        "project": ".cursor/rules/repo.json"
+      }
+    },
+    "core_principles": {
+      "enabled": true,
+      "simplicity": {
+        "description": "Always choose the simplest solution that works",
+        "guidelines": [
+          "If a solution feels complex, look for a simpler approach",
+          "When faced with a problem, first ask 'how can we simplify this?'",
+          "Avoid adding complexity unless absolutely necessary"
+        ]
+      },
+      "clean_code": {
+        "description": "Prioritize clean code over quick fixes",
+        "guidelines": [
+          "Never add workarounds when proper fixes are possible",
+          "Technical debt should be tracked and addressed promptly",
+          "Document why workarounds are needed and create tickets to fix them properly"
+        ]
+      },
+      "bug_fixes": {
+        "description": "Guidelines for handling bug fixes",
+        "rules": [
+          "When encountering a bug, check for similar occurrences across the codebase",
+          "Fix bugs systematically across all affected locations, not just the discovered instance",
+          "Document the pattern that led to the bug to prevent future occurrences",
+          "Use tools like grep or semantic search to find similar patterns",
+          "Create comprehensive fixes that address the root cause",
+          "Test fixes across all identified locations before committing changes"
+        ],
+        "best_practices": [
+          "Use pattern matching to find similar code structures",
+          "Consider creating automated checks to prevent similar bugs",
+          "Document the search methodology used to find similar instances",
+          "Keep track of all locations where the fix was applied",
+          "Verify that the fix works consistently across all instances"
+        ]
+      }
+    },
+    "code_quality": {
+      "enabled": true,
+      "architecture": {
+        "description": "Maintain clean and simple architecture",
+        "rules": [
+          "Keep the architecture simple and clean",
+          "Avoid unnecessary abstractions",
+          "Use standard patterns over custom solutions",
+          "Document architectural decisions"
+        ]
+      },
+      "testing": {
+        "description": "Ensure code quality through testing",
+        "rules": [
+          "Write unit tests for all new code",
+          "Maintain test coverage above 80%",
+          "Use meaningful test names",
+          "Keep tests simple and focused"
+        ]
+      },
+      "dependencies": {
+        "description": "Manage dependencies responsibly",
+        "rules": [
+          "Minimize external dependencies",
+          "Regularly update dependencies for security",
+          "Document why each dependency is needed",
+          "Remove unused dependencies"
+        ]
+      }
+    },
+    "automation": {
+      "enabled": true,
+      "description": "Rules for automating repetitive tasks and tool usage",
+      "rules": [
+        "If you perform a task twice, automate it",
+        "If you perform a task three times, create a reusable tool",
+        "If you perform a task five times, create a documented tool with error handling",
+        "If you perform a task ten times, create a documented tool with error handling and monitoring"
+      ],
+      "principles": {
+        "description": "Core principles for automation",
+        "principles": [
+          "Automate yourself out of the equation at every step",
+          "Tools should be self-documenting and require minimal human intervention",
+          "Error handling should be built into tools, not added as an afterthought",
+          "Tools should be designed to be used by other tools, not just humans"
+        ]
+      }
+    },
+    "script_maintenance": {
+      "enabled": true,
+      "description": "Rules for maintaining and improving scripts",
+      "rules": [
+        "If a script fails, fix the script rather than working around it",
+        "If a script requires manual intervention, modify it to eliminate the need",
+        "If a script produces incorrect results, add validation and error detection",
+        "If a script is difficult to use, improve its interface and documentation"
+      ],
+      "principles": {
+        "description": "Core principles for script maintenance",
+        "principles": [
+          "Scripts should be designed to run unattended",
+          "Scripts should validate their inputs and outputs",
+          "Scripts should log their actions for debugging and auditing",
+          "Scripts should be idempotent when possible"
+        ]
+      }
+    },
+    "tool_usage": {
+      "enabled": true,
+      "description": "Rules for using existing tools",
+      "rules": [
+        "Before starting a task, check if a tool already exists to do it",
+        "If a tool exists but doesn't work as expected, fix the tool rather than creating a workaround",
+        "If a tool exists but is difficult to use, improve its interface rather than creating a new tool",
+        "If multiple tools exist for the same task, consolidate them into a single, better tool"
+      ],
+      "principles": {
+        "description": "Core principles for tool usage",
+        "principles": [
+          "Tools should be discoverable and easy to find",
+          "Tools should have consistent interfaces and behavior",
+          "Tools should be well-documented with examples",
+          "Tools should be versioned and maintained"
+        ]
+      }
+    },
+    "automation_reminders": {
+      "enabled": true,
+      "description": "Rules for remembering to use automation",
+      "rules": [
+        "When starting a new task, ask yourself if it could be automated",
+        "When completing a task, ask yourself if it will need to be done again",
+        "When encountering an error, ask yourself if a tool could prevent it in the future",
+        "When documenting a process, ask yourself if it could be turned into a tool"
+      ],
+      "principles": {
+        "description": "Core principles for remembering automation",
+        "principles": [
+          "Automation is a mindset, not just a set of tools",
+          "The goal is to minimize human intervention in repetitive tasks",
+          "Time spent automating is an investment in future efficiency",
+          "Automation should be a continuous process, not a one-time effort"
+        ]
+      }
+    },
+    "tool_development": {
+      "enabled": true,
+      "description": "Rules for developing new tools",
+      "rules": [
+        "Tools should be designed to be used by other tools",
+        "Tools should have clear, consistent interfaces",
+        "Tools should handle errors gracefully and provide useful error messages",
+        "Tools should be well-documented with examples and use cases"
+      ],
+      "principles": {
+        "description": "Core principles for tool development",
+        "principles": [
+          "Tools should be modular and composable",
+          "Tools should be testable and maintainable",
+          "Tools should be designed for extensibility",
+          "Tools should follow the principle of least surprise"
+        ]
+      }
+    }
+  }
+} 
