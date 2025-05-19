@@ -219,4 +219,4 @@ resize_debounce_duration = "200ms"
 
 # Interval for spinner animation updates
 # Controls the speed of the loading spinner
-spin_duration = "300ms"
+spin_duration = "150ms"
