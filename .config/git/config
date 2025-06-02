@@ -213,7 +213,7 @@
     whoami = config user.email
 
     # show remote url
-    url = config --get remote.origin.url
+    url = !git config --get remote.origin.url|sed -E 's%^(git@github.com|gh):%https://github.com/%'
 
     # commit staged changes yolo mode with accompanying commit message
     yolo = !git commit -m \"$(curl -s https://whatthecommit.com/index.txt)\"
