@@ -220,7 +220,6 @@ function main()
         .psqlrc
         .ssh/config
         .vim
-        .xsession
         .Xresources
     )
     readonly CREATEDIRS=(

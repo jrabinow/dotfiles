@@ -5,3 +5,6 @@ ln -s ~/.local/share/YouTube\ Music ~/.config/YouTube\ Music
 ln -s ~/.local/share/rua ~/.config/rua
 ln -s ~/.local/share/Electron ~/.config/Electron
 rm -r ~/.config/pulse; ln -s ~/.local/share/pulse ~/.config/pulse
+if [ "$(which dwm)" == "" ]; then
+    cp "$(git rev-parse --show-toplevel)/.xsession" ~/
+fi
