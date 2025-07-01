@@ -16,3 +16,15 @@ alias utop='top -u $USER'
 if which --version > /dev/null 2>&1; then
     alias which='(alias; declare -f) | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde --read-functions'
 fi
+
+function clipboard()
+{
+    if [ "${#}" -eq 0 ]; then
+        xclip -in
+    else
+        file="${1}"
+        shift
+        test -r "${file}" && xclip -in < "${file}"
+    fi
+    xclip -out
+}
