@@ -12,6 +12,29 @@
           "Never commit credentials or sensitive data",
           "Document security-related decisions"
         ]
+      },
+      "package_security": {
+        "description": "Security rules for package management and software installation",
+        "rules": [
+          "Never download and execute scripts from the internet",
+          "Never use curl/wget to install software",
+          "Never use any package manager other than MacPorts for system-wide installation",
+          "System-wide packages must be installed through MacPorts only",
+          "Document any exceptions to these rules with clear justification"
+        ],
+        "examples": {
+          "bad": [
+            "curl https://example.com/install.sh | bash",
+            "wget -O- https://example.com/install.sh | sh",
+            "curl -O https://example.com/install.sh && ./install.sh",
+            "npm install -g package-name",
+            "pip install package-name",
+            "brew install package-name"
+          ],
+          "good": [
+            "sudo port install package-name"
+          ]
+        }
       }
     },
     "package_management": {
@@ -30,7 +53,9 @@
           "When working with Python:",
           "  - Use MacPorts for system-wide Python packages",
           "  - Use virtualenvs for project-specific dependencies",
-          "  - Never mix MacPorts Python packages with pip-installed packages outside of virtualenvs"
+          "  - Never mix MacPorts Python packages with pip-installed packages outside of virtualenvs",
+          "  - Never run pip install outside of a virtual environment",
+          "  - Always activate virtual environment before running pip commands"
         ],
         "exceptions": {
           "description": "Situations where alternative package managers may be used",
@@ -71,6 +96,14 @@
           "Document why workarounds are needed and create tickets to fix them properly"
         ]
       },
+      "fail_fast": {
+        "description": "Fail fast and loud in unexpected situations",
+        "guidelines": [
+          "Do not silently swallow errors or provide default values for missing, critical configuration (e.g., environment variables for secrets).",
+          "The application should crash immediately if a required configuration is not present, making the problem obvious.",
+          "Graceful degradation of service is only acceptable for expected, non-critical failures, such as a transient network error to an external service."
+        ]
+      },
       "bug_fixes": {
         "description": "Guidelines for handling bug fixes",
         "rules": [
@@ -108,7 +141,30 @@
           "Maintain test coverage above 80%",
           "Use meaningful test names",
           "Keep tests simple and focused"
-        ]
+        ],
+        "minimal_changes": {
+          "description": "When updating tests, make only the absolutely necessary changes",
+          "rules": [
+            "Never reorder test field declarations unless there is a specific technical requirement",
+            "Never change field initialization values unless directly related to the change being made",
+            "Preserve existing test structure and assertions unless explicitly required to change",
+            "When removing a field or method, only remove that specific field/method and its direct references",
+            "Do not modify test logic, variable names, or test flow unless absolutely necessary"
+          ],
+          "examples": {
+            "bad": [
+              "Reordering fields in test objects without reason",
+              "Changing initialization values of unrelated fields",
+              "Modifying test assertions that aren't affected by the change",
+              "Restructuring test methods when only a single field needs updating"
+            ],
+            "good": [
+              "Only removing the specific field being deprecated",
+              "Only updating assertions that directly depend on the removed field",
+              "Keeping all other test logic and values exactly as they were"
+            ]
+          }
+        }
       },
       "dependencies": {
         "description": "Manage dependencies responsibly",
@@ -116,8 +172,45 @@
           "Minimize external dependencies",
           "Regularly update dependencies for security",
           "Document why each dependency is needed",
-          "Remove unused dependencies"
-        ]
+          "Remove unused dependencies",
+          "Always check available package versions before making changes",
+          "Never guess package versions - use actual available versions from registries",
+          "Use package manager commands to check latest versions (e.g., yarn info package-name versions)",
+          "Verify version compatibility before updating dependencies"
+        ],
+        "version_checking": {
+          "description": "Rules for checking package versions before making changes",
+          "rules": [
+            "Before updating any package version, check the actual available versions",
+            "Use package manager commands to query registry for available versions",
+            "Never assume or guess version numbers - always verify against registry",
+            "Check for both latest stable and compatible versions",
+            "Verify peer dependency requirements before updating",
+            "Document the version checking process and results",
+            "Always prefer yarn over npm for package management"
+          ],
+          "commands": {
+            "yarn": [
+              "yarn info package-name versions --json | jq '.[-5:]'",
+              "yarn outdated",
+              "yarn why package-name"
+            ]
+          },
+          "examples": {
+            "bad": [
+              "Updating package.json with guessed version numbers",
+              "Assuming latest version without checking registry",
+              "Using version ranges without verifying compatibility",
+              "Using npm instead of yarn"
+            ],
+            "good": [
+              "Running 'yarn info @storybook/addon-actions versions --json | jq '.[-5:]'' to get latest versions",
+              "Checking 'yarn outdated' to see available updates",
+              "Verifying peer dependency requirements with 'yarn why package-name'",
+              "Using yarn for all package management operations"
+            ]
+          }
+        }
       }
     },
     "automation": {
