@@ -12,7 +12,7 @@ fi
 function usage()
 {
     cat << EOF
-Usage: ${0##*/}" [OPTION]...
+Usage: ${0##*/} [OPTION]...
 
 Options:
     -h, --help: show this help dialog
