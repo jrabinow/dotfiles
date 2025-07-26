@@ -45,8 +45,9 @@ function venv()
 
 function httpcode()
 {
-    curl "https://httpstat.us/$1"
-    echo
+    code="$1"; shift
+    perl -MHTTP::Status=status_message -E 'my $c=shift; say "$c -> ", status_message($c)' "${code}"
+    echo "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/${code}"
 }
 
 # print list of buck targets under a dir in fbcode
