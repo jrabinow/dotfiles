@@ -235,8 +235,8 @@
 
     # hide a branch for later
     hide = "!f() { git update-ref refs/hidden/$1 $1 && git br -D $1; }; f"
-    unhide = "!f() { git br $1 && git update-ref $1 refs/hidden/$1; }; f"
-    hidden = "!f() { git show-ref | grep hidden; }; f"
+    unhide = "!f() { git update-ref refs/heads/$1 refs/hidden/$1 && git checkout $1 && git update-ref -d refs/hidden/$1; }; f"
+    hidden = "!f() { git show-ref | grep hidden | sed 's#refs/hidden/##'; }; f"
 
 
 # URL shorthands
