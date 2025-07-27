@@ -34,10 +34,10 @@ function repeat()
 function passgen()
 {
     len=${1:-30}
-    domain="${2:-[[:print:]]}"
-    grep -ao "${domain}" /dev/urandom \
-        | head -n"${len}" \
-        | tr -d '\n'
+    domain="[[:${2:-print}:]]"
+    perl -ne "print grep { /${domain}/ } split(//, \$_)" /dev/urandom \
+        | head -c"${len}"
+        #| grep -ao "${domain}" \
     echo
 }
 
