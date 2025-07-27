@@ -170,3 +170,20 @@ function adserver_ts_to_date()
     shift
     bc -l <<< "${ts_nanoseconds}*0.0000001-11644473600" | xargs -I% date -u -d @%
 }
+
+function pdfdiff()
+{
+    pdf1="${1}"; shift
+    pdf2="${1}"; shift
+
+    outdir="$(mktemp -d)"
+    txt1="${outdir}/1.txt"
+    txt2="${outdir}/2.txt"
+
+    pdftotext "${pdf1}" "${txt1}"
+    pdftotext "${pdf2}" "${txt2}"
+
+    vimdiff "${txt1}" "${txt2}"
+
+    rm -r "${outdir}"
+}
