@@ -17,6 +17,8 @@ alias less="less -R"
 alias kpcli=keepassxc-cli
 alias DID_I_FUCKING_STUTTER='sudo $(history -p !!)'
 alias tor2dlp="yt-dlp --proxy 'socks5://localhost:9150'"
+# shellcheck disable=SC2142
+alias trimlines='awk "{if (length(\$0) <= $COLUMNS) {print}}"'
 
 # enable color support of ls and also add handy aliases
 if command -v dircolors > /dev/null; then
