@@ -185,12 +185,37 @@ function mkcd()
 
 function hgrep()
 {
+    local tail_count pattern
+
     if [ $# -gt 1 ]; then
-        tail_count="${1}"
+        tail_count="$1"
         shift
-        history "${tail_count}" | grep -- "${@}"
+        pattern="$*"
     else
-        history | grep -- "${@}"
+        pattern="$*"
+        tail_count=
+    fi
+
+    # Timestamped history (HISTTIMEFORMAT was set)
+    if grep -q '^#' "$HISTFILE"; then
+        if [ -n "$tail_count" ]; then
+            tail -n "$((tail_count * 2))" "$HISTFILE" | awk '
+                /^#/ { cmd_time=strftime("%Y-%m-%d %H:%M:%S", substr($0,2)); next }
+                { print cmd_time "  " $0 }
+            ' | grep --color=auto -- "$pattern"
+        else
+            awk '
+                /^#/ { cmd_time=strftime("%Y-%m-%d %H:%M:%S", substr($0,2)); next }
+                { print cmd_time "  " $0 }
+            ' "$HISTFILE" | grep --color=auto -- "$pattern"
+        fi
+    # Plain history
+    else
+        if [ -n "$tail_count" ]; then
+            tail -n "$tail_count" "$HISTFILE" | grep --color=auto -- "$pattern"
+        else
+            grep --color=auto -- "$pattern" "$HISTFILE"
+        fi
     fi
 }
 
