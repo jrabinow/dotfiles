@@ -2,7 +2,7 @@
 
 # write some cool doc here
 
-if [ -n "${DEBUG}" ]; then
+if [[ -n "${DEBUG}" ]]; then
     exec 5> /tmp/bash_debug_output.txt
     BASH_XTRACEFD="5"
     PS4='$LINENO: '
@@ -53,8 +53,7 @@ function main()
     [[ ${1:-} == '--' ]] && shift
 }
 
-if [ "${BASH_SOURCE[0]}" == "$0" ]; then
-    set -e -u
-    set -o pipefail
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+    set -euo pipefail
     main "$@"
 fi
