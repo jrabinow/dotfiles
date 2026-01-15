@@ -205,6 +205,7 @@ function main()
         .config/jnv
         .config/lxterminal
         .config/offlineimap
+        .config/pylint
         .config/redshift.conf
         .config/task
         .config/tmux
