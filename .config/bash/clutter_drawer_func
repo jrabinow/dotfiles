@@ -74,9 +74,20 @@ function twlookup_whitepages()
 
 function pgkill()
 {
-    pattern="$1"
-    shift
-    pgrep -alfi "${pattern}" | fzf | awk '{print $1}' | xargs -r kill
+    case $# in
+        1)
+            pattern="$1"; shift
+            pgrep -alfi "${pattern}" | fzf | awk '{print $1}' | xargs -r kill
+            ;;
+        2)
+            signal="$1"; shift
+            pattern="$1"; shift
+            pgrep -alfi "${pattern}" | fzf | awk '{print $1}' | xargs -r kill "${signal}"
+            ;;
+        *)
+            echo "UNKNOWN NUMBER OF ARGS. Don't know how to process; bailing"
+            ;;
+    esac
 }
 
 function pgkillall()
