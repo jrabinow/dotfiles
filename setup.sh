@@ -217,6 +217,7 @@ function main()
         .inputrc
         '.local/share/fonts/Roboto Mono for Powerline.ttf'
         .local/share/cursor
+        .local/share/llm
         .profile
         .psqlrc
         .ssh/config
@@ -234,11 +235,15 @@ function main()
         ".local/share/YouTube Music"
         .ssh/config.d
     )
+    # ["symlink"]="tgt"
     declare -A LINKS=(
         [".vim/init.vim"]=".vim/vimrc"
         [".local/share/vim/plugin-data/vimspector/download"]=".vim/plugged/vimspector/gadgets/macos/download"
         [".local/share/vim/plugin-data/coc/extensions/package.json"]=".config/coc/package.json"
         [".config/YouTube Music"]=".local/share/YouTube Music"
+        [".claude/skills"]=".local/share/llm/skills"
+        [".claude/rules"]=".local/share/llm/rules"
+        [".claude/plugins/marketplaces"]=".local/share/llm/plugins"
     )
     local PREPARE_COMMIT=false
     local INITIAL_ACCOUNT_CONFIG=false
