@@ -31,3 +31,15 @@ without independently tracing each change back to an observed failure in the cur
 context.
 Corrective: Treat external fixes as leads, not recipes. Each element must earn its
 place by connecting to something observed here.
+
+## Patching the instance instead of the class
+Pattern: Fixing a bug only at the discovered location without searching for the same
+pattern elsewhere in the codebase.
+Corrective: After identifying a bug, grep for structurally similar code before
+committing the fix — address the class, not just the instance.
+
+## Workaround in place of fix
+Pattern: Introducing a workaround to suppress a symptom rather than fixing the
+underlying cause, because the proper fix is harder or slower.
+Corrective: If a workaround is truly necessary, document it explicitly with the reason
+and a reference to the proper fix — never let it silently become permanent.
