@@ -7,3 +7,6 @@
 [submodule "tmux/tmux-fingers"]
 	path = .config/tmux/plugins/tmux-fingers
 	url = https://github.com/morantron/tmux-fingers
+[submodule "llm/plugins/karpathy-skills"]
+	path = .local/share/llm/plugins/karpathy-skills
+	url = https://github.com/forrestchang/andrej-karpathy-skills.git
