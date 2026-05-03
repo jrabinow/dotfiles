@@ -241,6 +241,7 @@ function main()
         [".local/share/vim/plugin-data/vimspector/download"]=".vim/plugged/vimspector/gadgets/macos/download"
         [".local/share/vim/plugin-data/coc/extensions/package.json"]=".config/coc/package.json"
         [".config/YouTube Music"]=".local/share/YouTube Music"
+        [".claude/commands"]=".local/share/llm/commands"
         [".claude/skills"]=".local/share/llm/skills"
         [".claude/rules"]=".local/share/llm/rules"
         [".claude/plugins/marketplaces"]=".local/share/llm/plugins"
