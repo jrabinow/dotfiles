@@ -216,7 +216,6 @@ function main()
         .gnupg/gpg-agent.conf
         .inputrc
         '.local/share/fonts/Roboto Mono for Powerline.ttf'
-        .local/share/cursor
         .local/share/llm
         .profile
         .psqlrc
